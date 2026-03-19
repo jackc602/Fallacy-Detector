@@ -1,0 +1,11 @@
+[project]
+name = "fallacy-detector"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas==2.2.3",
+    "pyarrow==17.0.0",
+    "torch>=2.10.0",
+]
