@@ -1,0 +1,77 @@
+[
+  {
+    "text": "\"Just like students are given a couple of weeks of preparation before taking exams, doctors should also be given few days or weeks to prepare themselves before an operation or surgery, after all surgery is not as easy task\"\nIs an example of....",
+    "label": "fallacy of logic",
+    "fol": "∀x (Student(x) → Prepares(x, Exam)) ⟹ ∃y (Doctor(y) → Prepares(y, Surgery))\n\nHere, '∀x' means \"for all x\", 'Student(x)' and 'Doctor(y)' are predicates representing a student and a doctor respectively, 'Prepares(x, Exam)' and 'Prepares(y, Surgery)' are actions of preparation for exams and surgeries respectively, and '→' represents 'if...then...' in this context. The formula suggests that if all students prepare for exams, then there exists a doctor who should prepare for surgeries."
+  },
+  {
+    "text": "You don’t have to do this. My grandmother is in the hospital. I need my salary to support her medication. She’s dying.",
+    "label": "appeal to emotion",
+    "fol": "∀x (Person(x) ∧ NeedsSalary(x) ∧ SupportsGrandmother(x, h)) → Ought(x, Action)\n   h ∈ Hospital\n   Dies(h)\n   Emotion(Dying)\n\nWhere Person(x), NeedsSalary(x), SupportsGrandmother(x, h), Ought(x, Action), Hospital(h), Dies(h), and Emotion(Dying) are predicates. The first formula represents the argument in the given text, and the last three statements provide additional information about the hospitalized grandmother."
+  },
+  {
+    "text": "I know five people from Kentucky. They are all racists. Therefore, Kentuckians are racist.",
+    "label": "faulty generalization",
+    "fol": "∀x (Kentuckian(x) ⟹ Person(x)) ∧ ∃x (Kentuckian(x) ∧ Racist(x)) ⊢ ∀x (Kentuckian(x) ⟹ Racist(x))\n\nHere, the variables are:\n- x: an arbitrary person\n- Kentuckian(x): x is a Kentuckian\n- Person(x): x is a person\n- Racist(x): x is a racist\n\nThe English text presents a faulty generalization by incorrectly assuming that all Kentuckians are racist based on the observation of a few racist individuals from Kentucky. The formula above tries to represent this logical fallacy in first-order logic."
+  },
+  {
+    "text": "Pvt. Joe Bowers: What are these electrolytes? Do you even know?\nSecretary of State: They're... what they use to make Brawndo!\nPvt. Joe Bowers: But why do they use them to make Brawndo?\nSecretary of Defense: [raises hand after a pause] Because Brawndo's got electrolytes.\n",
+    "label": "circular reasoning",
+    "fol": "x = electrolytes\n   y = Brawndo\n   F(x) -> Defines function F such that F(x) is true if and only if x is used to make y\n\n   F(electrolytes) ↔ y = Brawndo\n   F(Brawndo) ↔ ∃x (F(x) ∧ x = electrolytes)\n   (∃x F(x) ∧ \"Why do they use them to make Brawndo?\")  → F(Brawndo)\n   F(Brawndo)  → (\"Because Brawndo's got electrolytes.\")"
+  },
+  {
+    "text": "This is a fallacy of irrelevance that is based solely on someone's or something's history, origin, or source rather than its current meaning",
+    "label": "ad hominem",
+    "fol": "Let's denote:\n   - A as the statement being discussed\n   - B as the person making statement A\n\n   In first-order logic, the ad hominem fallacy could be translated as follows:\n\n   (P(B) ∧ B ≠ A) ∧ (¬V(A)) ∧ (P(A) → V(A)) ∧ (C(B) → O(A))\n\n   Here, P(X) means 'person X has a particular characteristic or background', V(X) means 'statement X is valid', C(X) means 'characteristic or background that is criticized', and O(X) means 'statement X is criticized'. The symbol '→' represents logical implication. This formula states that if a person (B) has a particular characteristic or background (P(B)), and that person (B) does not make the statement (B ≠ A), and the statement (A) is not valid (¬V(A)), but if the statement (A) would be valid if it had the same characteristic or background as the person (P(A) → V(A)), and if a criticized characteristic or background (C(B)) of the person leads to a criticism of the statement (O(A)), then this is an ad hominem fallacy."
+  },
+  {
+    "text": "Argues that because something is popular, it must be right.",
+    "label": "ad populum",
+    "fol": "For all x, if x is popular, then x is right. (This is an implicit universal quantifier premise, as it suggests that the relationship between popularity and rightness holds for all instances, not just specific ones.) However, it's important to note that this does not hold in general, as popularity doesn't necessarily guarantee rightness. The fallacy lies in drawing a conclusion about the truth of a statement based solely on its popularity without any other evidence."
+  },
+  {
+    "text": "We either have to cut taxes or leave a huge debt for our children.",
+    "label": "false dilemma",
+    "fol": "∃x (Tax(x) ∨ Debt(x)) ∧ ¬∃x (Tax(x) ∧ ¬Debt(x))\n\nHere, Tax(x) represents that tax is implemented, Debt(x) represents that a huge debt is left for future generations, and the existential quantifier ∃x means \"there exists an x such that\". The universal negation ¬ represents \"not\". The conjunction ∧ connects the two statements, and the second statement is a negation of the disjunction, representing the false dilemma fallacy."
+  },
+  {
+    "text": " The best example of this fallacy is presented by the person who coined this term, Nassim Nicholas Taleb in his 2007 book, The Black Swan.  There are two people",
+    "label": "false causality",
+    "fol": "Exists x, y [Person(x) ∧ Person(y)]\n   (Believes(x, 'Nassim Nicholas Taleb coined the term \"Black Swan\"') ∧ Believes(y, 'The term \"Black Swan\" implies false causality'))\n   (WroteBook(x, 'The Black Swan', 2007) ∧ (Believes(y, 'x presented a good example of false causality in the book \"The Black Swan\"')))\n   FalseCausality(y)  <-- This is the fallacious step, representing the false causality fallacy\n   Not Equal(x, y)   <-- This is to ensure that x and y are different individuals\n\nThis FOL formula states that there are two people (x and y), where x wrote the book \"The Black Swan\" in 2007 and y believes that x presented a good example of false causality in that book. However, the statement that y presents a good example of false causality is the fallacious step. The last statement asserts that x and y are not the same individual."
+  },
+  {
+    "text": "Ricky is watching television when he sees a commercial for foot cream. The commercial announcer says, \"This is the best foot cream on the market because no other foot cream makers have been able to prove otherwise!\" What fallacy has the announcer committed?",
+    "label": "intentional",
+    "fol": "Exists x (FootCream(x) Implies Not_Exists y (FootCream(y) And Better_Than(y,x)))\n\nIn this translation, 'FootCream(x)' represents any foot cream, 'Better_Than(y,x)' represents that y is better than x at being a foot cream, and 'Not_Exists y' represents there does not exist a y. The fallacy is committed by incorrectly implying that no other foot creams are better than the one being advertised, when the statement should only imply that no other foot cream makers have proven their products are better."
+  },
+  {
+    "text": "\"Why worry about pandas going extinct, when we have the homeless in our country to worry about?\"",
+    "label": "fallacy of relevance",
+    "fol": "∃x (Panda(x) ∧ Extinct(x)) → ∃y (Homeless(y) ∧ InCountry(y))\n\nHere, \"Panda(x)\" represents \"x is a panda,\" \"Extinct(x)\" represents \"x is extinct,\" \"Homeless(y)\" represents \"y is homeless,\" and \"InCountry(y)\" represents \"y is in this country.\" The symbol → represents \"implies.\" In English, the formula reads, \"If there exists an x such that x is a panda and x is extinct, then there exists a y such that y is homeless and y is in this country.\" This oversimplifies the fallacy of relevance, as the original statement assumes that resources allocated to one issue (pandas) cannot be allocated to another (homelessness), which is not necessarily true."
+  },
+  {
+    "text": "The fallacy of equivocation occurs when a key term or phrase in an argument is used in an ambiguous way, with one meaning in one portion of the argument and then another meaning in another portion of the argument.",
+    "label": "equivocation",
+    "fol": "Let's denote 'A' as the set of all things that are 'day' (meaning the 12-hour period between sunrise and sunset), and 'B' as the set of all things that are 'day' (meaning the period of light during a planet's day-night cycle).\n\n   P1: For all x, if x is in A, then x is in B. (Daylight as part of a day is always part of the planet's day.)\n\n   P2: Some y is not in B. (It's night on the planet.)\n\n   Conclusion: Therefore, not all x are in A. (Because the night exists, the whole day does not exist on the planet.)\n\n   This is a fallacy because 'day' (A) and 'day' (B) are used equivocally, having different meanings in different parts of the argument. In FOL, this is represented by using different variables or sets for the same term but with different meanings."
+  },
+  {
+    "text": "Everyone in our family has gone to the University of Tennessee, so you need to apply to UT.",
+    "label": "fallacy of credibility",
+    "fol": "∀x (Family(x) => ∃y (University_of_Tennessee(y) \\* Graduate(y, x)) ) ➔ ∃y (University_of_Tennessee(y) \\* Graduate(y, You))\n\nIn this formula:\n\n* 'Family(x)' represents a person being a member of the family in question.\n* 'University_of_Tennessee(y)' represents a person having graduated from the University of Tennessee.\n* 'Graduate(y, x)' represents person y having graduated from a university (in this case, the University of Tennessee).\n* 'You' represents the person being advised to apply to the University of Tennessee.\n* The symbol '→' represents implication (if...then).\n* The quantifiers ∀ (for all) and ∃ (there exists) are used to quantify over the variables x and y."
+  },
+  {
+    "text": "Recent auto accidents in your neighborhood have led you to propose to the city council that the speed limit along Main Street be reduced to calm the traffic flow. Opponents complain that reducing speed limits all over town is counterproductive and an unnecessary burden on drivers.",
+    "label": "fallacy of extension",
+    "fol": "∀x (Neighborhood(x) ⟹ {SpeedLimit(x, high)} ⟹ {Proposal(you, reduceSpeedLimit(MainStreet))})\n  ∃y (City(y) ∧ ∀z (CityCouncilMember(z) ⟹ Opposes(z, Proposal(you, reduceSpeedLimit(MainStreet)))) ⟹ ¬∀w (Town(w) ⟹ {SpeedLimit(w, low)})\n  ⟹ ∀z (CityCounselor(z) ⟹ (Opposes(z, Proposal(you, reduceSpeedLimit(MainStreet))) ⟶ Counterproductive(z, reduceSpeedLimit(MainStreet))))\n  ⟹ ∀z (CityCounselor(z) ⟹ (Opposes(z, Proposal(you, reduceSpeedLimit(MainStreet))) ⟶ UnnecessaryBurdenOnDrivers(z)))"
+  },
+  {
+    "text": "\"Just like students are given a couple of weeks of preparation before taking exams, doctors should also be given few days or weeks to prepare themselves before an operation or surgery, after all surgery is not as easy task\"\nIs an example of....",
+    "label": "fallacy of logic",
+    "fol": "∀x (Student(x) ⇒ Prepares_for_Exam(x, few_weeks)) ⟹ ∃y (Doctor(y) ⇒ Prepares_for_Operation(y, few_days_or_weeks))\n\nIn this translation, `Student(x)` represents that x is a student, `Prepares_for_Exam(x, few_weeks)` represents that x prepares for exams for few weeks, `Doctor(y)` represents that y is a doctor, and `Prepares_for_Operation(y, few_days_or_weeks)` represents that y prepares for an operation or surgery for few days or weeks.\n\nThe original argument claims that since students are given a couple of weeks to prepare for exams, doctors should also be given a similar amount of time to prepare for operations. The fallacy of logic lies in the assumption that because one situation (students preparing for exams) is relevant to another situation (doctors preparing for surgery), it follows that the same solution (giving preparation time) applies to both situations, which is not necessarily the case."
+  },
+  {
+    "text": "You don’t have to do this. My grandmother is in the hospital. I need my salary to support her medication. She’s dying.",
+    "label": "appeal to emotion",
+    "fol": "∃x (Grandmother(x) ∧ InHospital(x) ∧ Dying(x)) ∧ ∃y (Person(y) ∧ PaysSalary(y)) ∧ ⟹ Ought(Person(), Action)\n\nHere, the variables are:\n- x: the grandmother\n- y: the person (implied to be the speaker)\n- Action: the action that needs to be done (implied to be working or earning the salary)\n\nThe logical structure is: There exists an x such that x is the grandmother, x is in the hospital, and x is dying. There exists a y such that y is a person and y pays the salary. If the conditions for x and y hold, then it is necessary for the person to perform the action. This is an appeal to emotion as the emotional appeal (the grandmother is dying) is used to convince the listener to perform the action."
+  }
+]
