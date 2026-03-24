@@ -1,6 +1,7 @@
 import json
 import argparse
-import time
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import pandas as pd
 from llm_client import LLMClient
@@ -68,20 +69,10 @@ def build_prompt(text, label):
 def load_samples_from_parquet(parquet_path):
     """Getting unique samples from the parquet file, since it contains many duplicates."""
     df = pd.read_parquet(parquet_path)
-    samples = []
-    seen = set()
-    for _, row in df.iterrows():
-        lab = row['logical_fallacies']
-        if lab not in seen:
-            samples.append({
-                'text': row['source_article'],
-                'label': lab,
-                'fol': '',
-            })
-            seen.add(lab)
-        if len(samples) >= 13:
-            break
-    return samples
+    return [
+        {'text': row['source_article'], 'label': row['logical_fallacies'], 'fol': ''}
+        for row in df.to_dict('records')
+    ]
 
 
 
@@ -90,6 +81,14 @@ def load_samples_from_json(json_path):
         return json.load(f)
 
 
+def load_existing_fol(out_file):
+    """Returns dict of (text, label) -> fol for resuming a previous run."""
+    if not out_file.exists():
+        return {}
+    with open(out_file, 'r', encoding='utf-8') as f:
+        existing = json.load(f)
+    return {(s['text'], s['label']): s['fol'] for s in existing if s.get('fol', '').strip()}
+
 
 def translate(args):
     client = LLMClient(
@@ -97,7 +96,6 @@ def translate(args):
         model=args.model,
         api_key=args.api_key,
     )
-    args.model = client.model 
 
     # Load samples
     input_path = Path(args.input)
@@ -107,35 +105,52 @@ def translate(args):
         samples = load_samples_from_json(input_path)
 
     out_path = Path(args.output)
-    tag = f"{args.backend}_{args.model.replace(':', '-').replace('/', '-')}"
+    tag = f"{args.backend}_{str(args.model).replace(':', '-').replace('/', '-')}"
     out_file = out_path.parent / f"{out_path.stem}_{tag}{out_path.suffix}"
+
+    # Resume: pre-populate fol from existing output file
+    existing = load_existing_fol(out_file)
+    for s in samples:
+        if (s['text'], s['label']) in existing:
+            s['fol'] = existing[(s['text'], s['label'])]
+
+    todo = [s for s in samples if not s['fol'].strip() or args.overwrite]
 
     print(f"{args.backend} - {args.model}")
     print(f"Input: {input_path} - {len(samples)} samples")
-    print(f"{out_file}")
+    print(f"Output: {out_file}")
+    print(f"  {len(samples) - len(todo)} already done, {len(todo)} to process")
 
-    for i, sample in enumerate(samples):
-        if sample['fol'].strip() and not args.overwrite:
-            print(f"[{i+1}/{len(samples)}] Skipping (already has FOL): {sample['label']}")
-            continue
+    if not todo:
+        print("Nothing to do.")
+        return
 
+    lock = threading.Lock()
+    completed_count = [0]
+
+    def process(sample):
         prompt = build_prompt(sample['text'], sample['label'])
         try:
             fol = client.chat(prompt, system_prompt=SYSTEM_PROMPT).strip()
-            sample['fol'] = fol
-            print(f"[{i+1}/{len(samples)}] {sample['label']}")
-            print(f"  → {fol[:120]}{'...' if len(fol) > 120 else ''}")
         except Exception as e:
-            print(f"[{i+1}/{len(samples)}] ERROR on {sample['label']}: {e}")
-            sample['fol'] = f"ERROR: {e}"
+            fol = f"ERROR: {e}"
+        sample['fol'] = fol
+        with lock:
+            completed_count[0] += 1
+            n = completed_count[0]
+            if n % args.save_every == 0:
+                with open(out_file, 'w', encoding='utf-8') as f:
+                    json.dump(samples, f, indent=2, ensure_ascii=False)
+                print(f"  Checkpoint saved ({n} done)")
 
-        # Save after each sample so progress isn't lost
-        with open(out_file, 'w', encoding='utf-8') as f:
-            json.dump(samples, f, indent=2, ensure_ascii=False)
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
+        futures = [executor.submit(process, s) for s in todo]
+        for fut in as_completed(futures):
+            fut.result()  # re-raise any exceptions
 
-        if args.backend != 'ollama':
-            time.sleep(0.5)
-
+    # Final save
+    with open(out_file, 'w', encoding='utf-8') as f:
+        json.dump(samples, f, indent=2, ensure_ascii=False)
     print(f"\nDone. Results saved to {out_file}")
 
 
@@ -147,5 +162,7 @@ if __name__ == '__main__':
     parser.add_argument('--input', default='fol_test_samples.json', help='Input file (.json or .parquet)')
     parser.add_argument('--output', default='fol_results.json', help='Output file path')
     parser.add_argument('--overwrite', action='store_true', help='Re-translate even if FOL exists')
+    parser.add_argument('--workers', type=int, default=5, help='Number of parallel API calls')
+    parser.add_argument('--save-every', type=int, default=20, dest='save_every', help='Checkpoint frequency in samples')
     args = parser.parse_args()
     translate(args)

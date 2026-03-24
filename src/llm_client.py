@@ -1,6 +1,12 @@
 import json
 import os
+from dotenv import load_dotenv
+from pathlib import Path
 import ollama
+import vertexai
+from vertexai.generative_models import GenerativeModel
+
+load_dotenv(Path(__file__).parent.parent / ".env")
 
 
 class LLMClient:
@@ -13,7 +19,8 @@ class LLMClient:
         elif self.backend == 'openai':
             self.model = model or 'gpt-4o'
         elif self.backend == 'gemini':
-            self.model = model or 'gemini-2.0-flash'
+            vertexai.init(project = os.getenv("PROJECT_ID"), location = "us-east1")
+            self.model = GenerativeModel(model)
         else:
             raise ValueError(f"Unknown backend: {self.backend}. Use 'ollama', 'openai', or 'gemini'.")
 
@@ -23,7 +30,7 @@ class LLMClient:
         return {
             'ollama': '',
             'openai': 'OPENAI_API_KEY',
-            'gemini': 'GOOGLE_API_KEY',
+            'gemini': os.getenv("GEMINI_API_KEY"),
         }.get(self.backend, '')
 
 
@@ -34,7 +41,7 @@ class LLMClient:
         elif self.backend == 'openai':
             return self._chat_openai(message, system_prompt)
         elif self.backend == 'gemini':
-            return self._chat_gemini(message, system_prompt)
+            return self._generate_gemini(message, system_prompt)
 
 
 
@@ -98,10 +105,16 @@ class LLMClient:
         data = resp.json()
         return data['candidates'][0]['content']['parts'][0]['text']
 
+    def _generate_gemini(self, message, system_prompt=None):
+        response = self.model.generate_content(
+            message,
+        )
+        return response.text
+
 
 
 
 if __name__ == '__main__':
     # Quick test — change backend/key as needed
-    client = LLMClient(backend='ollama', model='mistral:latest')
+    client = LLMClient(backend='gemini', model='gemini-2.5-pro')
     print(client.chat("What is first-order logic? One sentence."))
