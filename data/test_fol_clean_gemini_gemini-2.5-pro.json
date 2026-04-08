@@ -1,0 +1,2557 @@
+[
+  {
+    "text": "People who drive big cars probably hate the environment.",
+    "label": "fallacy of extension",
+    "fol": "Proposition: ∀x ((Person(x) ∧ DrivesBigCar(x)) → Probably(HatesEnvironment(x)))\nHidden assumption: ∀x (Probably(HatesEnvironment"
+  },
+  {
+    "text": "White men can't jump. No, really, they can't!",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀x ((IsWhite(x) ∧ IsMan(x)) → ¬CanJump(x))\nConclusion: ∀x ((IsWhite(x) ∧ IsMan("
+  },
+  {
+    "text": "'Cotton and grain crops were lower this year than last. So, people must be stealing them.\"\nThis is an example of what kind of logical fallacy?",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: (Yield(cotton, thisYear) < Yield(cotton, lastYear)) ∧ (Yield(grain, thisYear) < Yield(grain, lastYear))"
+  },
+  {
+    "text": "\"Why are you hitting your computer!?\"\n\"The last time my wifi was weak, I hit my computer and it got better.\" What is this?",
+    "label": "false causality",
+    "fol": "Premise 1: ∃t (Time(t) ∧ IsPast(t) ∧ WifiWasWeakAt(t) ∧ HitComputerAt(t)"
+  },
+  {
+    "text": "All students are good and all clowns are bad.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (Student(x) → IsGood(x))\nPremise 2: ∀x (Clown(x) → IsBad(x))\nConclusion:"
+  },
+  {
+    "text": "\"People who don't support the proposed state minimum wage increase must hate the poor so much.\"\n\nWhich logical fallacy is used in the statement above?",
+    "label": "fallacy of extension",
+    "fol": "Proposition: ∀x ((Person(x) ∧ ¬SupportsWageIncrease(x)) → HatesThePoor(x))"
+  },
+  {
+    "text": "Charlie: Illegal posting and sharing of songs online is crippling the music industry.\nBob: You couldn't be more wrong; the music industry is doing just fine! I can't believe you think the government should be allowed to regulate what I share with my friends. No one wants a world where I can't loan a book to my girlfriend, let my roommate borrow my iPod, or share a funny meme with my blog followers.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ∀x (IsBenignSharing(x) → ¬ShouldBeRegulated(x))\nPremise 2: IsBenignSharing(loan"
+  },
+  {
+    "text": "Paige wants to play a guitar solo on our next recording. Her father is a horrible musician, though, so I doubt that Paula's any good either.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x (IsFatherOf(x, paige) ∧ HorribleMusician(x))\nHidden assumption: ∀x ∀y (IsFatherOf("
+  },
+  {
+    "text": "My sister-in-law, who is a teacher, said that this school is not somewhere that I would want to send my children.",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: IsTeacher(sisterInLaw)\nPremise 2: Said(sisterInLaw, ¬WantsToSendChildTo(speaker, thisSchool))\nHidden assumption:"
+  },
+  {
+    "text": "something that kills is deadly",
+    "label": "circular reasoning",
+    "fol": "Proposition: ∀x (Kills(x) → IsDeadly(x))"
+  },
+  {
+    "text": "“The rooster crows always before the sun rises, therefore the crowing rooster causes the sun to rise.”",
+    "label": "false causality",
+    "fol": "Premise 1: ∀t_s (SunRisesAt(t_s) → ∃t_c (RoosterCrowsAt(t_c) ∧ Before"
+  },
+  {
+    "text": "1 = a number; 2 = a number; therefore 1 = 2.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: IsNumber(1)\nPremise 2: IsNumber(2)\nHidden assumption: ∀x ∀y ((IsNumber(x) ∧ IsNumber(y)) → (x = y))\nConclusion: 1 = 2"
+  },
+  {
+    "text": "“against the man;” attacking the individual rather than their position.",
+    "label": "ad hominem",
+    "fol": "Proposition: ∀a ∀p ∀q (AdHominemAttack(a, p, q) ↔ (IsPerson(p) ∧ HoldsPosition(p, q) ∧ Attacks"
+  },
+  {
+    "text": "Makes the claim that EVERYONE is using this product, and you should, too.",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → UsesProduct(x, thisProduct))\nHidden assumption: (∀x (Person(x) → UsesProduct(x, thisProduct"
+  },
+  {
+    "text": "I can't trust the mayor or the governor. All politicians must be liars.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬Trustworthy(mayor) ∧ ¬Trustworthy(governor)\nHidden assumption 1: Politician(mayor) ∧ Politician(governor)"
+  },
+  {
+    "text": "\"I'm French and I don't like cheese.\"\n\"All French like cheese.\"\n\"I don't.\"\n\"Then you must not really be French.\"",
+    "label": "intentional",
+    "fol": "Premise 1: ∀x (French(x) → LikesCheese(x))\nPremise 2: ¬LikesCheese(a)\nConclusion: ¬French(a)"
+  },
+  {
+    "text": "Everyone is going to get the new smart phone when it comes out this weekend. Why aren’t you?",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → WillGetNewPhone(x))\nHidden assumption: (∀x (Person(x) → WillGetNew"
+  },
+  {
+    "text": "Encampment is like basic training. It’s CAP’s equivalent to Boot Camp.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: IsLike(encampment, basicTraining)\nPremise 2: IsEquivalentFor(encampment, bootCamp, cap)\nHidden assumption: ∀x ∀"
+  },
+  {
+    "text": "We cannot listen to John’s opinion on global warming because he is a tree hugger.",
+    "label": "ad hominem",
+    "fol": "Premise 1: IsTreeHugger(john)\nHidden assumption: ∀x (IsTreeHugger(x) → ¬ShouldListenToOpinionOf(x, globalW"
+  },
+  {
+    "text": "Kerry’s plan will raise taxes by at least $900 billion his first hundred days.",
+    "label": "intentional",
+    "fol": "Proposition: ∃a (Amount(a) ∧ GreaterThanOrEqual(a, 900BillionDollars) ∧ RaisesTaxes(kerrysPlan, a)"
+  },
+  {
+    "text": "Repeating the same thing as if you’re proving something",
+    "label": "circular reasoning",
+    "fol": "Proposition: ∃x ∃p (Repeats(x, p) ∧ PresentsAsProofFor(x, Repetition(p), p))"
+  },
+  {
+    "text": "\"I'm gonna get an iPhone because everybody else has an iPhone and they're cool.\"",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x ((Person(x) ∧ x ≠ i) → HasIphone(x))\nPremise 2: ∀x ((Person(x) ∧ Has"
+  },
+  {
+    "text": "\"Russia has a terrible human rights record.\"\n\"Well, the United States has done plenty of bad things, but we aren't a bad country, so Russia isn't, either.\" -the President when confronted about Russia's human rights abuses.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃x (Country(x) ∧ HasDoneBadThings(x) ∧ ¬IsBadCountry(x))\nPremise 2:"
+  },
+  {
+    "text": "\"The Philippines is in poverty because of poor people.\"",
+    "label": "circular reasoning",
+    "fol": "Premise 1: Country(thePhilippines)\nPremise 2: ∃x (Person(x) ∧ IsPoor(x) ∧ LivesIn(x, thePhilippines"
+  },
+  {
+    "text": "Thomas: \"Dating apps are an effective way to meet potential dates. With people's busy work schedules nowadays, technology can help you make connections.\"\nNina: \"Dating apps are dangerous! Most people are catfished, and guys usually pretend to be so much better than they really are online. If we're so busy, we won't have time for any of that, anyway.\"\nWhat fallacy is Nina leaning toward?",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ∃x ∃y (DatingApp(x) ∧ Person(y) ∧ Uses(y, x) ∧ IsCatfished(y))"
+  },
+  {
+    "text": "\"My opponent claims that water pollution is endangering our city waters. But have you thought about all of the air pollution in China? Where they have to wear masks sometimes in the city? That's what we really need to worry about.\"",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: EndangersOurCityWaters(waterPollution)\nPremise 2: IsSeriousProblem(airPollutionInChina)\nHidden assumption: ∀x ∀y ((Is"
+  },
+  {
+    "text": "\"You're a Westener and you're an idiot.\"",
+    "label": "ad hominem",
+    "fol": "Proposition: Westener(you) ∧ Idiot(you)\nConclusion: Westener(you) ∧ Idiot(you)"
+  },
+  {
+    "text": "Researchers are frauds who don’t earn their salaries",
+    "label": "ad hominem",
+    "fol": "Proposition: ∀x (IsResearcher(x) → (IsFraud(x) ∧ ¬EarnsSalary(x)))\nConclusion: ∀x (IsResearcher(x) → ("
+  },
+  {
+    "text": "The child did not do his chores so therefore all children are lazy.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: Child(c) ∧ ¬DidChores(c)\nHidden assumption: ∃x (Child(x) ∧ ¬DidChores(x)) →"
+  },
+  {
+    "text": "Having come from the same political party, he is sure to communicate biased and untrue claims about his party-mates",
+    "label": "ad hominem",
+    "fol": "Premise 1: ∃y (SameParty(h, y) ∧ y ≠ h)\nHidden assumption: ∀x ∀y ((SameParty(x, y) ∧ x"
+  },
+  {
+    "text": "I would never buy a Buick. My father owned two of them and both of them had frequent transmission problems. Buicks obviously break down all the time.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x ∃y (x ≠ y ∧ IsBuick(x) ∧ BreaksDown(x) ∧ IsBuick("
+  },
+  {
+    "text": "“We must accept the traditions of the men of old time who affirm themselves to be the offspring of the gods - that is what they say - and they must surely have known their own ancestors. How can we doubt the word of the children of the gods?” - Plato, Timaeus",
+    "label": "circular reasoning",
+    "fol": "Premise 1: ∀x (ManOfOldTime(x) → Affirms(x, OffspringOfGods(x)))\nPremise 2: ∀"
+  },
+  {
+    "text": "Has your psychology department stopped teaching that ineffective approach to therapy yet?",
+    "label": "circular reasoning",
+    "fol": "Hidden assumption: ∃d (YourPsychologyDepartment(d) ∧ ∃a (Ineffective(a) ∧ ApproachToTherapy(a) ∧ UsedTo"
+  },
+  {
+    "text": "Bill: Hey, did you hear we have a new operating system out now?  It is better than anything else out there because we just released it!\nSteve: What’s it called?\nBill: Windows Vista!\nSteve: Sounds wonderful!  I can’t wait until all of your users install it on all their computers!\n",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: OperatingSystem(windowsVista) ∧ JustReleased(windowsVista)\nHidden assumption: ∀x ((OperatingSystem(x) ∧ JustReleased(x))"
+  },
+  {
+    "text": "It takes faith to believe in God just like it takes faith to believe in the Easter Bunny -- but at least the Easter Bunny is based on a creature that actually exists!",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: RequiresFaithToBelieveIn(god) ∧ RequiresFaithToBelieveIn(easterBunny)\nPremise 2: ∃x ("
+  },
+  {
+    "text": "When asked about his comments Trump made on his tape with Billy Bush, Trump responded, “It’s locker room talk, and it’s one of those things. I will knock the hell out of ISIS. We’re going to defeat ISIS. ISIS happened a number of years ago in a vacuum that was left because of bad judgment. And I will tell you, I will take care of ISIS.”",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: IsLockerRoomTalk(commentsOnTape)\nPremise 2: CausedBy(badJudgment, isis)\nPremise 3: WillDefeat("
+  },
+  {
+    "text": "\"Truly helps cramming for a test: my psychological test is crowded and I have an A.\"",
+    "label": "false causality",
+    "fol": "Premise 1: CrammedFor(me, myPsychTest)\nPremise 2: Crowded(myPsychTest) ∧ HasGrade(me, myPsychTest,"
+  },
+  {
+    "text": "assumes that if many people act or believe a certain way, it must be the right way",
+    "label": "ad populum",
+    "fol": "Hidden assumption: ∀x ((∃y Action(y) ∧ Does(Many, y, x)) ∨ (∃z Belief(z) ∧ Holds"
+  },
+  {
+    "text": "We should go inside; the last time the clouds were that dark, there was a tornado.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃t (Time(t) ∧ CloudsAreDark(t) ∧ TornadoOccurs(t))\nPremise 2: Clouds"
+  },
+  {
+    "text": "Everyone is/is not doing it! It must/must not be a good thing!",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → Does(x, a)) ∨ ∀x (Person(x) → ¬Does(x, a))\nHidden assumption: ∀"
+  },
+  {
+    "text": "An ad claims that 3 out of 4 real estate agents reccommend moving to Sunnyville, California.",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: Claims(ad, (Count({x | RealEstateAgent(x) ∧ RecommendsMovingTo(x, sunnyville)}) / Count({x"
+  },
+  {
+    "text": "Have you stopped cheating on tests?  To answer yes means you cheated before. To answer no means you continue to cheat.",
+    "label": "intentional",
+    "fol": "Premise 1: AnswerIsYes → StoppedCheating(you)\nPremise 2: AnswerIsNo → ¬StoppedCheating(you)\nHidden"
+  },
+  {
+    "text": "\"You're too ugly to be class president!\"",
+    "label": "ad hominem",
+    "fol": "Premise 1: Ugly(you)\nHidden assumption: ∀x (Ugly(x) → ¬CanBeClassPresident(x))\nConclusion: ¬CanBeClassPresident(you)"
+  },
+  {
+    "text": "Why should merely cracking down on terrorism help to stop it, when that method hasn't worked in any other country?",
+    "label": "intentional",
+    "fol": "Premise 1: ∀c ((Country(c) ∧ ¬(c = thisCountry)) → ¬MethodWorksIn(crackdown, c))\nHidden assumption:"
+  },
+  {
+    "text": "40 million people can't be wrong! Buy the new Iphone XIV today!",
+    "label": "ad populum",
+    "fol": "Premise: ∃S (Count(S) = 40000000 ∧ ∀x (x ∈ S → Buys(x, iphoneXIV)))\nHidden assumption"
+  },
+  {
+    "text": "If you love your family, you'll buy this new stealth\nsecurity system.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: LovesFamily(you) → BuysSecuritySystem(you)\nHidden assumption: ∀x (Person(x) ∧ LovesFamily(x)"
+  },
+  {
+    "text": "How many school shootings should we tolerate before we change the gun laws?",
+    "label": "intentional",
+    "fol": "Premise: ∃n (Tolerate(n) ∧ (NumberOfSchoolShootings > n → ShouldChangeGunLaws))\nHidden assumption: ∀n (n > 0 → ¬"
+  },
+  {
+    "text": "President Trump said that he was proud of the children who participated in this year's Special Olympics. Those kids are a bunch of losers.",
+    "label": "ad hominem",
+    "fol": "Proposition 1: Said(trump, ∀x (ParticipatedInSpecialOlympics(x) → IsProudOf(trump, x)))\nProposition 2: ∀x (ParticipatedInSpecial"
+  },
+  {
+    "text": "Our competitors use unhealthy sugar substitutes and artificial sweeteners. But Rev-Up Energy Drink contains one hundred percent real cane sugar to fuel your body better.",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: ∀x (IsCompetitorProduct(x) → ∃y (Contains(x, y) ∧ ( (Unhealthy(y"
+  },
+  {
+    "text": "It’s possible to pass the class without attending regularly. Therefore, you will pass even if you don’t attend regularly.",
+    "label": "fallacy of logic",
+    "fol": "Premise: ∃x (PassesClass(x) ∧ ¬AttendsRegularly(x))\nHidden assumption: ∃x (PassesClass(x) ∧"
+  },
+  {
+    "text": "\"I shouldn't have flunked the test because I never get F's\" is an example of",
+    "label": "circular reasoning",
+    "fol": "Premise: ∀x (PastEvent(x) → ¬GetsF(i, x))\nHidden assumption: (∀x (PastEvent(x) → ¬GetsF(i, x"
+  },
+  {
+    "text": "If I don't take this AP class, then I won't do well on the exam. If I don't do well on the AP exam, then I won't get into a good college. If I can't get into a good college, then I'll never get a good job. If I can't get a good job, then I'm going to have to live in my parents' basement forever. Guess I'll sign up for the AP class...",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬TakeApClass(i) → ¬DoWellOnExam(i)\nPremise 2: ¬DoWellOnExam(i) → ¬GetIntoGoodCollege(i)"
+  },
+  {
+    "text": "I can’t take home a B in this course. My parents will be angry with me.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: TakesHomeB(me) → ParentsAreAngry(me)\nHidden assumption: ¬ParentsAreAngry(me)\nConclusion: ¬TakesHomeB(me)"
+  },
+  {
+    "text": "I don't see how you can say you're an ethical person. It's so hard to get you to do anything; your work ethic is so bad",
+    "label": "equivocation",
+    "fol": "Premise 1: HasBadWorkEthic(you)\nHidden assumption: ∀x (HasBadWorkEthic(x) → ¬IsEthical(x))\nConclusion: ¬IsEthical(you)"
+  },
+  {
+    "text": "I don't think that there should be marriage among homosexuals. Anyway, taxes on married people are high. I think that taxes on the married are just ridiculous.",
+    "label": "fallacy of relevance",
+    "fol": "Proposition 1: ∀x ∀y ((Homosexual(x) ∧ Homosexual(y)) → ¬CanMarry(x, y))\nProposition 2: ∀x (Married("
+  },
+  {
+    "text": "\"We need to fix our broken judicial system by electing new people.\"\nThis logical fallacy is called...",
+    "label": "circular reasoning",
+    "fol": "Premise 1: IsBroken(judicialSystem)\nHidden assumption: ∀x ((IsBroken(x) ∧ Fixes(y, x)) → (y = ElectNew"
+  },
+  {
+    "text": "Audrey: I am a human being. I am not a cyborg from the future here to destroy humanity.\nFred: Prove that you are human! Cyborgs don't pass out when they lose a lot of blood. Here's a knife.\nAudrey: Get to bed, Freddie. And no more SYFY channel before bed!\n",
+    "label": "intentional",
+    "fol": "Premise 1: Human(audrey)\nPremise 2: ∀x (Cyborg(x) → (LosesLotsOfBlood(x) → ¬Pass"
+  },
+  {
+    "text": "If you don't study, you'll fail your test. Then you will do poorly in the class and you GPA will fall. You won't get into a good college, so you'll never get a decent job and you'll end up poor and homeless.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬Study(you) → FailTest(you)\nPremise 2: FailTest(you) → (DoPoorlyInClass(you)"
+  },
+  {
+    "text": "I know for a fact that ghosts exist. My friend, who is a very reliable person, has seen ghosts on many occasions.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ReliablePerson(myFriend)\nPremise 2: ClaimsToHaveSeen(myFriend, g) ∧ Ghost(g)\nHidden assumption:"
+  },
+  {
+    "text": "If you don't say the Pledge of Allegiance, then you must be a traitor.",
+    "label": "false dilemma",
+    "fol": "Premise: ¬SaysPledgeOfAllegiance(s)\nHidden assumption: ∀x (¬SaysPledgeOfAllegiance(x) → IsTraitor(x))\nConclusion"
+  },
+  {
+    "text": "Not believing in the Tooth Fairy is like denying that the Titanic sank because eye-witnesses did not agree if the ship broke in half before or after it sank.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∃e1 ∃e2 (Event(e1) ∧ Event(e2) ∧ ¬(e1 ↔ e2))"
+  },
+  {
+    "text": "All of my red-headed friends are good dancers. Therefore, all red-headed people must be good dancers. \nThis assumption from my experience is an example of",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x ((FriendOfMine(x) ∧ RedHeaded(x)) → GoodDancer(x))\nHidden assumption: (∀x ((FriendOfMine"
+  },
+  {
+    "text": "Louise is running for class president. In her campaign speech she says, \"My opponent does not deserve to win. She is a smoker and she cheated on her boyfriend last year.\" What fallacy has Louise committed?\nhttp://www.funtrivia.com",
+    "label": "ad hominem",
+    "fol": "Premise 1: IsSmoker(opponent)\nPremise 2: CheatedOnBoyfriend(opponent)\nHidden assumption: ∀x ((IsSmoker(x) ∧ CheatedOnBoyfriend(x)) → ¬DeservesToWin(x))"
+  },
+  {
+    "text": "Dana is trying to raise money for her university's library. In her address to the board of trustees, she says, \"We must raise tuition to cover the cost of new books. Otherwise the library will be forced to close.\"\n\nOf what fallacy is this an example?",
+    "label": "false dilemma",
+    "fol": "Premise: ¬RaiseTuition → LibraryCloses\nHidden assumption: ∀x (ViableOption(x) → (x = RaiseTuition ∨ x = LibraryCloses"
+  },
+  {
+    "text": "Jack: I have tiny, invisible unicorns living in my anus.\n\nNick: How do you figure?\n\nJack: Can you prove that I don't?\n\nNick: No.\n\nJack: Then I do.",
+    "label": "intentional",
+    "fol": "Premise 1: ¬CanBeProven(¬(∃x (Unicorn(x) ∧ Tiny(x) ∧ Invisible(x) ∧ LivesInAnusOf(x"
+  },
+  {
+    "text": "How can you tell me I should exercise to lose weight? All you do is sit behind a desk all day. I've never seen you do a lick of exercise.\n\nIdentify the logical fallacy commited in this argument.",
+    "label": "ad hominem",
+    "fol": "Premise 1: Advises(advisor, advisee, p)\nPremise 2: ¬Follows(advisor, p)\nHidden assumption: ∀x ∀"
+  },
+  {
+    "text": "I am voting for Smith for President. My whole family is Democrat, so I'll be voting that way, too.",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (FamilyOf(x, i) → IsDemocrat(x)))\nHidden assumption: (∀x (FamilyOf(x,"
+  },
+  {
+    "text": "We must eliminate affirmative action. We can’t rely on laws to end racial prejudice.",
+    "label": "fallacy of relevance",
+    "fol": "Premise: ∀x (IsLaw(x) → ¬EndsRacialPrejudice(x))\nHidden assumption: IsLaw(affirmativeAction) ∧ (¬EndsR"
+  },
+  {
+    "text": "Your honor, while my son may have made a bad decision that night while under the influence of alcohol, it shouldn't affect the rest of his life. It was just one mistake. He's on the varsity swim team.",
+    "label": "intentional",
+    "fol": "Premise 1: ∃e (MadeBy(son, e) ∧ BadDecision(e) ∧ UnderInfluence(son, e) ∧ IsMistake(e))"
+  },
+  {
+    "text": "There is definitely a link between dementia and drinking energy drinks. I read about it on Wikipedia.",
+    "label": "fallacy of credibility",
+    "fol": "Premise: IsOnWikipedia(LinkExists(Dementia, DrinkingEnergyDrinks))\nHidden assumption: ∀p (IsOnWikipedia(p) → True(p))\nConclusion: True(Link"
+  },
+  {
+    "text": "When a statement falsely claims or assumes an \"either / or\" situation, when in fact there is at least one additional logically valid option, it is called...",
+    "label": "false dilemma",
+    "fol": "Premise 1: Claims(s, P ∨ Q)\nPremise 2: ∃r (ValidOption(r) ∧ ¬(r=P) ∧ ¬("
+  },
+  {
+    "text": "Cocaine is all natural; therefore, it is good for you.",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: IsNatural(cocaine)\nHidden assumption: ∀x (IsNatural(x) → IsGoodForYou(x))\nConclusion: IsGoodForYou(cocaine)"
+  },
+  {
+    "text": "The Freehold Raceway Mall is the best mall because there are always so many cars there.",
+    "label": "ad populum",
+    "fol": "Premise 1: HasManyCars(freeholdRacewayMall)\nHidden assumption: ∀x (IsMall(x) ∧ HasManyCars(x) → IsBestMall"
+  },
+  {
+    "text": "SM 5: Argument regarding insanity as a defense against execution",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∃x (Argument(x) ∧ TopicIs(x, insanityAsDefenseAgainstExecution))\nConclusion: ∃x (Argument(x) ∧ TopicIs(x"
+  },
+  {
+    "text": "A: The Government should enact minimum-wage legislation so that workers are not exploited.\nB: Nonsense. You say that only because you cannot find a good job.",
+    "label": "ad hominem",
+    "fol": "Premise 1: Says(a, p)\nPremise 2: CannotFindGoodJob(a)\nHidden assumption: ∀x ∀q (HasPersonalMotive"
+  },
+  {
+    "text": "If you buy the Disney annual pass you will save money when visiting the happiest place on Earth!",
+    "label": "intentional",
+    "fol": "Premise 1: BuysDisneyAnnualPass(you)\nPremise 2: IsHappiestPlaceOnEarth(disneyland)\nHidden assumption: ∀x ∀y ("
+  },
+  {
+    "text": "God must exist because every culture has some sort of belief in a higher being.",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Culture(x) → BelievesInHigherBeing(x))\nHidden assumption: (∀x (Culture(x) → Believes"
+  },
+  {
+    "text": "Kids: If you wouldn't eat your dog, why eat a turkey? Go vegan.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∀x ∀y ((Person(x) ∧ Dog(y) ∧ Owns(x,y)) → ¬WouldEat(x,y))\nPremise"
+  },
+  {
+    "text": "If you aren’t a capitalist, you must be a communist.",
+    "label": "false dilemma",
+    "fol": "Hidden assumption: ∀x (Capitalist(x) ∨ Communist(x))\nConclusion: ∀x (¬Capitalist(x) → Communist(x))"
+  },
+  {
+    "text": "My political candidate gives 10% of his income to the needy, goes to church every Sunday, and volunteers one day a week at a homeless shelter.  Therefore, he is honest and morally straight.",
+    "label": "intentional",
+    "fol": "Premise 1: GivesToNeedy(c) ∧ GoesToChurch(c) ∧ VolunteersAtShelter(c)\nHidden assumption: ∀x ((GivesToNeedy(x) ∧ GoesToChurch(x) ∧ VolunteersAtShelter(x)) → (Honest(x) ∧ MorallyStraight(x)))\nConclusion: Honest(c) ∧ MorallyStraight(c)"
+  },
+  {
+    "text": "Most heroin users started out smoking pot. If you start smoking pot, you’ll end up a heroin user, too.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∃x (HeroinUser(x) ∧ StartedWithPot(x))\nHidden assumption: ∀x (StartedWithPot(x) → Becomes"
+  },
+  {
+    "text": "The Earth is round.\nTherefore, Trump.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: IsRound(earth)\nHidden assumption: IsRound(earth) → Trump\nConclusion: Trump"
+  },
+  {
+    "text": "We have a responsibility to care for this poor lost dog.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: Dog(thisDog) ∧ Poor(thisDog) ∧ Lost(thisDog)\nHidden assumption: ∀x ((Dog(x) ∧ Poor(x)"
+  },
+  {
+    "text": "Personally attacking someone to shift attention away from your views is",
+    "label": "ad hominem",
+    "fol": "Proposition: ∀x ∀y ( (PersonallyAttacks(x, y) ∧ IntendsToShiftAttentionFromViews(x)) → IsAdHominem(x, y) )"
+  },
+  {
+    "text": "Do you still beat your wife?",
+    "label": "appeal to emotion",
+    "fol": "Hidden assumption: ∃x (WifeOf(x, you)))\nHidden assumption: ∃t (Time(t) ∧ Before(t, now) ∧ Beats"
+  },
+  {
+    "text": "\"Be my friend or be my enemy.\"",
+    "label": "false dilemma",
+    "fol": "Premise: IsFriendOf(you, me) ∨ IsEnemyOf(you, me)\nHidden assumption: ¬(IsFriendOf(you, me)"
+  },
+  {
+    "text": "10 of the last 14 National Spelling Bee Champions have been Indian American. Indian Americans must all be great spellers!",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 (Recent"
+  },
+  {
+    "text": "But, Dad, I know you smoked when you were my age, so how can you tell me not to do it?",
+    "label": "ad hominem",
+    "fol": "Premise 1: SmokedAtChildsAge(dad)\nPremise 2: ForbidsSmoking(dad, child)\nHidden assumption: ∀x ∀"
+  },
+  {
+    "text": "\"Many democrats don't want a border wall with Mexico, which means they don't want to keep Americans safe\" IS an example of this fallacy.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ∃x (Democrat(x) ∧ ¬WantsBorderWall(x))\nPremise 2: ∀x (¬WantsBorderWall("
+  },
+  {
+    "text": "Cat Stevens may be a successful and skilled musician, but let's not forget that he's been accused of extremist religious and political views.",
+    "label": "ad hominem",
+    "fol": "Premise 1: SuccessfulMusician(catStevens) ∧ SkilledMusician(catStevens)\nPremise 2: AccusedOfExtremistViews(catStevens)"
+  },
+  {
+    "text": "Pay taxes or go to jail",
+    "label": "false dilemma",
+    "fol": "Premise: ∀x (PayTaxes(x) ∨ GoesToJail(x))\nConclusion: ∀x (¬PayTaxes(x) → GoesToJail(x"
+  },
+  {
+    "text": "\"I bought a ticket to win a new car at the mall, since I have never won anything like that in the past.\"",
+    "label": "false causality",
+    "fol": "Premise: ∀t (IsPastTime(t) → ¬∃p (IsMajorPrize(p) ∧ Won(i, p, t)))\nHidden assumption: ∀x"
+  },
+  {
+    "text": "My friend said that if you sneeze more than three times, you have the corona virus.",
+    "label": "fallacy of credibility",
+    "fol": "Premise: Said(myFriend, ∀x (SneezesMoreThanThreeTimes(x) → HasCoronaVirus(x)))\nHidden assumption: ∀p ∀y"
+  },
+  {
+    "text": "I have no intention of stopping the use of somatostatin on patients suffering from acute pancreatitis. I consider it to be a very reasonable choice. After all, it has been standard practice in our department for many years and we’ve been quite satisfied with the results we’ve had.",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: StandardPracticeInForManyYears(useOfSomatostatin, ourDepartment)\nPremise 2: SatisfiedWithResultsOf(ourDepartment, useOfSomatostatin)"
+  },
+  {
+    "text": "A politician arguing that his opponent cannot possibly be a good choice for women because he has been married and divorced five times.",
+    "label": "ad hominem",
+    "fol": "Premise 1: HasBeenMarriedAndDivorcedFiveTimes(opponent)\nHidden assumption: ∀x (HasBeenMarriedAndDivorcedFiveTimes(x) → ¬GoodChoiceFor"
+  },
+  {
+    "text": "Explaining that the U.S. Civil War was fought only because of the institution of slavery",
+    "label": "false causality",
+    "fol": "Proposition: Caused(institutionOfSlavery, usCivilWar) ∧ ∀x (Caused(x, usCivilWar) → x = institutionOfSlavery)"
+  },
+  {
+    "text": "Company R.E. are working on advertisement for a new juice drink. Some of their marketing employees went to a school to do a survey on students’ beverage preference. The majority said they preferred orange-flavored drinks, so Jeff told his superiors that orange was the flavor favored most by high school students.",
+    "label": "ad populum",
+    "fol": "Premise 1: ∃s (School(s) ∧ ∀x ((Student(x) ∧ Attends(x, s) ∧ Surveyed(x))"
+  },
+  {
+    "text": "We shouldn’t put her in jail even if she stole billions of pesos. She is already too old to be locked up.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: TooOldToBeJailed(she)\nHidden assumption: ∀x (TooOldToBeJailed(x) → ¬ShouldBeJailed(x))\nConclusion: ¬"
+  },
+  {
+    "text": "You call the Marcoses murderers and plunderers yet you cannot lend me money for my school project, murdering my chance for a higher grade. You are just like them.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: Asserts(you, Murderer(marcoses) ∧ Plunderer(marcoses))\nPremise 2: ∃a (PerformedBy(a"
+  },
+  {
+    "text": "She took a drink from the drinking fountain yesterday and now she's sick. It must have been the public fountain that made her sick.",
+    "label": "false causality",
+    "fol": "Premise 1: ∃t1 (Yesterday(t1) ∧ DrankFrom(she, fountain, t1))\nPremise 2: ∃t"
+  },
+  {
+    "text": "\"Her arguments against the protest were weak. After all, she can't be fair; she works for the government.\"",
+    "label": "ad hominem",
+    "fol": "Premise 1: WorksForGovernment(s)\nHidden assumption: ∀x (WorksForGovernment(x) → ¬IsFair(x))\nHidden assumption: ∀x ∀a ((¬"
+  },
+  {
+    "text": "\"If you don't turn in your homework, you will be getting a call home.",
+    "label": "appeal to emotion",
+    "fol": "Premise: ∀x (Student(x) → (¬TurnsInHomework(x) → GetsCallHome(x)))\nConclusion: Student(s) ∧ ¬TurnsInHomework("
+  },
+  {
+    "text": "You can't believe Jack when he says there is a God because he doesn't even have a job.",
+    "label": "ad hominem",
+    "fol": "Premise 1: Says(jack, ∃x God(x))\nPremise 2: ¬HasJob(jack)\nHidden assumption: ∀x (¬HasJob(x)"
+  },
+  {
+    "text": "\"1 is a number and 2 is a number so 1 = 2\"",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: IsNumber(1)\nPremise 2: IsNumber(2)\nHidden assumption: ∀x ∀y ((IsNumber(x) ∧ IsNumber(y)) → x = y)\nConclusion: 1 = 2"
+  },
+  {
+    "text": "sending M-16s to Syrian rebels inevitably mean boots on the ground in Damascus.",
+    "label": "faulty generalization",
+    "fol": "Proposition: SendM16sToSyrianRebels → BootsOnGroundInDamascus"
+  },
+  {
+    "text": "A rainbow appeared in the sky the day before basketball tryouts, and I made the team! If there's a rainbow when I try out in the spring, I'm sure I'll make the team again.",
+    "label": "false causality",
+    "fol": "Premise 1: RainbowAppeared(t1) ∧ MadeTeam(i, t1)\nHidden assumption: ∀t (RainbowAppeared(t)"
+  },
+  {
+    "text": "Charlie: I think we should put more money into schools. Quality public education is so important. Bob: So you’re saying we should cut military spending and spend it instead on more spiral notebooks and crayons? I guess you want our country to be a weak, defenseless target for terrorists.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: IncreaseFundingFor(schools)\nHidden assumption 1: IncreaseFundingFor(schools) ↔ (CutMilitarySpending ∧ IncreaseFundingFor(notebooksAndCrayons"
+  },
+  {
+    "text": "Death penalty will not scare criminals because they don’t expect to be caught",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ∀x (Criminal(x) → ¬ExpectsToBeCaught(x))\nHidden assumption: ∀x (Criminal(x) → ("
+  },
+  {
+    "text": "I dropped the ball because Mercury is in retrograde.",
+    "label": "false causality",
+    "fol": "Premise 1: DroppedBall(i)\nPremise 2: MercuryInRetrograde\nHidden assumption: (MercuryInRetrograde ∧ DroppedBall"
+  },
+  {
+    "text": "I deserve to have a later curfew, so you should let me stay out until 10pm!",
+    "label": "circular reasoning",
+    "fol": "Premise 1: DeservesLaterCurfew(i)\nHidden assumption: ∀x (DeservesLaterCurfew(x) → ShouldBeAllowedToStayOutUntil1"
+  },
+  {
+    "text": " Perhaps the most classic example of this fallacy is the argument for the existence of God.  Due to the understanding of nature through science, many of the arguments that used to be used for God (or gods) were abandoned, only to be replaced with new ones, usually involving questions to which science has not definitively answered yet.  The move from creationism to intelligent design is a prime example.  Currently the origin of life is a popular argument for God (although a classic argument from ignorance), and an area where we very well may have a scientific answer in the next decade, at which time, the “origin of life” argument will fade away and be replaced by another, thus moving the figurative goalposts farther back as our understanding of the natural world increases.Exception: This fallacy should not be confused with an argument or set of arguments, with multiple propositions inherent in the argument.  The reason for the difference between this kind of argument and the moving the goalposts fallacy, is a subtle one, but indicated by a strong initial claim (“has to be”, “must”, “required for”, etc.) that gets answered and/or what appears to be ad hoc objections that follow eventually leading to an impossible request for proof.\nFun Fact: The name “moving the goalposts” comes from the analogy of kicking a perfect field goal in American football, only to have the goalposts be moved on you. This would be very unfair.\nReferences:\nThis a logical fallacy frequently used on the Internet. No academic sources could be found.\nQuestions about this fallacy? Ask our community!\n",
+    "label": "intentional",
+    "fol": "Premise 1: ∃p ∃c ∃a1 ∃t1 (Proponent(p) ∧ ArguesFor(p, c) ∧ UsesArgumentAt"
+  },
+  {
+    "text": "What is wrong with Tanya? She only has five hundred dollars saved and she’s going away to college next year. That would be like letting my four-year-old brother go to Russia by hisself.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: GoesToCollegeWithInsufficientFunds(tanya)\nPremise 2: IsAnalogousTo(GoesToCollegeWithInsufficientFunds(tanya), FourYear"
+  },
+  {
+    "text": "People from big cities are not as friendly as those from small towns.",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀x ∀y ((IsFromBigCity(x) ∧ IsFromSmallTown(y)) → LessFriendlyThan(x, y))\nConclusion: ∀x ∀y ((Is"
+  },
+  {
+    "text": "All people who live in England have bad teeth.",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀x (Person(x) ∧ LivesInEngland(x) → HasBadTeeth(x))"
+  },
+  {
+    "text": "Don't ever steal! Once you start, you won't be able to stop, and you'll end up bankrupt.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (StartsStealing(x) → CannotStopStealing(x))\nPremise 2: ∀x (CannotStopStealing(x)"
+  },
+  {
+    "text": "This fallacy (also known as “false dilemma”) occurs when a speaker or writer makes a veiled threat by reducing a complex issue to two options: either you see it my way or this bad thing will happen.",
+    "label": "false dilemma",
+    "fol": "Premise 1: ∃s (Speaker(s) ∧ PresentsChoice(s, a, p, q)))\nPremise 2: ∀s,a"
+  },
+  {
+    "text": "Using positive words that become associated with something, like company slogans and political advertisements",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∃s ∃w (Word(w) ∧ Positive(w) ∧ BecomesAssociatedWith(w, s) ∧ (IsCompany"
+  },
+  {
+    "text": "Mrs. Collier, we can't take a quiz tomorrow! The new season of Game of Thrones premieres tonight!!",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: GameOfThronesPremieresTonight\nHidden assumption: GameOfThronesPremieresTonight → ¬CanTakeQuizTomorrow\nConclusion: ¬CanTake"
+  },
+  {
+    "text": "My brother received the COVID-19 vaccine and then had diarrhea for a week. The vaccine is the reason my brother's bowels came undone.",
+    "label": "false causality",
+    "fol": "Premise 1: ReceivedVaccine(brother) ∧ HadDiarrhea(brother)\nPremise 2: HappenedAfter(HadDiarrhea(brother), Received"
+  },
+  {
+    "text": "Tony wants us to believe that the origin of life was an “accident”.  Tony is a godless SOB who has spent more time in jail than in church, so the only information we should consider from him is the best way to make license plates.",
+    "label": "ad hominem",
+    "fol": "Premise 1: Asserts(tony, OriginOfLifeWasAccident)\nPremise 2: IsDisreputable(tony)\nHidden assumption: ∀x ∀p"
+  },
+  {
+    "text": "I currently have as patients in my practice all the patients in this town who are willing and able to pay $5,000 per session for long-term twice-weekly therapy. If you buy my practice, all my clients will be included. Therefore, if you buy my practice you will then have at least some patients willing and able to pay $5,000 per session for long-term twice-weekly therapy.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∀x (MyPatient(x) ↔ (PatientInTown(x) ∧ WillingAndAbleToPay5k(x)))\nPrem"
+  },
+  {
+    "text": "all bachelors are unmarried males",
+    "label": "circular reasoning",
+    "fol": "Proposition: ∀x (Bachelor(x) ↔ (Unmarried(x) ∧ Male(x)))\nConclusion: ∀x (Bachelor(x) → (Unmarried(x"
+  },
+  {
+    "text": "“No! Don't eat that piece of chocolate. Today, it's one piece of chocolate, but tomorrow, you've gained 20 lbs!”",
+    "label": "faulty generalization",
+    "fol": "Premise 1: EatChocolate(today)\nHidden assumption: EatChocolate(today) → Gain20Lbs(tomorrow)\nConclusion: Gain20Lbs("
+  },
+  {
+    "text": "“She was wearing cowboy boots in her last Instagram picture so she must be into country music.”",
+    "label": "faulty generalization",
+    "fol": "Premise 1: WearsCowboyBoots(she)\nHidden assumption: ∀x (WearsCowboyBoots(x) → IsIntoCountryMusic(x))\nConclusion"
+  },
+  {
+    "text": "This fallacy isn’t proof of anything except that you don’t know something.",
+    "label": "intentional",
+    "fol": "Proposition: ∀p (IsProofOf(thisFallacy, p) ↔ (p ↔ ∃x ¬Knows(you, x)))\nConclusion"
+  },
+  {
+    "text": "Big deal! Lots of people cheat too.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃x (Person(x) ∧ Cheats(x))\nHidden assumption: ∀A ((∃x (Person(x) ∧ Does"
+  },
+  {
+    "text": "Charlie: Fast food is filled with salt, fat, and added sugars. We need better regulation of the industry.\nBob: That may be, but you’re such a hypocrite! I saw you devour a Triple-Baconator, super-sized fries, and 64 ounces of soda yesterday.",
+    "label": "ad hominem",
+    "fol": "Premise 1: ArguesFor(charlie, p) ∧ EatsFastFood(charlie)\nHidden assumption: ∀x ∀p ((ArguesFor"
+  },
+  {
+    "text": "If I tell my teacher I have done my homework, but I have only done part of it, I am using",
+    "label": "equivocation",
+    "fol": "Proposition: (Tells(i, teacher, DoneHomework(i)) ∧ PartiallyDoneHomework(i)) → UsingEquivocation(i)\nHidden assumption: ∀x (PartiallyDone"
+  },
+  {
+    "text": "Teachers don't have lives.\"My best friend said her English class was hard, and the one I'm in is hard too. All English classes must be hard.\"",
+    "label": "faulty generalization",
+    "fol": "Premise 1: EnglishClass(class_a) ∧ Hard(class_a)\nPremise 2: EnglishClass(class_b) ∧ Hard(class_"
+  },
+  {
+    "text": "Dr. McKenzie said all kids can fly, so it must be true!",
+    "label": "fallacy of credibility",
+    "fol": "Premise: Says(drMcKenzie, ∀x (Kid(x) → CanFly(x)))\nHidden assumption: ∀p (Says(drMcKenzie,"
+  },
+  {
+    "text": "\"Dad, it's difficult to make a living on my salary.\"\n\n\"Consider yourself lucky. When I was your age, I was living on $40 a week.\"",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: DifficultToMakeLivingOn(SalaryOf(son))\nPremise 2: LivedOn(dad, 40DollarsPerWeek)\nHidden assumption: ∀x"
+  },
+  {
+    "text": "My grandfather was a typical Irishman - friendly, outgoing, and drunk half the time.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: TypicalIrishman(grandfather)\nHidden assumption: ∀x (TypicalIrishman(x) → (Friendly(x) ∧ Outgoing(x) ∧"
+  },
+  {
+    "text": "\"Everyone is wearing the new skinny jeans from American Eagle. Are you?\"",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → WearsNewSkinnyJeans(x)))\nHidden assumption: Person(you)\nHidden assumption: ∀y ("
+  },
+  {
+    "text": "Aristotle thought women were inferior to men. Aristotle is one of the smartest men who ever lived, so he must be right about this.",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: Believes(aristotle, WomenAreInferiorToMen)\nPremise 2: IsOneOfTheSmartest(aristotle)\nHidden assumption: ∀"
+  },
+  {
+    "text": "If you don't get up early every day you will be late. The more you are late the more trouble you will get into. The more trouble you get into, you will end up losing your job and your family will starve. (This is an example of...)",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬GetsUpEarly(you) → IsLate(you)\nPremise 2: IsLate(you) → GetsIntoTrouble(you)\nPremise"
+  },
+  {
+    "text": "Schools are like families; therefore teachers (like parents) should be allowed to discipline their students.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: Analogous(School, Family)\nPremise 2: Analogous(Teacher, Parent)\nPremise 3: Analogous(Student,"
+  },
+  {
+    "text": "People nowadays only vote with their emotions instead of their brains.",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀x ((Person(x) ∧ LivesNowadays(x) ∧ Votes(x)) → (VotesWithEmotion(x) ∧ ¬VotesWithBrain(x)))"
+  },
+  {
+    "text": "Lucas: I remember when I was about three years old my mother saved me from almost being eaten by a shark.\nKatie: I doubt that. What you are experiencing is what cognitive psychologists refer to as a \"false memory.\"\n",
+    "label": "ad hominem",
+    "fol": "Premise 1: Remembers(lucas, sharkEvent)\nPremise 2: IsAFalseMemory(lucasMemory) ∧ MemoryOf(lucasMemory, shark"
+  },
+  {
+    "text": "We think this new MallTime game app will be a success because all little girls like shopping.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (LittleGirl(x) → LikesShopping(x))\nHidden assumption: (∀x (LittleGirl(x) → LikesShopping("
+  },
+  {
+    "text": "Leonardo DiCaprio is just a dumb actor. What does he really know about climate change?",
+    "label": "ad hominem",
+    "fol": "Premise 1: Actor(leonardoDiCaprio) ∧ Dumb(leonardoDiCaprio)\nHidden assumption: ∀x ((Actor(x) ∧ Dumb(x)) → ¬KnowsAbout(x, climateChange))\nConclusion: ¬KnowsAbout(leonardoDiCaprio, climateChange)"
+  },
+  {
+    "text": "The teenagers where rude and disrespectful therefore all teenagers are rude and disrespectful.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃S (∀x (x ∈ S → (IsTeenager(x) ∧ IsRude(x) ∧ Is"
+  },
+  {
+    "text": "Caroline says that she thinks her friends should not be so rude to the new girl. Jenna says that she cannot believe that Caroline is choosing to be better friends with the new girl than the girls who have always known her.",
+    "label": "fallacy of extension",
+    "fol": "Proposition 1: Says(caroline, Thinks(caroline, ∀x (FriendOf(x, caroline) → ¬ShouldBeRudeTo(x, new"
+  },
+  {
+    "text": "My opponent raises a good point, but can we really trust him? I mean, he moved to this town two years ago and everyone knows that his wife left him.",
+    "label": "ad hominem",
+    "fol": "Premise 1: IsNewToTown(opponent)\nPremise 2: WifeLeft(opponent)\nHidden assumption: ∀x ((IsNewToTown"
+  },
+  {
+    "text": "\"The Americans I know say they elected the new president because they were tired of having their jobs sent overseas. This question of jobs brought this president into office.\"",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (KnownAmerican(x) → ElectedForJobReasons(x, newPresident))\nHidden assumption: (∃x (American(x) ∧ ElectedForJob"
+  },
+  {
+    "text": "We think this new MallTime game app will be a success because all girls like shopping.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (Girl(x) → LikesShopping(x))\nHidden assumption: IsShoppingGame(mallTimeApp)\nHidden assumption:"
+  },
+  {
+    "text": "Saying that a compromise between two extremes is the truth",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∀x ∀y ∀z ((Extreme(x) ∧ Extreme(y) ∧ CompromiseBetween(z, x, y)) → True(z))\nConclusion:"
+  },
+  {
+    "text": "Christine has a terrible experience with a boyfriend. She decides that all boys are mean.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x (Boy(x) ∧ Mean(x))\nHidden assumption: ∃x (Boy(x) ∧ Mean(x)) → ∀y (Boy(y) → Mean(y))\nConclusion: ∀x (Boy(x) → Mean(x))"
+  },
+  {
+    "text": "taps into people's desire to belong",
+    "label": "ad populum",
+    "fol": "Proposition: ∃x ∃p (Person(p) ∧ HasDesireToBelong(p) ∧ TapsInto(x, p))"
+  },
+  {
+    "text": "Mob of people: Lower taxes! Lower taxes!\n\nPolitician: People, your taxes are high because of illegal immigrants. That's right—illegal immigrants. We need to get rid of them.\n\nMob of people: (murmuring amongst themselves) Hmmm... immigrants. Let's get rid of them!",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: HighTaxes\nPremise 2: (∃x IllegalImmigrant(x)) → HighTaxes\nHidden assumption: ∀c"
+  },
+  {
+    "text": "Al Gore feels that all companies are irresponsible and should be punished for allowing emissions which causes global warming.",
+    "label": "fallacy of extension",
+    "fol": "Proposition: Believes(alGore, ∀x (Company(x) → (IsIrresponsible(x) ∧ ShouldBePunished(x))))\nHidden assumption: ∀x ("
+  },
+  {
+    "text": "“I admire the president for being a good role model.” REPLY: “But the New York Times says he’s a lousy role model, so you’re wrong.”",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: Says(nyt, ¬IsGoodRoleModel(president))\nHidden assumption: ∀p (Says(nyt, p) → p)"
+  },
+  {
+    "text": "My best friend says you’re a liar, so I’m not going to talk to you.",
+    "label": "ad hominem",
+    "fol": "Premise: ∃x (IsBestFriendOf(x, speaker) ∧ Says(x, IsLiar(addressee)))\nHidden assumption: ∀x ∀y (Says"
+  },
+  {
+    "text": "A father talking to his daughter on dating a boyfriend he doesn’t like says, “If you continue dating this guy who doesn’t take his education seriously, you’ll end up dropping out of school, you then won’t be able to get a job, and you will get married too young.”",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬TakesEducationSeriously(boyfriend)\nPremise 2: ContinuesDating(daughter, boyfriend) → DropsOutOfSchool(daughter)\nPremise"
+  },
+  {
+    "text": "When sales of hot chocolate go up, street crime drops.",
+    "label": "false causality",
+    "fol": "Premise: ∃t (SalesOfHotChocolateGoUp(t) ∧ StreetCrimeDrops(t))\nHidden assumption: ∃t (P(t) ∧"
+  },
+  {
+    "text": "Lola: I don't think John would be a good fit to manage this project, because he doesn't have a lot of experience with project management.\nJohn: But you don't have a lot of experience in project management either!",
+    "label": "ad hominem",
+    "fol": "Premise 1: ¬HasExperience(john) → ¬GoodFit(john)\nPremise 2: ¬HasExperience(lola)\nHidden assumption: ∀x ∀y (("
+  },
+  {
+    "text": "Let’s go buy the iPhone X in spite of the $999 price tag--all of our friends have one already!",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (FriendOf(x, us) → Has(x, iphoneX))\nHidden assumption: ∀y ((∀x (FriendOf("
+  },
+  {
+    "text": "Which type of appeal is used in the following phrases from the Declaration of Independence: “appealing to the Supreme Judge of the world” and “with a firm reliance on the protection of divine providence”?",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ∃t (IsAppealType(t) ∧ UsesAppeal(appealingToSupremeJudge, t) ∧ UsesAppeal(firmRelianceOnDivineProvidence, t))"
+  },
+  {
+    "text": "Don’t believe what Alex says about global warming. Alex dropped out of college!",
+    "label": "ad hominem",
+    "fol": "Premise 1: DroppedOutOfCollege(alex)\nHidden assumption: ∀x ∀p ((DroppedOutOfCollege(x) ∧ Says(x, p)"
+  },
+  {
+    "text": "“McDonald’s has served 100 billion people in the world. It must be the best fast food restaurant in the world\" is an example of",
+    "label": "ad populum",
+    "fol": "Premise 1: ServedManyPeople(mcDonalds)\nHidden assumption: ∀x ((FastFoodRestaurant(x) ∧ ServedManyPeople(x)) → IsBestFastFoodRestaurant("
+  },
+  {
+    "text": "The majority of students are in favor of changing the colors of the graduation gowns to a single color to not exclude those that are non-binary, but a few people complained it wasn't \"tradition\" , so let's meet in the middle and just allow students to not attend graduation if they don't want to wear the traditional black and gold.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: FavoredByMajority(ChangeGownColor)\nPremise 2: ∃x (Person(x) ∧ Opposes(x, ChangeGown"
+  },
+  {
+    "text": "Latin should not be taught in school since it is not spoken anywhere in the world. All learning should have some use to be of value, and a dead language has no practical use.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∀x (IsSubjectOfLearning(x) → (ShouldBeTaughtInSchool(x) → HasValue(x)))\nPremise 2: ∀x ("
+  },
+  {
+    "text": "Why would you lend money to some who looks like they don't have a job?",
+    "label": "ad hominem",
+    "fol": "Premise 1: ∃x (Person(x) ∧ AppearsUnemployed(x))\nHidden assumption: ∀x ∀y (Person(x) ∧"
+  },
+  {
+    "text": "If we don’t teach teens to work harder, the human race is doomed.",
+    "label": "appeal to emotion",
+    "fol": "Premise: ¬TeachTeensToWorkHarder → HumanRaceIsDoomed\nConclusion: TeachTeensToWorkHarder ∨ HumanRaceIsDoomed"
+  },
+  {
+    "text": "Don't try to tell me that you only watch educational programming, Emmy! I know for a fact that your sister only watches reality television.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃s (Sister(s, emmy) ∧ ∀p (Watches(s, p) → RealityTV(p)))\nHidden assumption: ∀x"
+  },
+  {
+    "text": "Allowing abortion in the first week of pregnancy would lead to allowing it in the ninth month",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀t ( (AllowAbortionAt(t) ∧ NoSignificantDifference(t, t+1)) → AllowAbortionAt(t+1) )\nHidden"
+  },
+  {
+    "text": "Mr. Gough supports the cell phone ban and he's an idiot, so we should let teachers keep their cell phones.",
+    "label": "ad hominem",
+    "fol": "Premise 1: SupportsCellPhoneBan(mrGough) ∧ IsIdiot(mrGough)\nHidden assumption: ∀x ∀p ((IsIdiot"
+  },
+  {
+    "text": "Teaching assistant: the homework assignment was much harder than we thought, so I think we should give a few extra points to students who completed it.\nProfessor: that’s a terrible idea. If we give everyone a perfect score for no reason, students won’t bother working hard in the future.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: GiveExtraPoints → GivePerfectScoresForNoReason\nPremise 2: GivePerfectScoresForNoReason → ∀x (Student(x) → ¬WillWorkHardIn"
+  },
+  {
+    "text": "The speaker or writer appeals to the audience's trust by establishing his credibility or trustworthiness as a writer or speaker?",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ∀x ((Speaker(x) ∨ Writer(x)) → (AppealsToAudienceTrust(x) ↔ EstablishesCredibility(x)))"
+  },
+  {
+    "text": "Misrepresents the context from which a quotation is taken; putting words or ideas in people’s mouth/head; creating a “dummy” or fake or falsified argument or situation so you can attack it .\nThis is what fallacy?",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ∀x (MisrepresentsQuotationContext(x) ∨ AttributesFalseIdeas(x) ∨ CreatesAndAttacksDummyArgument(x) → IsA(x,"
+  },
+  {
+    "text": "\"Flight attendants are the nicest people. I should know—I’ve taken two flights.\"",
+    "label": "faulty generalization",
+    "fol": "Premise 1: FlightAttendant(a) ∧ FlightAttendant(b)\nPremise 2: IsNice(a) ∧ IsNice(b)\nHidden"
+  },
+  {
+    "text": "If you don’t give me a passing grade, I won’t get accepted to medical school. That will break my grandmother’s heart.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ¬GivePassingGrade → ¬AcceptedToMedSchool\nPremise 2: ¬AcceptedToMedSchool → BreaksGrandmothersHeart\nConclusion: ¬GivePassingGrade →"
+  },
+  {
+    "text": "You should certainly be the one who washes the dishes -- you are just so good at it!",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: IsGoodAt(you, washDishes)\nHidden assumption: ∀x (IsGoodAt(x, washDishes) → ShouldDo(x,"
+  },
+  {
+    "text": "Julie was trying to demonstrate to the audience of her speech that gender inequality is like ordering fast food. \"It's not good for us,\" she said, \"but we do it all the time and men tend to go out for a burger and fries more than women do.\"\nWhat fallacy is this?",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: IsLike(genderInequality, orderingFastFood)\nPremise 2: ¬IsGoodForUs(orderingFastFood) ∧"
+  },
+  {
+    "text": "Giving 10% of your income to the Church will free a child’s soul from Limbo into Heaven, so give your money!",
+    "label": "false causality",
+    "fol": "Premise 1: GiveTenPercentToChurch(you) → ∃s (ChildSoul(s) ∧ IsInLimbo(s) ∧ MovesToHeaven("
+  },
+  {
+    "text": "It is warmer this year in Las Vegas as compared to last year; therefore, global warming is rapidly accelerating.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: WarmerThan(lasVegas, thisYear, lastYear)\nHidden assumption: ∀l ∀t1 ∀t2 (WarmerThan(l, t"
+  },
+  {
+    "text": "If everyone believes it, you should too!",
+    "label": "ad populum",
+    "fol": "Premise: ∀x (Person(x) → Believes(x, p))\nHidden assumption: (∀x (Person(x) → Believes(x, p)))"
+  },
+  {
+    "text": "\"If we ban Hummers because they are bad for the environment eventually the government will ban all cars, so we should not ban Hummers.\"",
+    "label": "faulty generalization",
+    "fol": "Premise 1: BanHummers → BanAllCars\nHidden assumption: ¬Should(BanAllCars)\nHidden assumption: ∀p ∀q ((p → q) ∧ ¬Should("
+  },
+  {
+    "text": "iPhones are the best phone because everyone has them.",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → Has(x, iphone))\nHidden assumption: ∀y ( (∀x (Person(x) → Has(x, y))) → BestPhone(y) )\nConclusion: BestPhone(iphone)"
+  },
+  {
+    "text": "We must eliminate affirmative action. We can’t rely on laws to end racial prejudice.",
+    "label": "fallacy of relevance",
+    "fol": "Premise: ∀x (Law(x) → ¬EndsRacialPrejudice(x))\nHidden assumption: Law(affirmativeAction) ∧ (¬"
+  },
+  {
+    "text": "The economy grows as the number of likes on my Instagram account continue to increase. Clearly, the two are linked.",
+    "label": "false causality",
+    "fol": "Premise 1: ∀t (Increases(myInstagramLikes, t) → Grows(theEconomy, t))\nHidden assumption: ∀x ∀y ((∀t (Increases("
+  },
+  {
+    "text": "When your mom gets your phone bill and you have gone over the limit, you begin talking to her about how hard your math class is and how well you did on a test today.",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: (Gets(mom, phoneBill) ∧ GoneOverLimit(you)) → (TalksAbout(you, mom, HardnessOfMathClass) ∧ TalksAbout(you, mom"
+  },
+  {
+    "text": "The Senator thinks we can solve all our ecological problems by driving a Prius.",
+    "label": "fallacy of extension",
+    "fol": "Proposition: Thinks(theSenator, ∀p (EcologicalProblem(p) → SolvableByDrivingPrius(p)))\nConclusion: Thinks(theSenator,"
+  },
+  {
+    "text": "The president of Honduras is a good leader because he is a leader of the country. This is an example of which common fallacy?",
+    "label": "circular reasoning",
+    "fol": "Premise 1: IsLeaderOfCountry(presidentOfHonduras)\nHidden assumption: ∀x (IsLeaderOfCountry(x) → IsGoodLeader(x))"
+  },
+  {
+    "text": "Jimmy stole Tommy’s lunch in the past.\nTherefore, it is acceptable for Tommy to steal Jimmy’s lunch today.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃t (InPast(t) ∧ StealsLunchFrom(jimmy, tommy, t))\nHidden assumption: ∀x ∀y"
+  },
+  {
+    "text": "At a recent cocktail party, the conversation has turned to family pets, and your friend asks you “Are you a cat or a dog person?\"",
+    "label": "false dilemma",
+    "fol": "Premise: Person(you)\nHidden assumption: ∀x (Person(x) → (CatPerson(x) ∨ DogPerson(x)))\nHidden assumption: ∀"
+  },
+  {
+    "text": "Cheesecake Factory is the best because it is always crowded",
+    "label": "ad populum",
+    "fol": "Premise 1: IsAlwaysCrowded(cheesecakeFactory)\nHidden assumption: ∀x (IsAlwaysCrowded(x) → IsBest(x))"
+  },
+  {
+    "text": "I really deserve an “A” on this paper, professor.  Not only did I study during my grandmother’s funeral, but I also passed up the heart transplant surgery, even though that was the first matching donor in 3 years.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: StudiedDuringGrandmothersFuneral(speaker)\nPremise 2: PassedUpHeartTransplant(speaker)\nHidden assumption: ∀x ((StudiedDuringGrandmothers"
+  },
+  {
+    "text": "Bill says Jenny would make a good class president, but Bill makes bad grades, so we shouldn’t vote for Jenny.",
+    "label": "ad hominem",
+    "fol": "Premise 1: Says(bill, GoodClassPresident(jenny))\nPremise 2: MakesBadGrades(bill)\nHidden assumption: ∀x ∀y"
+  },
+  {
+    "text": "On my walk to work this morning, a woman on her bike nearly ran me off the sidewalk. I hadn't realized that cyclists were so aggressive and rude!",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x (Cyclist(x) ∧ Aggressive(x) ∧ Rude(x))\nHidden assumption: ∃x (Cyclist(x)"
+  },
+  {
+    "text": "French people are great at kissing.  Julie is French.  Get me a date!",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (French(x) → GreatAtKissing(x))\nPremise 2: French(julie)\nHidden assumption: ∀y (GreatAtKissing(y) → WantsToDate(me, y))\nConclusion: WantsToDate(me, julie)"
+  },
+  {
+    "text": "Smoking pot is against the law because it is wrong; I know it is wrong because it is against the law",
+    "label": "circular reasoning",
+    "fol": "Premise 1: IsWrong(smokingPot) → IsAgainstTheLaw(smokingPot)\nPremise 2: IsAgainstTheLaw(smokingPot) → IsWrong("
+  },
+  {
+    "text": "I don't see how you can believe he is not guilty of that crime. He's a terrible person and I can prove it. In fact, several years ago he was convicted of that same kind of crime.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: TerriblePerson(he)\nPremise 2: ∃c (ConvictedOf(he, c) ∧ SameKindOfCrime("
+  },
+  {
+    "text": "My opponent is trying to convince you that we evolved from monkeys who were swinging from trees; a truly ludicrous claim.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ArguesFor(opponent, p)\nPremise 2: IsLudicrous(p)\nHidden assumption: ∀x (IsLudicrous(x"
+  },
+  {
+    "text": "In the race for mayor, Lara says a vote for her opponent will lead to you losing your job. What fallacy has she committed?",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: VoteFor(you, opponent) → LoseJob(you)\nHidden assumption: ¬LoseJob(you)\nConclusion: ¬VoteFor(you, opponent)"
+  },
+  {
+    "text": "Historians agree that studying the past is the best way to avoid repeating mistakes.",
+    "label": "equivocation",
+    "fol": "Premise: ∀x (Historian(x) → AgreesWith(x, claim))\nHidden assumption: (∀x (Historian(x) → Agrees"
+  },
+  {
+    "text": "This type of ad taps into a person's desire to be part of a group.",
+    "label": "ad populum",
+    "fol": "Proposition: ∀x (Person(x) → TapsInto(thisAd, Desire(x, BelongsToGroup(x))))"
+  },
+  {
+    "text": "Four out of five dentists recommend Happy Glossy Smiley toothpaste brand. Therefore, it must be great.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: RecommendedByMajorityOfDentists(happyGlossySmiley)\nHidden assumption: ∀x (RecommendedByMajorityOfDentists(x) → Great"
+  },
+  {
+    "text": "If I go to the bathroom, I will miss the notes, then I'll do poorly on a test, then I won't get into college, so I won't go to the bathroom.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: GoToBathroom → MissNotes\nPremise 2: MissNotes → DoPoorlyOnTest\nPremise 3: DoPoorlyOnTest →"
+  },
+  {
+    "text": "One cigarette will lead youth to addiction",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x (Youth(x) ∧ SmokesOneCigarette(x))\nHidden assumption: ∀x ((Youth(x) ∧ SmokesOne"
+  },
+  {
+    "text": "If the government allows psychologists to prescribe medications there will be no basis to block them from obtaining competence and legal authority to conduct other traditionally medical procedures such as diagnosing minor skin irritations, treating a sprained ankle, setting a broken bone, and performing neurosurgery.\" Or: \"Never reduce a fee for any patient for any reason or else you'll find yourself constantly reducing fees for everyone, everyone will take advantage of you, your patients will lose respect for you and for therapy, and you'll loose money and go bankrupt.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃p ∃r ReduceFee(p, r) → ConstantlyReduceFees\nPremise 2: ConstantlyReduceFees → EveryoneTakesAdvantage"
+  },
+  {
+    "text": "Helga: You should not be eating that... it has been scientifically proven that eating fat burgers are no good for your health.\nHugh: You eat fat burgers all the time so that can’t be true.",
+    "label": "ad hominem",
+    "fol": "Premise 1: Claims(helga, ∀x (EatsFatBurgers(x) → Unhealthy(x)))\nPremise 2: EatsFatBurgers(helga"
+  },
+  {
+    "text": "The meteorologist predicted the wrong amount of rain for May. Obviously the meteorologist is unreliable.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃p (Prediction(p) ∧ MadeBy(meteorologist, p) ∧ Concerns(p, rain_in_may) ∧ IsWrong(p"
+  },
+  {
+    "text": "Thousands of pets are left homeless and hungry because lousy people turn them out on the streets instead of taking care of them.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ∃x (Person(x) ∧ Lousy(x) ∧ ∃y (Pet(y) ∧ TurnsOutOnStreet"
+  },
+  {
+    "text": "Everyone already believes that the defendant killed her husband, and that many people can't be wrong.",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → Believes(x, Killed(theDefendant, herHusband)))\nHidden assumption: (∀x (Person(x) → Bel"
+  },
+  {
+    "text": "Violent video games are directly related to gun violence in schools and should be banned for teens. The school day should start an hour later.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃r (Relation(r) ∧ ∀x (ViolentVideoGame(x) → ∃y (GunViolenceInSchools(y) ∧ r("
+  },
+  {
+    "text": "\"everyone is doing it\" mentality",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → Does(x, a))\nHidden assumption: (∀x (Person(x) → Does(x, a))) → Permiss"
+  },
+  {
+    "text": "Global chocolate consumption is highest in Switzerland, yet people there are among the trimmest in the industrialized world.  therefore, it's reasonable to conclude that chocolate helps keep your weight down.",
+    "label": "false causality",
+    "fol": "Premise 1: HighestChocolateConsumption(switzerland)\nPremise 2: PopulationIsTrim(switzerland)\nHidden assumption: ∃c (Highest"
+  },
+  {
+    "text": "Accused on the 6 o'clock news of corruption and taking bribes, the senator said that we should all be very wary of the things we hear in the media, because we all know how very unreliable the media can be.",
+    "label": "ad hominem",
+    "fol": "Premise 1: ∃p (HeardInMedia(p) ∧ AccusationOfCorruption(p, senator))\nPremise 2: IsUnreliable("
+  },
+  {
+    "text": ", that it must be true",
+    "label": "ad populum",
+    "fol": "Proposition: True(p)\nConclusion: True(p)"
+  },
+  {
+    "text": "\"I am torn between studying for the quiz or not. But, I know that if I don't study for the quiz, I will fail. If I fail the quiz, I get a D in the class. If I get a D, it will lower my GPA. If my GPA lowers, I can't play football. If I can't play football, I don't get a scholarship. No scholarship, no college. No college, no life!\"",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬StudyForQuiz → FailQuiz\nPremise 2: FailQuiz → GetDInClass\nPremise 3: GetDInClass →"
+  },
+  {
+    "text": "\"Certainly this is the case at most colleges in America nowadays\"",
+    "label": "ad populum",
+    "fol": "Proposition: ∃S (∀x (x∈S → (CollegeInAmerica(x) ∧ IsTheCase(this, x))) ∧ IsMost({x | CollegeInAmerica"
+  },
+  {
+    "text": "In a study designed by a famous academic to test the effects of pleasant imagery on motivation, employees were shown images of baby animals and beautiful nature scenes for their first five minutes at work.\n\nAmazingly, results showed a 10 percent leap in profits in the first quarter and record earnings over the course of a year. So, showing employees pleasant images is a great way to increase their motivation and improve productivity",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: ∃c (Company(c) ∧ ∀x (Employee(x, c) → ShownPleasantImages(x)))\nPrem"
+  },
+  {
+    "text": "Stating that something should be done (or agreed to) because everyone else thinks this way.",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → ThinksShouldBeDone(x, p))\nHidden assumption: ∀y ((∀x (Person(x) → Th"
+  },
+  {
+    "text": "Rick: I need to know if we should stop for lunch or not.  You are either hungry or not hungry, which is it?\n\nTina: If being hungry is being able to eat, I am always hungry.\n",
+    "label": "fallacy of extension",
+    "fol": "Premise: (∀x (Hungry(x) ↔ AbleToEat(x))) → AlwaysHungry(tina)\nHidden assumption: AbleTo"
+  },
+  {
+    "text": "Ross Geller, an evolutionary biologist and perhaps the foremost expert in the field, says that evolution is true. Therefore, it's true.",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: ExpertInField(rossGeller, evolution)\nPremise 2: Says(rossGeller, IsTrue(evolution))\nHidden assumption: ∀x ∀"
+  },
+  {
+    "text": ", rather than considering the content of what the person is saying?",
+    "label": "ad hominem",
+    "fol": "Proposition: ∃a (PerformedAction(a) ∧ ¬ConsidersContentOfSpeech(a))"
+  },
+  {
+    "text": "It is ridiculous to have spent thousands of dollars to rescue two whales trapped in the ice. Why, look at all the people trapped in jobs they don't like.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃x (Person(x) ∧ IsTrappedInBadJob(x))\nPremise 2: Action(rescueWhales)\nHidden"
+  },
+  {
+    "text": "\"You are clearly just too young to understand this issue!\"",
+    "label": "ad hominem",
+    "fol": "Premise 1: IsYoung(you)\nHidden assumption: ∀x (IsYoung(x) → ¬Understands(x, thisIssue))\nConclusion: ¬Understands(you, thisIssue)"
+  },
+  {
+    "text": "Everyone is buying the new iPhone that’s coming out this weekend. You have to buy it too",
+    "label": "ad populum",
+    "fol": "Premise 1: ∀x (Person(x) → Buys(x, newIphone))\nHidden assumption: Person(you)\nConclusion: Buys(you"
+  },
+  {
+    "text": "We can either agree with Barbara's plan or just let the project fail. There is no other option.",
+    "label": "false dilemma",
+    "fol": "Premise 1: AgreeWithBarbarasPlan ∨ LetProjectFail\nHidden assumption: ∀x (Option(x) → (x = AgreeWithBarbarasPlan ∨ x ="
+  },
+  {
+    "text": "He has smoked cigarettes his entire life and he doesn't have lung cancer. Therefore smoking doesn't cause lung cancer.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x (Smokes(x) ∧ ¬HasLungCancer(x))\nHidden assumption: (∀x (Smokes(x) → HasLungCancer("
+  },
+  {
+    "text": "Un pleasant idea of vegan diet\n\nThere is strong movement from people who choose not to consume meat, and their reasons vary from the healthiness to the effort of making the body looks appropriate or ideal. This is a rather ludicrous idea.\nHuman beings have been consuming meat since thousands of years and counting. There are no cases when consuming meat causing severe problems, provided meat is consumed in appropriate amount, for everyone. Many say that being a vegan means having a healthier, stronger body and mind. Actualy, according to studies, our bodies are perfectly capable of digesting, absorbing and making full use of the many beneficial nutrients found in animal foods. Thus, there is no health reason to completely avoid animal foods.\nDon’t put unnecessary restrain on yourselves. You should enjoy life to the fullest; give your best in any possible situations, as well as consuming meat.\n\nWhat is the claims from the text above?",
+    "label": "false causality",
+    "fol": "Premise 1: ∀x (Human(x) ∧ ConsumesMeatInModeration(x) → ¬CausesSevereHealthProblems(x))\nPremise 2:"
+  },
+  {
+    "text": "Students who want cell phones in school have no idea what they're talking about.",
+    "label": "ad hominem",
+    "fol": "Proposition: ∀x ((Student(x) ∧ WantsCellPhonesInSchool(x)) → ¬KnowsWhatTheyAreTalkingAbout(x))\nConclusion: ∀x ((Student(x)"
+  },
+  {
+    "text": "Lindsay's mom is concerned when she finds out that Lindsay skipped class one day. She tells Lindsay that she will now start skipping more frequently. Then she will drop out altogether, never graduate or get into college, and end up unemployed and living at home for the rest of her life.\nWhat type of fallacy has Lindsay's mom committed?",
+    "label": "faulty generalization",
+    "fol": "Premise 1: SkippedClassOnce(lindsay)\nPremise 2: SkippedClassOnce(lindsay) → SkipsFrequently(lindsay)\nPremise 3"
+  },
+  {
+    "text": "The Tooth Fairy is real because nobody has proven she doesn't exist.' This is an example of which fallacy?",
+    "label": "intentional",
+    "fol": "Premise: ∀x (Person(x) → ¬Proves(x, ¬IsReal(toothFairy)))\nHidden assumption: ∀p ((∀x ("
+  },
+  {
+    "text": "“A bank with the heart for every Filipino” - Veterans Bank",
+    "label": "appeal to emotion",
+    "fol": "Proposition: IsBank(veteransBank) ∧ ∀x (IsFilipino(x) → HasHeartFor(veteransBank, x))\nConclusion: IsBank"
+  },
+  {
+    "text": "I don't understand why you're saying I broke a promise. I said I'd never speak to my ex-girlfriend again. And I didn't. I just sent her some pictures and text messages.",
+    "label": "equivocation",
+    "fol": "Premise 1: Promised(speaker, ∀a (Did(speaker, a) → ¬IsSpeakingTo(a, exGirlfriend)))\nPremise 2: ¬∃a (Did"
+  },
+  {
+    "text": "We can't believe what he says out of that ugly mouth of his.",
+    "label": "ad hominem",
+    "fol": "Premise 1: HasUglyMouth(h)\nHidden assumption: ∀x (HasUglyMouth(x) → ∀p (Says(x, p) → ¬"
+  },
+  {
+    "text": "“My roommate Fatima said her philosophy class was hard, and the one I’m in is hard, too. All philosophy classes must be hard!” Insisted Baneen.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: PhilosophyClass(fatimasClass) ∧ Hard(fatimasClass)\nPremise 2: PhilosophyClass(baneensClass) ∧ Hard"
+  },
+  {
+    "text": "There must be objective rights and wrongs in the universe.  If not, how can you possibly say that torturing babies for fun could ever be right?",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ObjectivelyWrong(torturingBabiesForFun)\nHidden assumption: ¬(∃x ObjectivelyWrong(x)) → ¬Objectively"
+  },
+  {
+    "text": "Only asking 5 people their opinion about Christian Heritage and saying their opinions are the \"majority\" of people.",
+    "label": "intentional",
+    "fol": "Premise 1: ∃a,b,c,d,e (Person(a) ∧ Person(b) ∧ Person(c) ∧ Person(d)"
+  },
+  {
+    "text": "Children should not go trick or treating, as there always\nexists the possibility that someone could poison the treats.",
+    "label": "appeal to emotion",
+    "fol": "Premise: ∃p ∃t (IsPerson(p) ∧ IsTreat(t) ∧ CanBePoisonedBy(t, p))\nHidden"
+  },
+  {
+    "text": "All of those who hate the Duterte administration are CPP-NPA supporters.",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀x (HatesDuterteAdmin(x) → IsCppNpaSupporter(x))\nConclusion: ∀x (HatesDuterteAdmin(x) → IsCpp"
+  },
+  {
+    "text": "If this test were based on fraudulent norms, then it would be invalid. But the norms are not fraudulent. Therefore, this test is valid.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: BasedOnFraudulentNorms(thisTest) → Invalid(thisTest)\nPremise 2: ¬BasedOnFraudulentNorms(thisTest)"
+  },
+  {
+    "text": "She is good at writing because she writes words effectively.\"",
+    "label": "circular reasoning",
+    "fol": "Premise 1: WritesWordsEffectively(she)\nHidden assumption: ∀x (WritesWordsEffectively(x) → GoodAtWriting(x))\nConclusion: Good"
+  },
+  {
+    "text": "Evolution cannot be true. If it were true, we’d all be smelly apes.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: IsEvolutionTrue → ∀x (Person(x) → (IsSmelly(x) ∧ IsApe(x)))\nHidden"
+  },
+  {
+    "text": "company's slogan \"Eat Fresh.\"",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∀x ∀y ((Person(x) ∧ Eats(x, y)) → IsFresh(y))\nConclusion: Should(EatFresh)"
+  },
+  {
+    "text": "Some of you have objected to the new test batteries that were purchased for our program, alleging that they have no demonstrable validity, were not adequately normed for the kind of clients we see, and are unusable for clients who are physically disabled. What you have conveniently failed to mention, however, is that they cost less than a third of the price for the other tests we had been using, are much easier to learn, and can be administered and scored in less than half the time of the tests we used to use.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ¬HasDemonstrableValidity(newTests) ∧ ¬AdequatelyNormed(newTests) ∧ ¬UsableForDisabled(newTests)"
+  },
+  {
+    "text": "\"Running a marathon is very tiring because it is so exhausting.\"",
+    "label": "circular reasoning",
+    "fol": "Premise 1: IsExhausting(RunningAMarathon)\nHidden assumption: ∀x (IsExhausting(x) ↔ IsVeryTiring(x))"
+  },
+  {
+    "text": "Look at that face! Would anyone vote for that? Can you imagine that as the face of our next president?",
+    "label": "ad hominem",
+    "fol": "Premise 1: HasUnattractiveFace(c)\nHidden assumption: ∀x (HasUnattractiveFace(x) → ¬ShouldBePresident(x))\nConclusion: ¬ShouldBe"
+  },
+  {
+    "text": "They cannot take her to jail even if she did rob the bank and take millions of pesos… She is already too old and weak to be locked up.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: RobbedBank(s) ∧ TookMillions(s)\nPremise 2: IsOld(s) ∧ IsWeak(s)\nHidden assumption: ∀"
+  },
+  {
+    "text": "Everyone knows that teenagers are lazy",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀y (Person(y) → Knows(y, ∀x (Teenager(x) → Lazy(x))))\nHidden assumption: ∀p ((∀y ("
+  },
+  {
+    "text": "I'd also like you to consider the possibility that these people intend to attack both Mandela and myself. That doesn't mean I'm excluding the possibility that it really is Mandela these lunatics are after. I just want you to think critically about what you are doing. Pieter van Heerden was murdered. That means there are eyes and ears everywhere. Experience has taught me that red herrings are an important part of intelligence work. Do you follow me?",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: WasMurdered(pieterVanHeerden)\nPremise 2: ∀x (WasMurdered(x) → ∃y (Is"
+  },
+  {
+    "text": "I'm tailgating her, because she cut me off!",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: CutOff(her, i)\nHidden assumption: ∀x (CutOff(x, i) → Tailgates(i, x))\nConclusion: Tailgates(i, her)"
+  },
+  {
+    "text": " Doug is convinced he has lucky underwear. One time when he forgot to put on his lucky underwear, he got a parking ticket. Doug concludes that because he forgot to wear his lucky underwear, he got the ticket. Doug doesn't wash his lucky underwear often. This part isn't relevant to the example, but it is disturbing nonetheless.",
+    "label": "false causality",
+    "fol": "Premise 1: ∃t (¬WearsLuckyUnderwear(doug, t) ∧ GetsParkingTicket(doug, t))\nHidden assumption:"
+  },
+  {
+    "text": " Circular definition: a definition that is circular.\n",
+    "label": "circular reasoning",
+    "fol": "Proposition: ∀x (CircularDefinition(x) ↔ (Definition(x) ∧ IsCircular(x)))\nHidden assumption: ∀x (IsCircular(x) ↔ CircularDefinition"
+  },
+  {
+    "text": "Asserting that if we allow \"A\" to happen, then \"Z\" will consequently happen too, therefore \"A\" should not happen.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: Happen(A) → Happen(Z)\nHidden assumption: ShouldNotHappen(Z)\nHidden assumption: ∀x ∀y ((Happen("
+  },
+  {
+    "text": "Senator Curry is against the new F-99 laser fighter. I’m for it because I don’t want to leave America defenseless.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: Supports(curry, f99) ↔ ¬Supports(speaker, f99)\nPremise 2: ¬Supports(speaker, f99)"
+  },
+  {
+    "text": "We have to stop the tuition increase! The next thing you know, they'll be charging $40,000 a semester!",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬Stop(tuitionIncrease) → Charge(semester, 40000)\nHidden assumption: ¬Charge(semester,"
+  },
+  {
+    "text": "Brandon: We should have tastier lunches!\nJaylen: Don't listen to him! He's a terrible person! I saw him trip another student and steal his lunch money!",
+    "label": "ad hominem",
+    "fol": "Premise 1: Proposes(brandon, tastierLunches)\nPremise 2: TerriblePerson(brandon)\nHidden assumption: ∀x ∀p ((Proposes"
+  },
+  {
+    "text": "We know the virus started in a lab because it's too deadly to have just been the result of basic circumstance. But it hasn't been as deadly for China which proves that it's lab-made. Because it's deadly.",
+    "label": "circular reasoning",
+    "fol": "Premise 1: VeryDeadly(theVirus)\nPremise 2: ¬DeadlyFor(theVirus, china)\nPremise 3: Deadly(theVirus)"
+  },
+  {
+    "text": "\"Jews are lice; They cause typhus (Painful/deadly disease).\"",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ∀x (Jew(x) → Lice(x))\nHidden assumption: ∀x (Lice(x) → CausesTyphus(x))\nConclusion:"
+  },
+  {
+    "text": "\"We must legalize weed, it is tearing families apart.\" Response: \"But look at all those druggies getting arrested, they are obviously criminals.\"",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: TearsFamiliesApart(IllegalityOfWeed)\nHidden assumption 1: ∀x (TearsFamiliesApart(x) → Should"
+  },
+  {
+    "text": "\"Judge Danforth in the play, 'The Crucible,' offers Proctor two choice: you are either with this court or against it\" IS an example of this fallacy.",
+    "label": "false dilemma",
+    "fol": "Premise 1: OffersChoice(danforth, proctor, With(proctor, court) ∨ Against(proctor, court))\nHidden assumption: ∃s"
+  },
+  {
+    "text": "The makers of Sugarette Candy Drinks point to research showing that of the five countries where Sugarette drinks sell the most units, three of them are in the top ten healthiest countries on Earth, therefore Sugarette drinks are healthy.",
+    "label": "intentional",
+    "fol": "Premise 1: ∃c1,c2,c3 (c1≠c2 ∧ c2≠c3 ∧ c1≠c3 ∧ SellsMostIn"
+  },
+  {
+    "text": "All chess players are geniuses.",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀x (ChessPlayer(x) → Genius(x))\nConclusion: ∀x (ChessPlayer(x) → Genius(x))"
+  },
+  {
+    "text": "The claim that because somebody famous supports an idea, the idea must be right. This fallacy is often used in advertising.",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: Famous(p)\nPremise 2: Supports(p, i)\nHidden assumption: ∀x ∀y ((Famous(x)"
+  },
+  {
+    "text": "”You can start a family early, or build financial stability for a better family life in the future.”",
+    "label": "false dilemma",
+    "fol": "Premise: StartFamilyEarly ∨ BuildFinancialStability\nHidden assumption: ¬(StartFamilyEarly ∧ BuildFinancialStability)\nConclusion: ¬StartFamilyEarly → BuildFinancialStability"
+  },
+  {
+    "text": "SM 1: Second World War discussion",
+    "label": "fallacy of extension",
+    "fol": "Proposition: IsSecondWorldWarDiscussion(sm1)"
+  },
+  {
+    "text": "It’s cold on a summer day. Global warming is a hoax.",
+    "label": "false causality",
+    "fol": "Premise 1: ∃d (IsSummerDay(d) ∧ IsCold(d))\nHidden assumption: GlobalWarmingIsHappening → ∀"
+  },
+  {
+    "text": "Mrs. Miller taught your older brother, who was the class clown. She decides to be strict with you from the very first day of class because she thinks you will be a clown, too.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: Taught(mrsMiller, olderBrother) ∧ ClassClown(olderBrother) ∧ BrotherOf(olderBrother, you)\nPrem"
+  },
+  {
+    "text": "Charlie: Illegal posting and sharing of songs online are crippling the music industry.\nBob: You couldn’t be more wrong; the music industry is doing just fine. I can’t believe you think the government should be allowed to regulate what I share with my “friends.” No one wants a world where I can’t loan a book to my girlfriend, let my roommate borrow my iPod, or share a funny meme with my blog followers.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ¬IsCrippled(musicIndustry)\nPremise 2: ∀x (PersonalSharing(x) → ShouldBePermitted(x))\nHidden assumption"
+  },
+  {
+    "text": "The Bible is true because God exists, and God exists because the Bible says so.",
+    "label": "circular reasoning",
+    "fol": "Premise 1: Exists(god) → True(bible)\nPremise 2: Says(bible, Exists(god)) → Exists(god)\nHidden assumption:"
+  },
+  {
+    "text": "Up until the late 16th century, most people believed that the earth was the center of the universe.  This was seen as enough of a reason back then to accept this as true.",
+    "label": "ad populum",
+    "fol": "Premise: BelievedByMostPeopleAtTime(GeocentricModel, Pre16thCentury)\nHidden assumption: ∀p ∀t (BelievedByMostPeopleAtTime(p,"
+  },
+  {
+    "text": "Mr. Stark's idea for implementing affirmative action in the university's admission process is complete folly. He say's he wants the student body to represent diversity in the community. But that's ridiculous. I suppose this means we'll have to throw out our academic standards while were at it. After all, if we're going to let students into our prestigious institution just because of their gender or the color of their skin, then what's going to happen to our reputation?\n\nIdentify the logical fallacy commited in this argument.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ImplementsAffirmativeAction(starksIdea)\nPremise 2: ∀x (LetsInStudentsBasedOnDemographics(x) → Throws"
+  },
+  {
+    "text": "we can't have the public option, because if we do, health care reform won't get the votes of senators like him.",
+    "label": "circular reasoning",
+    "fol": "Premise 1: HavePublicOption → ¬Passes(healthCareReform)\nHidden assumption: Passes(healthCareReform)\nConclusion: ¬HavePublicOption"
+  },
+  {
+    "text": "Bears are a subset of omnivores. Raccoons also are a subset of omnivores. But these two subsets do not overlap, and that fact makes the conclusion illogical. The argument is invalid—that is, the relationship between the premises doesn’t support the conclusion.",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∀x (Bear(x) → Omnivore(x))\nPremise 2: ∀x (Raccoon(x) → Omnivore(x))"
+  },
+  {
+    "text": "I know three redheads who have terrible tempers, and since Annabel has red hair, I’ll bet she has a terrible temper, too.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: (Redhead(a) ∧ HasTerribleTemper(a)) ∧ (Redhead(b) ∧ HasTerribleTemper(b"
+  },
+  {
+    "text": "Ted: Biological evolution is both a theory and a fact.\n\nEdwin: That is ridiculous! How can you possibly be absolutely certain that we evolved from pond scum!\n\nTed: Actually, that is a gross misrepresentation of my assertion. I never claimed we evolved from pond scum.",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: IsTheory(biologicalEvolution) ∧ IsFact(biologicalEvolution)\nPremise 2: ¬EvolvedFromPondScum(humans)\nHidden assumption: ("
+  },
+  {
+    "text": "Professor, you have to give me an A on this paper. I know I only turned in a sentence and some clip art, but you have to understand, my grandmother suddenly died while traveling in the Northern Yukon, and her funeral was there so I had to travel, and my parents got divorced in the middle of the ceremony, and all the stress caused me to become catatonic for two weeks. Have some pity — my grandmother's last wish was that I'd get an A in this class.",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: SubmittedPoorWork(me)\nPremise 2: ExperiencedExtremeHardship(me)\nPremise 3: GrandmothersLastWishWasAG"
+  },
+  {
+    "text": "Women can't do as good a job as men.",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀w ∀m ∀j ((IsWoman(w) ∧ IsMan(m) ∧ IsJob(j)) → ¬(JobPerformance(w, j) ≥"
+  },
+  {
+    "text": "It is immoral to kill an innocent human being.  Fetuses are innocent human  beings.  Therefore, it is immoral to kill fetuses.",
+    "label": "equivocation",
+    "fol": "Premise 1: ∀x ((IsInnocent(x) ∧ IsHumanBeing(x)) → IsImmoralToKill(x))\nPremise 2: ∀"
+  },
+  {
+    "text": "Either you believe what I’m saying, or you must believe exactly the opposite.",
+    "label": "false dilemma",
+    "fol": "Premise: Believe(you, p) ∨ Believe(you, ¬p)\nHidden assumption: ∀x (BeliefState(x) → (x = Believe(you, p)"
+  },
+  {
+    "text": "Eighty-five percent of those surveyed said that it is important to have a cell phone.",
+    "label": "false causality",
+    "fol": "Proposition: Count({x | Surveyed(x) ∧ SaidImportant(x)}) / Count({x | Surveyed(x)}) = 0.85"
+  },
+  {
+    "text": "“All those opposed to my arguments for the opening of a new department, signify by saying, ‘I quit.’\"",
+    "label": "appeal to emotion",
+    "fol": "Premise: ∀x (IsOpposedToArguments(x) → SaysIQuit(x))\nHidden assumption: ∀x (SaysIQuit(x) → QuitsJob(x"
+  },
+  {
+    "text": "Dad drank at parties, too",
+    "label": "ad hominem",
+    "fol": "Premise: ∃x (Party(x) ∧ DrankAt(dad, x))\nHidden assumption: (∃x (Party(x) ∧ DrankAt(dad,"
+  },
+  {
+    "text": "Jeff is preparing to create a commercial for a new energy drink. He visits a local high school and surveys students in an English class about their beverage preferences. The majority of the class says they prefer grape flavored drinks, so Jeff tells his superiors that grape is the flavor favored most by high school students. What error in reasoning has Jeff made?",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (StudentInClass(x, englishClass) → HighSchoolStudent(x))\nPremise 2: IsMajorityPreferenceInGroup(gra"
+  },
+  {
+    "text": "We are not weak if we make a proper use of those means which the God of nature hath placed in our power.",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: MakeProperUseOfGodGivenMeans(we) → ¬Weak(we)\nConclusion: ¬MakeProperUseOfGodGivenMeans(we) ∨ ¬Weak"
+  },
+  {
+    "text": "Throughout history, most philosophers thought men were more rational than women, therefore this is true.",
+    "label": "ad populum",
+    "fol": "Premise 1: BelievedByMostPhilosophers(menAreMoreRationalThanWomen)\nHidden assumption: ∀p (BelievedByMostPhilosophers(p) → True(p"
+  },
+  {
+    "text": "Do most Americans believe in God? To find out, we asked over 10,000 scientists at colleges and universities throughout America. Less than 40 percent said they believed in God. The conclusion is obvious: Most Americans no longer believe in God.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (Surveyed(x) → (Scientist(x) ∧ American(x)))\nPremise 2: ¬Most(x, Surveyed(x"
+  },
+  {
+    "text": "This fallacy attacks a position the opponent doesn’t really hold.",
+    "label": "fallacy of extension",
+    "fol": "Proposition: ∃p (Position(p) ∧ Attacks(thisFallacy, p) ∧ ¬Holds(theOpponent, p)))"
+  },
+  {
+    "text": "Conclude that because A happens then B, C, D, E, F, G, H, I, J, K, L… will inevitably happen.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: Occurs(a)\nHidden assumption: (Occurs(a) → Occurs(b)) ∧ (Occurs(b) → Occurs(c))"
+  },
+  {
+    "text": "Our house was burglarized right after that new family moved in next door. Therefore, that new family must have been involved.",
+    "label": "false causality",
+    "fol": "Premise 1: ∃t1 (MovedIn(newFamily, t1))\nPremise 2: ∃t2 (WasBurglarized(ourHouse, t2)"
+  },
+  {
+    "text": "Passing federal laws to control the amount of violence in music is the first step in a process that will result in absolute government control of the media and total censorship over all forms of artistic expression.",
+    "label": "faulty generalization",
+    "fol": "Premise: ∃p (IsProcess(p) ∧ LeadsTo(p, AbsoluteGovControlMedia) ∧ LeadsTo(p, TotalCensorshipArtisticExpression))\nHidden"
+  },
+  {
+    "text": "Speaker 1: No fault divorce has proven to be detrimental to society and the family.\r\nSpeaker 2: You didn’t seem to think that when you got divorced.",
+    "label": "ad hominem",
+    "fol": "Premise 1: Claims(speaker1, IsDetrimental(noFaultDivorce))\nPremise 2: GotDivorce(speaker1)\nHidden assumption: ∀x ∀"
+  },
+  {
+    "text": "I cannot listen to anyone who does not share my social and political values.",
+    "label": "ad hominem",
+    "fol": "Proposition: ∀x (Person(x) ∧ ¬SharesMyValues(x) → ¬CanListenTo(me, x))"
+  },
+  {
+    "text": "When the arguer is attacked vs. the argument that is attacked, this is an example of:",
+    "label": "ad hominem",
+    "fol": "Attack(x, a) ∧ ¬Attack(x, p)))`\nThis seems like a good representation of the *definition* of an ad hominem attack.\n\nThe user'"
+  },
+  {
+    "text": "Daniel was a precocious child and had a liking for logic. He reasoned that atoms are invisible, and that he was made of atoms and therefore invisible too. Unfortunately, despite his thinky skills, he lost the game of hide and go seek.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (Atom(x) → Invisible(x))\nPremise 2: MadeOfAtoms(daniel)\nHidden assumption: ∀y (MadeOf"
+  },
+  {
+    "text": "The meteorologist predicted the wrong amount of rain for May. Obviously, the meteorologist is unreliable.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃p (MadePrediction(theMeteorologist, p) ∧ IsAbout(p, rainForMay) ∧ IsWrong(p))\nHidden assumption:"
+  },
+  {
+    "text": "Oh, please. What do you know about labor laws? You don't even have a job.",
+    "label": "ad hominem",
+    "fol": "Premise 1: ¬HasJob(you)\nHidden assumption: ∀x (KnowsAboutLaborLaws(x) → HasJob(x))\nConclusion: ¬KnowsAboutLaborLaws(you)"
+  },
+  {
+    "text": "You appealed to popularity or the fact that many people do something as an attempted form of validation.",
+    "label": "ad populum",
+    "fol": "Proposition: ∃p (AppealedToForValidation(you, p) ∧ (IsPopular(p) ∨ IsDoneByMany(p)))\nHidden assumption:"
+  },
+  {
+    "text": "Wife: Should we buy the house?\nHusband: The Realtor didn’t say anything about any problems, so I am sure it is fine. Let’s get it!\n",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬∃p (IsProblemFor(p, theHouse) ∧ ReportedBy(p, theRealtor))\nHidden assumption: ∀"
+  },
+  {
+    "text": "Over one million students have purchased Brain Power.",
+    "label": "ad populum",
+    "fol": "Proposition: ∃S ( (∀x (x ∈ S → (IsStudent(x) ∧ Purchased(x, brainPower)))) ∧ (|S| > 1000"
+  },
+  {
+    "text": "Speaker 1 (Democrat): “Donald Trump is a known adulterer. It reflects badly on his character, and suggests he might not be trustworthy.”\r\nSpeaker 2 (Republican): “What about Bill Clinton? You didn’t seem to care when he cheated.”",
+    "label": "ad hominem",
+    "fol": "Premise 1: Adulterer(donaldTrump) → HasBadCharacter(donaldTrump)\nPremise 2: HasBadCharacter(donaldTrump) → ¬Is"
+  },
+  {
+    "text": "The word of Zorbo the Great is flawless and perfect. We know this because it says so in The Great and Infallible Book of Zorbo's Best and Most Truest Things that are Definitely True and Should Not Ever Be Questioned.",
+    "label": "circular reasoning",
+    "fol": "Premise 1: Says(bookOfZorbo, IsFlawlessAndPerfect(wordOfZorbo))\nHidden assumption: bookOfZorbo = wordOfZ"
+  },
+  {
+    "text": "An influencer posts on Instagram that the restaurant \"EP is poppin'! Everyone worth knowing is here tonight - come on down!\" -- this is an example of:",
+    "label": "ad populum",
+    "fol": "Premise 1: IsPoppin(ep)\nPremise 2: ∀x (WorthKnowing(x) → IsAt(x, ep, tonight))\nHidden assumption: ∀"
+  },
+  {
+    "text": "Senator Smith says we should cut back the Defense budget. His position is that we should let down our defenses and just trust our enemies not to attack us!",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: Advocates(smith, CutDefenseBudget)\nHidden assumption: CutDefenseBudget ↔ (LetDownDefenses ∧ TrustEnemies)\nConclusion"
+  },
+  {
+    "text": "Going to prom (when you don't want to) because 90 percent of your classmates are going",
+    "label": "ad populum",
+    "fol": "Premise 1: ¬WantsToGoToProm(i)\nPremise 2: MajorityOfClassmatesGoToProm(i)\nHidden assumption: ∀x"
+  },
+  {
+    "text": "While jogging around the neighborhood, you are more likely to get bitten by someone’s pet dog, than by any member of the canine species.",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (Pet(x) ∧ Dog(x) → Canine(x))\nPremise 2: MoreLikely(∃x (Pet(x)"
+  },
+  {
+    "text": "“It’s important to argue logically because logic is an essential part of argumentation.”",
+    "label": "circular reasoning",
+    "fol": "Premise: IsEssentialPartOf(logic, argumentation)\nHidden assumption: ∀x ∀y (IsEssentialPartOf(x, y) → IsImportant(Uses(x)))\nConclusion: IsImportant"
+  },
+  {
+    "text": "Rep. Bill Posey ( R-FL ) said scientists said in the 1970s that the Earth was cooling , a popular talking point of climate skeptics and the subject of a fake",
+    "label": "intentional",
+    "fol": "Proposition 1: Said(billPosey, ∃x (Scientist(x) ∧ SaidInTime(x, EarthIsCooling, the1970s)))\nProposition"
+  },
+  {
+    "text": "`` Look , if you want to characterize a temperature above today 's temperature as normal , you 're free to do that , but that does n't mean that 's a planet we want to live on , '' Duffy said .",
+    "label": "intentional",
+    "fol": "Premise 1: ∀t (IsTempAboveToday(t) → ¬DesirablePlanetState(state_where_t_is_normal))\nHidden assumption"
+  },
+  {
+    "text": "At one point , Smith showed a slide of two charts that he said demonstrated how the rate of sea-level rise does not equal the sharp spike in the consumption of fossil fuels .",
+    "label": "intentional",
+    "fol": "Proposition: ∃s ∃t (Slide(s) ∧ Time(t) ∧ Showed(smith, s, t) ∧ Said(smith, Demonstrates(s,"
+  },
+  {
+    "text": "Brooks then said that erosion plays a significant role in sea-level rise , which is not an idea embraced by mainstream climate researchers .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: Said(brooks, idea_ErosionCausesSeaLevelRise)\nPremise 2: ∀x (MainstreamClimateResearcher(x) →"
+  },
+  {
+    "text": "Brooks added that Antarctic ice is growing .",
+    "label": "intentional",
+    "fol": "Proposition: Stated(brooks, IsGrowing(antarcticIce))"
+  },
+  {
+    "text": "Now , you could make a different argument if you want to talk about Greenland or the Arctic . ''",
+    "label": "intentional",
+    "fol": "Proposition: (WantsToTalkAbout(you, greenland) ∨ WantsToTalkAbout(you, theArctic)) → CanMakeDifferentArgument(you)\nConclusion: Can"
+  },
+  {
+    "text": "The Earth is not warming .",
+    "label": "intentional",
+    "fol": "Proposition: ¬IsWarming(earth)\nConclusion: ¬IsWarming(earth)"
+  },
+  {
+    "text": "The White Cliffs of Dover are tumbling into the sea and causing sea levels to rise .",
+    "label": "intentional",
+    "fol": "Proposition: TumblingInto(whiteCliffsOfDover, theSea) ∧ Causes(TumblingInto(whiteCliffsOfDover, theSea), SeaLevelsRise"
+  },
+  {
+    "text": "Global warming is helping grow the Antarctic ice sheet .",
+    "label": "intentional",
+    "fol": "Proposition: HelpsGrow(globalWarming, antarcticIceSheet)"
+  },
+  {
+    "text": "Now , you could make a different argument if you want to talk about Greenland or the Arctic . ''",
+    "label": "intentional",
+    "fol": "Proposition: (WantToTalkAbout(you, greenland) ∨ WantToTalkAbout(you, arctic)) → CanMakeDifferentArgument(you)\nConclusion: CanMakeDifferentArgument"
+  },
+  {
+    "text": "Rep. Bill Posey ( R-FL ) said scientists said in the 1970s that the Earth was cooling , a popular talking point of climate skeptics and the subject of a fake Time magazine cover that has become a meme .",
+    "label": "ad hominem",
+    "fol": "Proposition: Said(billPosey, p) ∧ PopularTalkingPoint(p) ∧ SubjectOf(p, c) ∧ FakeTimeCover(c) ∧ Is"
+  },
+  {
+    "text": "Rep. Bill Posey ( R-FL ) said scientists said in the 1970s that the Earth was cooling , a popular talking point of climate skeptics and the subject of a fake Time magazine cover that has become a meme .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: Said(billPosey, p) ∧ IsPopularTalkingPointOf(p, g) ∧ IsSubjectOf(p, c) ∧ HasBecomeMeme(c)"
+  },
+  {
+    "text": "The epic amount of rain that led to deadly , catastrophic flooding across large parts of South Carolina and North Carolina is an example of exactly the type of supercharged storm system climate scientists have been warning about for years as a likely consequence of global warming .",
+    "label": "false causality",
+    "fol": "Proposition: ∃s (Storm(s) ∧ Supercharged(s) ∧ CausedFloodingIn(s, southCarolina) ∧ CausedFlooding"
+  },
+  {
+    "text": "The epic amount of rain that led to deadly , catastrophic flooding across large parts of South Carolina and North Carolina is an example of exactly the type of supercharged storm system climate scientists have been warning about for years as a likely consequence of global warming .",
+    "label": "intentional",
+    "fol": "Premise 1: ∃e (RainEvent(e) ∧ CausedDeadlyFlooding(e) ∧ OccurredInCarolinas(e))\nPremise 2:"
+  },
+  {
+    "text": "While it 's too soon to say precisely how global warming may have affected the rare confluence of events that conspired to dump at least 26.88 inches of rain in less than four days on South Carolina , changes in extreme precipitation events are one of global warming 's most well-documented climate change impacts .",
+    "label": "intentional",
+    "fol": "Premise 1: ¬KnownPrecisely(CausalMechanism(globalWarming, southCarolinaRainEvent))\nPremise 2: ∃x (IsExtremePrecipitationEvent(x"
+  },
+  {
+    "text": "Updated data from NASA satellite instruments reveal the Earth ’ s polar ice caps have not receded at all since the satellite instruments began measuring the ice caps in 1979 . Since the end of 2012 , moreover , total polar ice extent has largely remained above the post-1979 average .",
+    "label": "intentional",
+    "fol": "Proposition 1: ∀t (t > 1979 → (Extent(t) ≥ Extent(1979)))\nProposition 2: Let AvgPost19"
+  },
+  {
+    "text": "Nicklen is no stranger to bears .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∃x (Bear(x) ∧ ¬IsStranger(nicklen, x))"
+  },
+  {
+    "text": "The study found climate deniers are able to downplay the threat of climate change by discrediting the threat facing polar bears .",
+    "label": "appeal to emotion",
+    "fol": "Premise: ∀x (ClimateDenier(x) ∧ Discredits(x, ThreatToPolarBears) → Downplays(x, ThreatOfClimateChange))\nConclusion: ∃"
+  },
+  {
+    "text": "But the emaciated polar bear , featured in videos Nicklen published to social media on December 5 , was one of the most gut-wrenching sights he 's ever seen .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∃b ∃s ∃v (PolarBear(b) ∧ Emaciated(b) ∧ Video(v) ∧ PublishedBy(v,"
+  },
+  {
+    "text": "`` We stood there crying—filming with tears rolling down our cheeks , '' he said .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∃h ∃g (Said(h, ∀x (MemberOfGroup(x, g) → (StoodThere(x) ∧ Crying(x)"
+  },
+  {
+    "text": "Video shows the polar bear clinging to life , its white hair limply covering its thin , bony frame . One of the bear 's back legs drags behind it as it walks , likely due to muscle atrophy . Looking for food , the polar bear slowly rummages through a nearby trashcan used seasonally by Inuit fishers . It finds nothing and resignedly collapses back down onto the ground . In the days since Nicklen posted the footage , he 's been asked why he didn ’ t intervene .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∃b ∃t ∃n (PolarBear(b) ∧ Trashcan(t) ∧ Person(n) ∧ Name(n, \"Nicklen"
+  },
+  {
+    "text": "Even then , the report found that polar bears were moving from ice to land earlier and staying on land longer , unhealthily extending the bears ' fasting season . By the end of summer , most bears studied by the World Wildlife Fund showed signs of starvation . Fifteen years later , polar bears ' icy hunting grounds are in even worse shape .",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ∀x (PolarBear(x) → (MovesFromIceToLandEarlier(x, t1) ∧ StaysOnLandLonger(x, t1)))"
+  },
+  {
+    "text": "`` When scientists say bears are going extinct , I want people to realize what it looks like . Bears are going to starve to death , '' said Nicklen . ``",
+    "label": "appeal to emotion",
+    "fol": "Premise: GoingExtinct(bears)\nHidden assumption: GoingExtinct(bears) ↔ ∀x (Bear(x) → WillStarveToDeath(x))"
+  },
+  {
+    "text": "By telling the story of one polar bear , Nicklen hopes to convey a larger message about how a warming climate has deadly consequences .",
+    "label": "false causality",
+    "fol": "Premise 1: ∃x (PolarBear(x) ∧ TellsStory(nicklen, x))\nPremise 2: Message(m) ↔ WarmingClimateHas"
+  },
+  {
+    "text": "Species thrive when it is warm .",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀x (Species(x) → (IsWarm → Thrives(x)))\nConclusion: IsWarm → ∀x (Species(x) → Thrives("
+  },
+  {
+    "text": "Renew­ables such as wind turbines are environmentally disastrous because they pollute a huge land area , slice and dice birds and bats , kill insects that are bird food , create health problems for humans who live within kilometres of them , leave toxins around the turbine site and despoil the landscape .",
+    "label": "intentional",
+    "fol": "Premise 1: ∀x (WindTurbine(x) → (PollutesLandArea(x) ∧ KillsBirdsAndBats(x) ∧ KillsIn"
+  },
+  {
+    "text": "Shorten refuses to tell us how he will spend our money or to give any detail on energy ­systems that are proven failures .",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ¬∃p (IsSpendingPlan(p, ourMoney) ∧ Tells(shorten, us, p))\nPremise 2: ∀x ((Is"
+  },
+  {
+    "text": "A quick search would show him that whenever in the past there was an explosion of plant life , the carbon dioxide content was far higher than at present .",
+    "label": "intentional",
+    "fol": "Proposition: ∀t ((Past(t) ∧ ExplosionOfPlantLife(t)) → (Co2Content(t) > Co2Content(now)))"
+  },
+  {
+    "text": "A quick search would show him that whenever in the past there was an explosion of plant life , the carbon dioxide content was far higher than at present . If we halve the carbon dioxide content of the atmosphere , all life dies .",
+    "label": "faulty generalization",
+    "fol": "Proposition 1: ∀t ((t < now ∧ ExplosionOfPlantLife(t)) → (CO2Content(t) > CO2Content(now)))\nProposition 2"
+  },
+  {
+    "text": "There are measurable cycles with the sun , Earth ’ s orbit , oceans and moon that drive climate change , especially if cycles coincide . It has yet to be demonstrated that the climate change today is any different from those of the past .",
+    "label": "intentional",
+    "fol": "Premise 1: ∃x (NaturalCycle(x) ∧ Causes(x, ClimateChange))\nPremise 2: ¬Demonstrated(∃y (PastClimateChange"
+  },
+  {
+    "text": "Despite hundreds of billions of dollars of expenditure during the past few decades , it still has not been shown that human emissions of carbon dioxide drive ­global warming .",
+    "label": "intentional",
+    "fol": "Premise: SignificantEffortMadeToShow(Drives(HumanEmissionsOfCO2, GlobalWarming))\nPremise: ¬IsShown(Drives(HumanEmissionsOfCO2"
+  },
+  {
+    "text": "He should know that climate always changes and that the planet would be in serious trouble if it did not .",
+    "label": "faulty generalization",
+    "fol": "Proposition: (∀t Changes(climate, t)) ∧ (∃t ¬Changes(climate, t) → InSeriousTrouble(thePlanet))\nConclusion: ∀"
+  },
+  {
+    "text": "He would have learned that ­natural warm times , like now , bring great prosperity , increased longevity and less disease , whereas Jack Frost brings death , depopulation and economic stresses .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: NaturalWarmTime(now)\nPremise 2: ∀t (NaturalWarmTime(t) → (Brings(t, GreatProsperity) ∧ Brings("
+  },
+  {
+    "text": "The amount of energy used to construct solar and wind facilities is greater than they produce in their working lives .",
+    "label": "intentional",
+    "fol": "Proposition: ∀x ((SolarFacility(x) ∨ WindFacility(x)) → (EnergyToConstruct(x) > EnergyProducedInLifetime(x)))\nConclusion: ∀"
+  },
+  {
+    "text": "Species thrive when it is warm .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: ∀x (Species(x) → (IsWarm → Thrives(x)))\nConclusion: ∀x (Species(x) → (IsWarm → Thrives(x)))"
+  },
+  {
+    "text": "If he does , he is unelectable .",
+    "label": "ad hominem",
+    "fol": "Proposition: DoesIt(he) → Unelectable(he)\nConclusion: DoesIt(he) → Unelectable(he)"
+  },
+  {
+    "text": "In school science , Shorten would have learned carbon dioxide is the food of life and without this natural gas , which occurs in space and all planets , there would be no life .",
+    "label": "faulty generalization",
+    "fol": "Proposition: IsFoodOf(carbonDioxide, life) ∧ NaturalGas(carbonDioxide) ∧ OccursIn(carbonDioxide, space) ∧"
+  },
+  {
+    "text": "These subsidies , paid by the long-suffering consumer and employer , add to emissions because coal-fired elec­tricity needs to be on standby for when there is no wind or sunshine .",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ∃s (Supports(subsidies, s) ∧ ReliesOnIntermittentPower(s))\nPremise 2: ∀s (ReliesOn"
+  },
+  {
+    "text": "These subsidies , paid by the long-suffering consumer and employer , add to emissions because coal-fired elec­tricity needs to be on standby for when there is no wind or sunshine .",
+    "label": "intentional",
+    "fol": "Premise 1: ∃t (¬HasWind(t) ∧ ¬HasSunshine(t))\nPremise 2: ∀t ((¬Has"
+  },
+  {
+    "text": "These subsidies , paid by the long-suffering consumer and employer , add to emissions because coal-fired elec­tricity needs to be on standby for when there is no wind or sunshine .",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∃t (¬HasWind(t) ∧ ¬HasSunshine(t))\nPremise 2: ∀t ((¬HasWind(t)"
+  },
+  {
+    "text": "As soon as renewables were introduced into the grid , electric­ity prices increased and delivery became unreliable .",
+    "label": "false causality",
+    "fol": "Premise 1: Introduced(renewables, theGrid)\nPremise 2: PricesIncreased ∧ DeliveryBecameUnreliable\nHidden assumption: Introduced(renewables, theGrid)"
+  },
+  {
+    "text": "An increase in renewables will make matters worse .",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀x (IsIncreaseInRenewables(x) → MakesMattersWorse(x))\nConclusion: MakesMattersWorse(increaseInRenewables)"
+  },
+  {
+    "text": "I have never written a blank cheque for a used car .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: ¬∃x ∃y (BlankCheque(x) ∧ UsedCar(y) ∧ WroteFor(i, x, y))"
+  },
+  {
+    "text": "He would have learned that ­natural warm times , like now , bring great prosperity , increased longevity and less disease , whereas Jack Frost brings death , depopulation and economic stresses .",
+    "label": "false causality",
+    "fol": "Premise 1: NaturalWarmTime(now)\nPremise 2: ∀t (NaturalWarmTime(t) → (BringsGreatProsperity(t) ∧"
+  },
+  {
+    "text": "In biology , the Labor leader would have learned of Darwinism and environmental adapta­tion of species .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: Studies(laborLeader, biology) → (Learns(laborLeader, darwinism) ∧ Learns(laborLeader, environmentalAdaptation))\nConclusion:"
+  },
+  {
+    "text": "In school science , Shorten would have learned carbon dioxide is the food of life and without this natural gas , which occurs in space and all planets , there would be no life .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: LearnedInSchoolScience(shorten, IsFoodOfLife(carbonDioxide) ∧ (¬∃x IsPresent(x, carbonDioxide) → ¬∃y IsLife"
+  },
+  {
+    "text": "If he is knowingly promoting a falsehood , he is unelectable .",
+    "label": "ad hominem",
+    "fol": "Proposition: ∃x (Promotes(h, x) ∧ Falsehood(x) ∧ Knows(h, Falsehood(x))) → Unelectable(h)"
+  },
+  {
+    "text": "A quick search would show him that whenever in the past there was an explosion of plant life , the carbon dioxide content was far higher than at present .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: ∀t ((Past(t) ∧ ExplosionOfPlantLife(t)) → FarHigherThan(Co2Content(t), Co2Content(now)))"
+  },
+  {
+    "text": "A quick search would show him that whenever in the past there was an explosion of plant life , the carbon dioxide content was far higher than at present .",
+    "label": "false causality",
+    "fol": "Proposition: ∀t ((Past(t) ∧ ExplosionOfPlantLife(t)) → FarHigherThan(CO2Content(t), CO2Content(now))))\nConclusion:"
+  },
+  {
+    "text": "Shorten should know that for thousands of millions of years the Earth has been changing , with cycles­ and one-off events such as an asteroid impact , super-volcano or a supernova explosion .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ShouldKnow(shorten, ∃e (IsChangeEvent(e) ∧ Affects(e, earth) ∧ (IsCycle(e) ∨ IsOneOffEvent"
+  },
+  {
+    "text": "Shorten should know that for thousands of millions of years the Earth has been changing , with cycles­ and one-off events such as an asteroid impact , super-volcano or a supernova explosion .",
+    "label": "faulty generalization",
+    "fol": "Proposition: ShouldKnow(shorten, ∃t (TimePeriod(t) ∧ IsLong(t) ∧ ∀t' (MemberOf(t', t) → ChangesAtTime"
+  },
+  {
+    "text": "He should know that climate always changes and that the planet would be in serious trouble if it did not .",
+    "label": "fallacy of extension",
+    "fol": "Proposition: (∀t Changes(climate, t)) ∧ (¬(∀t Changes(climate, t)) → IsInSeriousTrouble(planet))\nConclusion: (∀t"
+  },
+  {
+    "text": "Does Shorten ’ s energy policy consider those who lose jobs and have the power cut off in his race to achieve 50 per cent renewables to fill the pockets of Labor union mates ? And what about the scams siphoning off tens of billions that slosh around the world as carbon credits , carbon trading and renewable energy certificates ?",
+    "label": "intentional",
+    "fol": "Premise 1: GoalOf(shortensEnergyPolicy, Achieve50PercentRenewables)\nPremise 2: ∀x ((LosesJob(x) ∨ Power"
+  },
+  {
+    "text": "In July , the Greenland ice sheet experienced one of the most significant melting events in the past decade , losing more than 8.5 billion tons of surface mass in a single day , which was enough to submerge Florida in two inches of water .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∃e (IsMeltingEvent(e) ∧ ExperiencedBy(e, greenlandIceSheet) ∧ OccurredIn(e, july) ∧ Is"
+  },
+  {
+    "text": "Two years ago , a polar bear made it to the Summit Station , which was unusual since polar bears live in coastal regions where they can easily find food .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x (IsPolarBear(x) ∧ WasAt(x, summitStation))\nPremise 2: ∀x (IsPolarBear(x) →"
+  },
+  {
+    "text": "Other unusual events have become more frequent , too , Mercer said . Two years ago , a polar bear made it to the Summit Station , which was unusual since polar bears live in coastal regions where they can easily find food . The bear had trekked several hundred miles inland across the ice sheet . In the last five years , Mercer said three polar bears have been sighted high on Greenland 's ice sheet .",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃x ∃t (PolarBear(x) ∧ At(x, summitStation) ∧ Time(t) ∧ TwoYearsAgo(t"
+  },
+  {
+    "text": "The warm air fueled an extreme rain event that dumped 7 billion tons of water on the ice sheet , enough to fill the Reflecting Pool at the National Mall in Washington , DC , nearly 250,000 times .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∃e,a,w,s,rp,nm,dc (IsExtremeRainEvent(e) ∧ IsWarmAir(a) ∧ IsWater("
+  },
+  {
+    "text": "Global sea level rose permanently by 1.5 millimeters as a result .",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∃e (IsARising(e) ∧ SubjectOfRise(e, globalSeaLevel) ∧ IsPermanent(e) ∧ AmountOfRise(e,"
+  },
+  {
+    "text": "The theory is that tropical cyclones have slowed down in their speed by about 10 percent over the past 70 years due to a retreat of the jet stream farther north , depriving storms of steering currents and making them stall and keep raining in one location . This is what happened with Hurricane Harvey in Houston last year .",
+    "label": "false causality",
+    "fol": "Premise 1: JetStreamRetreatedNorth → ∀x (TropicalCyclone(x) → DeprivedOfSteeringCurrents(x))\nPremise 2"
+  },
+  {
+    "text": "But like most claims regarding global warming , the real effect is small , probably temporary , and most likely due to natural weather patterns .",
+    "label": "false causality",
+    "fol": "Proposition: ∃e (IsRealEffect(e) ∧ IsSmall(e) ∧ IsTemporary(e) ∧ IsDueToNaturalWeatherPatterns(e))"
+  },
+  {
+    "text": "Any changes in hurricanes over 70 years , even if real , can easily be part of natural cycles — or incomplete data .",
+    "label": "false causality",
+    "fol": "Proposition: ∀x ((IsChangeInHurricanes(x) ∧ IsReal(x)) → (IsPartOfNaturalCycle(x) ∨ IsDueToIncompleteData"
+  },
+  {
+    "text": "Coastal lake sediments along the Gulf of Mexico shoreline from 1,000 to 2,000 years ago suggest more frequent and intense hurricanes than occur today .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∃e (Sediment(e) ∧ FromGulfOfMexico(e) ∧ DatedTo(e, 1000, 2000)"
+  },
+  {
+    "text": "Until 2017 , the United States went 11 years without a major hurricane strike — something that is statistically very improbable .",
+    "label": "ad populum",
+    "fol": "Proposition: ∃t (Year(t) ∧ t = 2017 ∧ (∀y (Year(y) ∧ (t - 11 ≤ y)"
+  },
+  {
+    "text": "The monetary cost of damages has increased dramatically in recent decades , but that is due to increasing population , wealth and the amount of vulnerable infrastructure . It ’ s not due to stronger storms .",
+    "label": "false causality",
+    "fol": "Premise 1: HasIncreased(MonetaryCostOfDamages)\nPremise 2: HasIncreased(Population) ∧ HasIncreased(Wealth) ∧ HasIncreased"
+  },
+  {
+    "text": "Natural variability is simply too large . This should not be surprising given that humanity ’ s greenhouse gas emissions have caused only a1 percent change in the natural energy flows coursing through the climate system .",
+    "label": "ad populum",
+    "fol": "Premise 1: CausedChange(humanEmissions, naturalEnergyFlows, 0.01)\nHidden assumption: ∀x ∀y ∀z (CausedChange(x,"
+  },
+  {
+    "text": "Even before Hurricane Florence made landfall somewhere near the border of North and South Carolina , predicted damage from potentially catastrophic flooding from the storm was already being blamed on global warming .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∃t1 ∃t2 (BlamedOn(PredictedDamage(florence), globalWarming, t1) ∧ MadeLandfall(florence, t2"
+  },
+  {
+    "text": "Now it ’ s fashionable to blame stalling hurricanes on global warming .",
+    "label": "intentional",
+    "fol": "Proposition: IsFashionable(Assert(Causes(globalWarming, StallingHurricanes)))"
+  },
+  {
+    "text": "But examination of a weather map of the atmospheric flow at an altitude of 18,000 feet shows the jet stream is pushed farther south over western North America . This kind of natural variation in atmospheric flow is called weather , not climate change .",
+    "label": "intentional",
+    "fol": "Premise 1: IsNaturalVariation(jetStreamSouth)\nPremise 2: IsWeather(jetStreamSouth)\nHidden assumption: ∀x (IsWeather(x) → ¬Is"
+  },
+  {
+    "text": "But like most claims regarding global warming , the real effect is small , probably temporary , and most likely due to natural weather patterns .",
+    "label": "faulty generalization",
+    "fol": "Proposition: IsSmall(theRealEffect) ∧ IsTemporary(theRealEffect) ∧ CausedBy(theRealEffect, naturalWeatherPatterns)\nHidden assumption: ∀x (IsClaim"
+  },
+  {
+    "text": "Unusual things happen in nature sometimes The Massachusetts Bay Colony in 1635 experienced a Category 3 or 4 storm , with up to a 20-foot storm surge .",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃e (IsStorm(e) ∧ OccurredAt(e, massachusettsBayColony) ∧ OccurredInYear("
+  },
+  {
+    "text": "Now it ’ s fashionable to blame stalling hurricanes on global warming .",
+    "label": "ad populum",
+    "fol": "Proposition: IsFashionable(BlamingStallingHurricanesOnGlobalWarming)"
+  },
+  {
+    "text": "This kind of natural variation in atmospheric flow is called weather , not climate change .",
+    "label": "equivocation",
+    "fol": "Proposition: IsWeather(thisVariation) ∧ ¬IsClimateChange(thisVariation)\nConclusion: IsWeather(thisVariation)"
+  },
+  {
+    "text": "But I ’ m afraid , human nature being what it is , the thing gets exaggerated out of all proportion , and the greens have behaved deplorably instead of being reasonably sensible . ”",
+    "label": "ad hominem",
+    "fol": "Premise 1: IsExaggerated(theThing)\nPremise 2: ∀x (IsGreen(x) → HasBehavedDeplor"
+  },
+  {
+    "text": "So for now , nuclear energy is the only viable option .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: ∀x (ViableOption(x) ↔ x = nuclearEnergy)\nConclusion: ViableOption(nuclearEnergy)"
+  },
+  {
+    "text": "But all this , he clarifies cheerfully , is more or less academic . “ Because quite soon – before we ’ ve reached the end of this century , even – I think that what people call robots will have taken over.",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃t (t < endOfCentury ∧ HappensAt(RobotsTakeOver, t))\nHidden assumption: RobotsTakeOver → Is"
+  },
+  {
+    "text": "Oh well , it ’ s doing a good job designing itself , let ’ s encourage it. ’ ” Computers will develop independent volition and intuition ( “ To some extent , they already have ” ) and become capable of reproducing themselves , and of evolving . “",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x (Computer(x) ∧ IsGoodSelfDesigner(x))\nPremise 2: ∃x (Computer(x) ∧"
+  },
+  {
+    "text": "A defiant generalist in an era of increasingly specialised study , and a mischievous provocateur , Lovelock is regarded by many as a scientific genius .",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: DefiantGeneralist(lovelock)\nPremise 2: MischievousProvocateur(lovelock)\nConclusion: RegardedBy"
+  },
+  {
+    "text": "But isn ’ t that exactly what he did last time we met ? “ I know , ” he grins teasingly . “ But I ’ ve grown up a bit since then . ”",
+    "label": "intentional",
+    "fol": "Premise 1: Did(he, action, t_last)\nPremise 2: ¬IsMature(he, t_last) ∧ IsMature(he, t_now"
+  },
+  {
+    "text": "He now says : “ Anyone who tries to predict more than five to 10 years is a bit of an idiot , because so many things can change unexpectedly. ”",
+    "label": "ad hominem",
+    "fol": "Premise 1: ∃t (TimeFrame(t) ∧ GreaterThan(t, 10_years) ∧ ¬IsPredictable(t))"
+  },
+  {
+    "text": "A defiant generalist in an era of increasingly specialised study , and a mischievous provocateur , Lovelock is regarded by many as a scientific genius .",
+    "label": "ad populum",
+    "fol": "Proposition: DefiantGeneralist(lovelock) ∧ MischievousProvocateur(lovelock) ∧ RegardedByManyAsScientificGenius(lovelock)\nConclusion"
+  },
+  {
+    "text": "It ’ s two-and-a-half times higher than the worst-case scenario for climate change , and it ’ s one of the most desirable cities in the world to live in . ”",
+    "label": "false causality",
+    "fol": "Proposition: IsHigherThan(it, worstCaseScenarioForClimateChange, 2.5) ∧ IsMostDesirableCityToLiveIn(it)\nConclusion: City(it)"
+  },
+  {
+    "text": "You ’ ve only got to look at Singapore .",
+    "label": "intentional",
+    "fol": "Proposition: Examine(singapore)\nHidden assumption: ∀x (Examine(x) → Proves(x, p))\nConclusion: Proves(singapore, p)"
+  },
+  {
+    "text": "The fashionable hope that windfarms or recycling could prevent global famine and mass migration was , he assured me , a fantasy ; it was too late for ethical consumption to save us .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ¬∃t (Time(t) ∧ t < Now ∧ CanAtTime(EthicalConsumption, Save(Us), t))\nHidden assumption:"
+  },
+  {
+    "text": "Before the end of this century , 80 % of the world ’ s population would be wiped out .",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∃t (Time(t) ∧ Before(t, EndOf(thisCentury)) ∧ ProportionOfPopulationWipedOut(t) = 0.8)"
+  },
+  {
+    "text": "His Gaia hypothesis , which contends that the earth is a single , self-regulating organism , is now accepted as the founding principle of most climate science , and his invention of a device to detect CFCs helped identify the hole in the ozone layer .",
+    "label": "intentional",
+    "fol": "Proposition: (Proposed(lovelock, gaiaHypothesis) ∧ ContentOf(gaiaHypothesis, IsSingleOrganism(earth) ∧ IsSelfRegulating"
+  },
+  {
+    "text": "He now says : “ Anyone who tries to predict more than five to 10 years is a bit of an idiot , because so many things can change unexpectedly. ”",
+    "label": "intentional",
+    "fol": "Premise 1: ∃x (Thing(x) ∧ CanChangeUnexpectedly(x))\nHidden assumption: (∃y (Thing(y) ∧"
+  },
+  {
+    "text": "It ’ s two-and-a-half times higher than the worst-case scenario for climate change , and it ’ s one of the most desirable cities in the world to live in . ”",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: (Value(c) = 2.5 * Value(worstCaseScenario)) ∧ IsMostDesirableCity(c)"
+  },
+  {
+    "text": "All things being equal – “ and it ’ s only got to take one sizable volcano to erupt and all the models , everything else , is right off the board ” – he expects that before the consequences of global warming can impact on us significantly , something else will have made our world unrecognisable , and threaten the human race .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃x (SizableVolcano(x) ∧ Erupts(x)) → ∀y (Model(y) → Invalidated(y))\nPremise"
+  },
+  {
+    "text": "Lovelock maintains that , unlike most environmentalists , he is a rigorous empiricist , but it is manifestly clear that he enjoys maddening the green movement . “ Well , it ’ s a religion , really , you see . It ’ s totally unscientific. ”",
+    "label": "ad hominem",
+    "fol": "Premise 1: IsReligion(greenMovement)\nHidden assumption: ∀x (IsReligion(x) → IsUnscientific(x))\nConclusion: IsUnscientific"
+  },
+  {
+    "text": "He pauses to do some quick mental arithmetic , as casually as I might tot up how many pints of milk to grab from Sainsburys .",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: Performs(he, MentalArithmetic)\nPremise 2: Performs(i, TotUpMilkPints)\nHidden assumption: ∀x ∀y"
+  },
+  {
+    "text": "The implications for climate change are obvious . “ The world that they ’ re going to be comfortable in is wildly different from the one that we feel comfortable in .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃w1 ∀p (CurrentPerson(p) → IsComfortableIn(p, w1))\nPremise 2: ∃w2 ∀p"
+  },
+  {
+    "text": "The implications for climate change are obvious . “ The world that they ’ re going to be comfortable in is wildly different from the one that we feel comfortable in .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∀w1, w2 ((∀x (FuturePerson(x) → IsComfortableIn(x, w1))) ∧ (∀y (Current"
+  },
+  {
+    "text": "It is not difficult to imagine that conflicts arising from forced migrations and economic collapse might make the planet ungovernable , threatening the fabric of civilization . ”",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∃e1 ∃e2 (IsForcedMigration(e1) ∧ IsEconomicCollapse(e2))\nPremise 2:"
+  },
+  {
+    "text": "Even as global ocean temperatures rise to their highest levels in recorded history , some parts of the ocean , near where ice is melting exceptionally fast , are actually cooling , slowing ocean circulation currents and sending weather patterns into a frenzy . Sure enough , a persistently cold patch of ocean is starting to show up just south of Greenland , exactly where previous experimental predictions of a sudden surge of freshwater from melting ice expected it to be .",
+    "label": "false causality",
+    "fol": "Premise 1: GlobalOceanTempIsHighest ∧ ∃x (OceanPart(x) ∧ IsNearFastMeltingIce(x) ∧ IsCooling"
+  },
+  {
+    "text": "Salmon are crucial to their coastal ecosystem like perhaps few other species on the planet . A significant portion of the nitrogen in West Coast forests has been traced back to salmon , which can travel hundreds of miles upstream to lay their eggs . The largest trees on Earth simply wouldn ’ t exist without salmon .",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∃n (Nitrogen(n) ∧ InWestCoastForest(n) ∧ SourceIsSalmon(n))\nHidden assumption 1: ∀x (Largest"
+  },
+  {
+    "text": "“ The climate [ change ] models predict this gentle , slow increase in temperature , ” says Peterson , “ but the main problem we ’ ve had for the last few years is the variability is so high . As scientists , we can ’ t keep up with it , and neither can the animals. ” Peterson likens it to a boxer getting pummeled round after round : “ At some point , you knock them down , and the fight is over . ” Attendant with this weird wildlife behavior is a stunning drop in the number of plankton — the basis of the ocean ’ s food chain .",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∀m (ClimateModel(m) → Predicts(m, GentleSlowTempIncrease))\nPremise 2: High(TemperatureVariability)\nPrem"
+  },
+  {
+    "text": "As sea levels rise in the next century , even a $ 3 billion wall won ’ t keep Lower Manhattan above water .",
+    "label": "appeal to emotion",
+    "fol": "Premise: SeaLevelsRiseInNextCentury\nPremise: ∃x (Wall(x) ∧ CostInBillions(x, 3))\nHidden assumption"
+  },
+  {
+    "text": "“ Why do we keep getting so many record-warm years ? ” Dr. Schmidt asked in an interview . “ It ’ s because the planet is warming .",
+    "label": "circular reasoning",
+    "fol": "Premise 1: FrequentRecordWarmYears\nHidden assumption: PlanetIsWarming → FrequentRecordWarmYears\nConclusion: PlanetIsWarming"
+  },
+  {
+    "text": "John R. Christy , an atmospheric scientist at the University of Alabama in Huntsville who is known for his skepticism about the seriousness of global warming , pointed out in an interview that 2014 had surpassed the other record-warm years by only a few hundredths of a degree , well within the error margin of global temperature measurements . “ Since the end of the 20th century , the temperature hasn ’ t done much , ” Dr. Christy said . “ It ’ s on this kind of warmish plateau . ” Despite such arguments from a handful of scientists , the vast majority of those who study the climate say the earth is in a long-term warming trend that is profoundly threatening and caused almost entirely by human activity .",
+    "label": "intentional",
+    "fol": "Premise 1: Scientist(johnChristy) ∧ Skeptic(johnChristy, SeriousnessOfGlobalWarming)\nPremise 2: ∀y (RecordWarmYear"
+  },
+  {
+    "text": "Exit Glacier has been shrinking for 200 years — since 1815 — long before widespread industrialization and automobiles .",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: StartsShrinkingAt(exitGlacier, 1815)\nPremise 2: ∀t (IsWidespreadIndustrialization(t"
+  },
+  {
+    "text": "Sounding more like an Old Testament doomsayer than a president , Obama warned in his Alaska speech that unless carbon fuels are restricted , “ we will condemn our children to a planet beyond their capacity to repair : Submerged countries .",
+    "label": "ad hominem",
+    "fol": "Premise 1: ¬RestrictCarbonFuels → CondemnToUnrepairablePlanet\nPremise 2: CondemnToUnrepairablePlanet → ∃x"
+  },
+  {
+    "text": "News flash , Mr. President : Alaska has been buffeted by cyclical swings in climate for thousands of years . That ’ s true for the rest of the world , too . There was a 300-year-long Medieval heat wave , followed by a Little Ice Age that began around 1300 , and then the 300-year warming period we ’ re in now .",
+    "label": "intentional",
+    "fol": "Premise 1: ∃p (ClimatePeriod(p) ∧ IsHeatWave(p) ∧ Name(p, medievalHeatWave))\nPremise"
+  },
+  {
+    "text": "The Alaska Climate Research Center reports almost no evidence of warming trends in Alaska since 1977 .",
+    "label": "intentional",
+    "fol": "Proposition: Reports(alaskaClimateResearchCenter, ¬∃x IsEvidenceFor(x, WarmingTrendInAlaskaSince1977))"
+  },
+  {
+    "text": "No matter what humans do , temperature trends go up , and then down ; glaciers expand and then recede ; sea levels rise and then fall , explains Will Happer , professor emeritus of physics at Princeton .",
+    "label": "intentional",
+    "fol": "Proposition: ∀a (HumanAction(a) → (Cycles(Temperature) ∧ Cycles(Glaciers) ∧ Cycles(SeaLevels)))\nHidden assumption: AssertedBy"
+  },
+  {
+    "text": "But don ’ t blame climate change on humans . There are bigger forces at work here .",
+    "label": "intentional",
+    "fol": "Premise 1: ∃x (BiggerThan(x, humans) ∧ Cause(x, climateChange))\nHidden assumption: ∀y ∀x ∀z ((Cause(x"
+  },
+  {
+    "text": "How about the epidemic of cop shootings in the United States , or the drowned toddlers washing up on Mediterranean shores as families flee the Middle East , or ISIS beheading thousands of Christians ?",
+    "label": "fallacy of extension",
+    "fol": "Proposition 1: IsEpidemic(CopShootingsInUS)\nProposition 2: ∃x (Toddler(x) ∧ Drowned(x) ∧ WashesUp"
+  },
+  {
+    "text": "How about the epidemic of cop shootings in the United States , or the drowned toddlers washing up on Mediterranean shores as families flee the Middle East , or ISIS beheading thousands of Christians ?",
+    "label": "intentional",
+    "fol": "Proposition: ExistsEpidemic(CopShootings, UnitedStates) ∨ ∃x∃y (Toddler(x) ∧ Family(y) ∧ Member"
+  },
+  {
+    "text": "President Obama hiked to Exit Glacier in Alaska last week , with photographers in tow , to send the world a message :",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∃e (Hike(e) ∧ Agent(e, obama) ∧ Destination(e, exitGlacier) ∧ LocatedIn(exitGlacier,"
+  },
+  {
+    "text": "The photo op was designed to build support for an international climate agreement he ’ s pushing hard to sell , so far with little success .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ∃x ∃y (PhotoOp(x) ∧ InternationalClimateAgreement(y) ∧ DesignedToBuildSupportFor(x, y) ∧"
+  },
+  {
+    "text": "Exit Glacier has been shrinking for 200 years — since 1815 — long before widespread industrialization and automobiles .",
+    "label": "equivocation",
+    "fol": "Premise 1: ∃t (Time(t) ∧ YearIs(t, 1815) ∧ ShrinkingStarted(exitGlacier, t))\nPremise"
+  },
+  {
+    "text": "News flash , Mr. President : Alaska has been buffeted by cyclical swings in climate for thousands of years .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ∃s (IsCyclicalSwingInClimate(s) ∧ HasBeenBuffetedByForThousandsOfYears(alaska, s))"
+  },
+  {
+    "text": "Exit Glacier has been shrinking for 200 years — since 1815 — long before widespread industrialization and automobiles .",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: IsShrinking(exitGlacier, t1815)\nPremise 2: ¬WidespreadIndustrialization(t1815)"
+  },
+  {
+    "text": "There was a 300-year-long Medieval heat wave , followed by a Little Ice Age that began around 1300 , and then the 300-year warming period we ’ re in now .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ∃mhw, lia, cwp (IsA(mhw, MedievalHeatWave) ∧ DurationInYears(mhw, 300) ∧ Is"
+  },
+  {
+    "text": "Many scientists are predicting the onset of two or three centuries of cooler weather — which would mean bigger glaciers .",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: ∃x (Scientist(x) ∧ Predicts(x, CoolerWeather))\nPremise 2: CoolerWeather → BiggerGlaciers\nConclusion:"
+  },
+  {
+    "text": "That ’ s despite the world ’ s growing use of fossil fuels .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: P ∧ GrowingUseOfFossilFuels\nHidden assumption: GrowingUseOfFossilFuels → ¬P\nConclusion: P"
+  },
+  {
+    "text": "That doesn ’ t mean pollution controls are futile . We all want to breathe clean air .",
+    "label": "fallacy of relevance",
+    "fol": "Premise: ∀x (Person(x) → WantsToBreatheCleanAir(x))\nHidden assumption: (∀x (Person(x) → WantsToBreatheClean"
+  },
+  {
+    "text": "Amid all this controversy and uncertainty about global climate change , Obama blindly insists that his theory of global warming “ is beyond dispute ” and attacks his critics as “ deniers . ”",
+    "label": "ad hominem",
+    "fol": "Proposition: IsControversial(globalClimateChange) ∧ IsUncertain(globalClimateChange) ∧ Insists(obama, IsBeyondDispute(globalWarmingTheory)) ∧"
+  },
+  {
+    "text": "Sounding more like an Old Testament doomsayer than a president , Obama warned in his Alaska speech that unless carbon fuels are restricted , “ we will condemn our children to a planet beyond their capacity to repair : Submerged countries .",
+    "label": "ad hominem",
+    "fol": "Premise 1: ¬RestrictCarbonFuels → CondemnToIrreparablePlanet\nPremise 2: CondemnToIrreparablePlanet → ∃x (Country"
+  },
+  {
+    "text": "It ’ s a demonstration of Obama ’ s appalling lack of priorities .",
+    "label": "ad hominem",
+    "fol": "Proposition: ∃x (Demonstrates(x, HasAppallingLackOfPriorities(obama)))"
+  },
+  {
+    "text": "” Really , Mr. President ? How about the epidemic of cop shootings in the United States , or the drowned toddlers washing up on Mediterranean shores as families flee the Middle East , or ISIS beheading thousands of Christians ?",
+    "label": "intentional",
+    "fol": "Premise 1: ∃e (Epidemic(e) ∧ Type(e, CopShootings) ∧ Location(e, us))\nPremise"
+  },
+  {
+    "text": "” Really , Mr. President ? How about the epidemic of cop shootings in the United States , or the drowned toddlers washing up on Mediterranean shores as families flee the Middle East , or ISIS beheading thousands of Christians ?",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃e (Event(e) ∧ IsCopShooting(e) ∧ Location(e, USA) ∧ IsEpidemic(e))"
+  },
+  {
+    "text": "There is no proof the current rate of change in Antarctica will continue .",
+    "label": "intentional",
+    "fol": "Proposition: ¬∃p (IsProof(p) ∧ Proves(p, WillContinue(CurrentRateOfChangeInAntarctica)))"
+  },
+  {
+    "text": "Under high greenhouse-gas emissions , the worst-case projections of sea-level rise eventually reach over a centimeter each year , said Rob DeConto , an Antarctic expert at the University of Massachusetts at Amherst who was not involved in the new study .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: HighGreenhouseGasEmissions → ∃p (IsWorstCaseProjection(p) ∧ EventuallyReachesRate(p, OverOneCmPerYear))"
+  },
+  {
+    "text": "If the acceleration continues , some of scientists ’ worst fears about rising oceans could be realized , leaving low-lying cities and communities with less time to prepare than they had hoped .",
+    "label": "appeal to emotion",
+    "fol": "Premise: AccelerationContinues → ∃x (IsWorstFearOfScientist(x) ∧ IsAboutRisingOceans(x) ∧ Occurs(x))"
+  },
+  {
+    "text": "Scientists can ’ t see the future , but they do fear continuing and even worsening losses .\n“ I don ’ t know if it ’ s going to keep exactly tripling , but I think it has a lot of potential to keep significantly increasing , ” Velicogna said .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: Scientist(velicogna)\nPremise 2: Believes(velicogna, HasPotential(SignificantlyIncrease(losses)))\nHidden assumption: ∀x"
+  },
+  {
+    "text": "“ This has been the saddest research trip of my life ”",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ResearchTrip(this) ∧ ∀x ((ResearchTrip(x) ∧ x ≠ this) → SadderThan(this, x))\nConclusion: Sad(this"
+  },
+  {
+    "text": "If global warming is “ real , ”\nboth sides of the debate seem to assume , the climate lobby ’ s policy agenda follows\ninexorably .",
+    "label": "false dilemma",
+    "fol": "Premise: IsAssumedByBothSides(GlobalWarmingIsReal → ClimateLobbyAgendaFollows)\nHidden assumption: ∀p (IsAssumedByBothSides(p)"
+  },
+  {
+    "text": "Carbon dioxide hurts nobody ’ s health .",
+    "label": "intentional",
+    "fol": "Proposition: ∀x (Person(x) → ¬HurtsHealthOf(carbonDioxide, x))\nConclusion: ∀x (Person(x) → ¬HurtsHealthOf"
+  },
+  {
+    "text": "It ’ s good for plants .",
+    "label": "intentional",
+    "fol": "Proposition: ∀x (Plant(x) → IsGoodFor(it, x))\nConclusion: ∀x (Plant(x) → IsGoodFor(it, x))"
+  },
+  {
+    "text": "Carbon dioxide hurts nobody ’ s health . It ’ s good for plants . Climate change need not endanger anyone .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: ∀x (Person(x) → ¬HealthIsHurtBy(x, carbonDioxide))\nPremise 2: ∀x (Plant(x)"
+  },
+  {
+    "text": "Healthy societies do not fall apart over slow , widely predicted , relatively small\neconomic adjustments of the sort painted by climate analysis . Societies do fall apart\nfrom war , disease or chaos .",
+    "label": "false dilemma",
+    "fol": "Premise 1: ∀x ∀y ((Society(x) ∧ Healthy(x) ∧ ClimateChangeEffect(y)) → ¬FallsApart(x, y))\nPremise"
+  },
+  {
+    "text": "Healthy societies do not fall apart over slow , widely predicted , relatively small\neconomic adjustments of the sort painted by climate analysis . Societies do fall apart\nfrom war , disease or chaos .",
+    "label": "intentional",
+    "fol": "Premise 1: ∀x ∀y ((Society(x) ∧ Healthy(x) ∧ ClimateChangeEffect(y)) → ¬FallsApart(x, y"
+  },
+  {
+    "text": "Global warming is not even the obvious top environmental threat . Dirty water , dirty air\nand insect-borne diseases are a far greater problem today for most people world-wide .",
+    "label": "false dilemma",
+    "fol": "Premise 1: EnvironmentalThreat(dirtyWater) ∧ EnvironmentalThreat(dirtyAir) ∧ EnvironmentalThreat(insectBorneDiseases)\nPremise 2: IsGreaterProblemThan("
+  },
+  {
+    "text": "Carbon dioxide hurts nobody ’ s health . It ’ s good for plants .",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∀x (Person(x) → ¬HurtsHealthOf(carbonDioxide, x))\nPremise 2: ∀x (Plant(x) → Is"
+  },
+  {
+    "text": "If it did—and you do hear such claims—then\nliving in hot Arizona rather than cool Maine , or living with Louisiana ’ s frequent floods ,\nwould be considered a health catastrophe today .",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: IsClaimed(C)\nPremise 2: C → (IsHealthCatastrophe(livingInHotAZ) ∨ IsHealthCatastrophe"
+  },
+  {
+    "text": "Global warming is not the only risk our society faces .",
+    "label": "intentional",
+    "fol": "Proposition: RiskToSociety(globalWarming) ∧ ∃x (RiskToSociety(x) ∧ x ≠ globalWarming)\nConclusion: ∃x (RiskToSociety("
+  },
+  {
+    "text": "If you buy overpriced insurance against\nevery potential danger , you soon run out of money .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: ∀x (Person(x) ∧ (∀d (PotentialDanger(d) → BuysOverpricedInsuranceAgainst(x, d))) → SoonRunsOutOfMoney"
+  },
+  {
+    "text": "Dirty water , dirty air\nand insect-borne diseases are a far greater problem today for most people world-wide . Habitat loss and human predation are a far greater problem for most animals . Elephants\nwon ’ t make it to see a warmer climate .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition 1: ∀p ( (p = DirtyWater ∨ p = DirtyAir ∨ p = InsectBorneDiseases) → IsGreaterProblemForMostPeople(p, ClimateChange)"
+  },
+  {
+    "text": "Dirty water , dirty air\nand insect-borne diseases are a far greater problem today for most people world-wide . Habitat loss and human predation are a far greater problem for most animals . Elephants\nwon ’ t make it to see a warmer climate .",
+    "label": "fallacy of logic",
+    "fol": "Proposition 1: ∀p ( (p = dirtyWater ∨ p = dirtyAir ∨ p = insectBorneDiseases) → IsGreaterProblemForMostPeople(p, climateChange"
+  },
+  {
+    "text": "The Intergovernmental Panel on\nClimate Change ’ s “ scientific ” recommendations , for example , include “ reduced gender\ninequality & marginalization in other forms , ” “ provisioning of adequate housing , ” “ cash\ntransfers ” and “ awareness raising & integrating into education. ”",
+    "label": "intentional",
+    "fol": "Proposition: IsScientificRecommendationOf(reducedGenderInequality, ipcc) ∧ IsScientificRecommendationOf(provisioningAdequateHousing, ipcc) ∧ IsScientificRecommendationOf(cashTrans"
+  },
+  {
+    "text": "Global warming saves lives .",
+    "label": "false causality",
+    "fol": "Proposition: ∃x (Life(x) ∧ Saves(globalWarming, x))\nConclusion: ∃x (Life(x) ∧ Saves(globalW"
+  },
+  {
+    "text": "Rather than a world declining into an inescapable man-made climate hell , Earth ’ s ecosystems and inhabitants are thriving because of increasing CO2 and rising temperatures not in spite of them .",
+    "label": "faulty generalization",
+    "fol": "Proposition: (¬DecliningIntoClimateHell(earth)) ∧ (Thriving(ecosystems) ∧ Thriving(inhabitants)) ∧ ((IncreasingCO2 ∧ Rising"
+  },
+  {
+    "text": "Concentrations of this gas are slightly less than 420 parts-per-million ( ppm ) , or one-sixth the average historic levels of 2,600 ppm for the last 600 million years .",
+    "label": "faulty generalization",
+    "fol": "Proposition: (Concentration(thisGas) < 420) ∧ (AvgHistoricConcentration(thisGas, last600My) = 26"
+  },
+  {
+    "text": "The science and data strongly support that our planet ’ s ecosystems are thriving and that humanity is benefiting from modestly increasing temperature and an increase in carbon dioxide .",
+    "label": "faulty generalization",
+    "fol": "Proposition: Supports(ScienceAndData, (∀x (Ecosystem(x) → IsThriving(x))) ∧ (IsBenefitingFrom(humanity, ModestlyIncreasingTemperature"
+  },
+  {
+    "text": "These facts refute the claim that Earth is spiraling into one man-made climate catastrophe after another .",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: Facts\nHidden assumption: Facts → ¬(∀t1 ∃t2 ∃c (Time(t1) ∧ Time(t2)"
+  },
+  {
+    "text": "All the while droughts , forest fires , heat waves , and temperature-related deaths have declined substantially .",
+    "label": "intentional",
+    "fol": "Proposition: DeclinedSubstantially(droughts) ∧ DeclinedSubstantially(forestFires) ∧ DeclinedSubstantially(heatWaves) ∧ DeclinedSubstantially(temperatureRelatedDeaths)\nConclusion"
+  },
+  {
+    "text": "What changes the future holds are hardly certain , but judging from the past , they too will be small .",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: ∀x ((Change(x) ∧ InFuture(x)) → ¬IsCertain(x))\nPremise 2: ∀x ((Change"
+  },
+  {
+    "text": "If you get your news only from mainstream media , you would likely believe that CO2 levels are dangerously high and unprecedented .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ∀x ((Person(x) ∧ ∀y (GetsNewsFrom(x, y) → IsMainstreamMedia(y))) → Believes(x, (Is"
+  },
+  {
+    "text": "Concentrations of this gas are slightly less than 420 parts-per-million ( ppm ) , or one-sixth the average historic levels of 2,600 ppm for the last 600 million years .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ∃c ∃h (CurrentConcentration(thisGas, c) ∧ AverageHistoricConcentration(thisGas, h) ∧ c < 420 ∧"
+  },
+  {
+    "text": "During the last glacial period , concentrations nearly reached the “ line of death ” at 150 parts per million , below which plants die .",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ∃c (ConcentrationDuringGlacialPeriod(c) ∧ (c > 150) ∧ IsClose(c, 150"
+  },
+  {
+    "text": "However , records indicate that modern warming began more than 300 years ago in the depths of the horrific Little Ice Age .",
+    "label": "equivocation",
+    "fol": "Proposition: ∃t (BeganAtTime(modernWarming, t) ∧ TimeIsMoreThanNYearsAgo(t, 300)"
+  },
+  {
+    "text": "Context is important when reviewing climate and temperature data .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ∀x (IsReviewOfClimateAndTempData(x) → IsImportantToConsider(context, x))"
+  },
+  {
+    "text": "Global warming saves lives .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: SavesLives(globalWarming)\nConclusion: SavesLives(globalWarming)"
+  },
+  {
+    "text": "Viewed in the long-term geologic context , we are actually CO2 impoverished .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: IsCO2Impoverished(currentState, LongTermGeologicContext)"
+  },
+  {
+    "text": "Longer-term data reveal multiple warming periods since the end of the last major ice age 10,000 years ago , each warmer than today .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ∃p1 ∃p2 ( (p1 ≠ p2) ∧ WarmingPeriodSinceIceAge(p1) ∧ WarmingPeriodSinceIceAge("
+  },
+  {
+    "text": "There is a strong correlation between the rise and fall of temperature and the ebb and flow of civilizations . During the last three warm periods dating back 6,000 years to the advent of the first great civilizations , humanity prospered and great empires arose . Intervening cold periods brought crop failure , famine , and mass depopulation .",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: ∃t1 ∃t2 ∃t3 ((t1 ≠ t2 ∧ t1 ≠ t3 ∧ t2 ≠ t3)"
+  },
+  {
+    "text": "History advises us to welcome warmth and fear cold .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: Advises(history, ∀x (Person(x) → (ShouldWelcome(x, warmth) ∧ ShouldFear(x, cold))))\nHidden assumption: ∀x ∀"
+  },
+  {
+    "text": "Contrary to sensational media reports , extreme weather-related deaths in the U.S. have decreased more than 98 % over the last 100 years .",
+    "label": "false causality",
+    "fol": "Proposition: ExtremeWeatherDeathsUS(now) < (0.02 * ExtremeWeatherDeathsUS(oneHundredYearsAgo))\nConclusion: ExtremeWeatherDeathsUS(now)"
+  },
+  {
+    "text": "Twenty times as many people die from cold as from heat , according to a worldwide review of 74 million temperature-related deaths by Dr. Antonio Gasparrini and a team of physicians . Global warming saves lives .",
+    "label": "fallacy of relevance",
+    "fol": "Premise 1: NumDeaths(cold) = 20 * NumDeaths(heat)\nHidden assumption: GlobalWarming → (Decreases(NumDeaths(cold))"
+  },
+  {
+    "text": "Ultimately , politicians will face a difficult choice : persuade their voters that the revolutionary change outlined in the report is urgently needed or ignore it and say the scientists have got it wrong .",
+    "label": "false dilemma",
+    "fol": "Proposition: ∀x (IsPolitician(x) → (PersuadeVotersOfChange(x) ∨ (IgnoreReport(x) ∧ ClaimScientistsAreWrong("
+  },
+  {
+    "text": "We used to think if we could keep warming below two degrees this century , then the changes we would experience would be manageable .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: BelievedInPast(we, (∀t (MemberOf(t, thisCentury) → (WarmingLevel(t) < 2))) → (∀c (Change("
+  },
+  {
+    "text": "We used to think if we could keep warming below two degrees this century , then the changes we would experience would be manageable .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: UsedToBelieve(we, (KeepWarmingBelowTwoDegrees → ∀c (Change(c) → Manageable(c))))\nConclusion: KeepWarmingBelowTwoDegrees → ∀c"
+  },
+  {
+    "text": "The countdown to the worst of global warming seems to have accelerated .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: HasAccelerated(Countdown(WorstOfGlobalWarming))"
+  },
+  {
+    "text": "It 's no coincidence that this storm exploded in an area of near-record warm sea surface temperatures that had not yet been tapped by any other recent storms .",
+    "label": "false causality",
+    "fol": "Premise 1: ∃a (InArea(thisStorm, a) ∧ NearRecordWarmSST(a) ∧ ∀y ((Storm(y) ∧ Recent("
+  },
+  {
+    "text": "Computer models of the climate are at the heart of calls to ban the cheap , reliable energy that powers our thriving economy and promotes healthier , longer lives .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∃e (IsEnergy(e) ∧ Cheap(e) ∧ Reliable(e) ∧ Powers(e, ourEconomy) ∧ Thriving(ourEconomy)"
+  },
+  {
+    "text": "For decades , these models have projected dramatic warming from small , fossil-fueled increases in atmospheric concentrations of carbon dioxide , with catastrophic consequences .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∀t ∀m ((IsPastDecade(t) ∧ IsClimateModel(m)) → ProjectsAtTime(m, t, ∃i ∃w"
+  },
+  {
+    "text": "Should we trust these computer models of doom ?",
+    "label": "ad hominem",
+    "fol": "Proposition: ∀x ((ComputerModel(x) ∧ PredictsDoom(x)) → ShouldTrust(we, x))"
+  },
+  {
+    "text": "In the upper levels of the lower atmosphere , the models predicted seven times as much warming as has been observed .",
+    "label": "intentional",
+    "fol": "Proposition: ∃x ∃y (PredictedWarming(upperLowerAtmosphere, x) ∧ ObservedWarming(upperLowerAtmosphere, y) ∧ (x ="
+  },
+  {
+    "text": "Why didn ’ t he simply look down here , where we all live ?",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: ¬LookedDown(he, here) ∧ (∀x (MemberOfUs(x) → LivesAt(x, here)))\nHidden assumption: Should(LookDown(he"
+  },
+  {
+    "text": "In this revision , temperatures were estimated from nearby land stations . This runs afoul of basic physics .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: MethodUsed(thisRevision, EstimateFromLandStations)\nHidden assumption: ∀x (MethodIs(x, EstimateFromLandStations) → Violates(x, Basic"
+  },
+  {
+    "text": "But each serial adjustment has tended to make the early years colder , which increases the warming trend . That ’ s wildly improbable .",
+    "label": "false dilemma",
+    "fol": "Premise 1: ∀x (SerialAdjustment(x) → MakesEarlyYearsColder(x))\nPremise 2: ∀x (MakesEarlyYearsColder(x) → Increases"
+  },
+  {
+    "text": "Even in warm summers , there ’ s plenty of ice over much of the Arctic Ocean .",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀t (WarmSummer(t) → ∃i (Ice(i) ∧ CoversSignificantPortionOf(i, arcticOcean)))\nConclusion: ∃t ("
+  },
+  {
+    "text": "According to the United Nations ' Intergovernmental Panel on Climate Change , there has been no systematic increase in the frequency of extreme weather events , and the ongoing rise in sea level that began with the end of the ice age continues with no great increase in magnitude .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: ¬∃t (SystematicIncreaseInFrequency(extremeWeatherEvents, t)) ∧ (Continues(ongoingSeaLevelRise) ∧ ¬HasGreat"
+  },
+  {
+    "text": "NASA honored him for this achievement , and he was an author for a previous edition of the U.N. report . He told a House Science Committee hearing in March 2017 that the U.N. climate models have failed badly . Christy compared the average model projections since 1979 to the most reliable observations — those made by satellites and weather balloons over the vast tropics .",
+    "label": "fallacy of credibility",
+    "fol": "Proposition: HonoredBy(nasa, christy, theAchievement) ∧ ∃r (UNReport(r) ∧ PreviousEdition(r) ∧ AuthorOf(christy, r"
+  },
+  {
+    "text": "Shelters in poorer countries are not repainted as often , and darker stations absorb more of the sun ’ s energy . It ’ s no surprise that poor tropical countries show the largest warming from this effect .",
+    "label": "intentional",
+    "fol": "Premise 1: ∀x (IsInPoorerCountry(x) → ¬RepaintedOften(x))\nPremise 2: ∀x (IsDarker(x) →"
+  },
+  {
+    "text": "As long as the ice-water mix is well-stirred ( like a glass of ice water ) , the surface temperature stays at the freezing point until all the ice melts .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: ∀x ∀t ((IsIceWaterMix(x) ∧ IsWellStirred(x, t) ∧ ∃i (IsIce(i) ∧ Is"
+  },
+  {
+    "text": "Shelters in poorer countries are not repainted as often , and darker stations absorb more of the sun ’ s energy . It ’ s no surprise that poor tropical countries show the largest warming from this effect .",
+    "label": "false causality",
+    "fol": "Premise 1: ∀x ∀y ((Shelter(x) ∧ Country(y) ∧ Poor(y) ∧ LocatedIn(x, y)) → ¬RepaintedOften"
+  },
+  {
+    "text": "And then you get scared .",
+    "label": "appeal to emotion",
+    "fol": "Premise: PrecedingEventOccurs\nHidden assumption: PrecedingEventOccurs → GetsScared(you)\nConclusion: GetsScared(you)"
+  },
+  {
+    "text": "At six feet , though , around 12 million people in the United States would be displaced , and the world ’ s most vulnerable megacities , like Shanghai , Mumbai , and Ho Chi Minh City , could be wiped off the map .",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: IsVulnerableMegacity(shanghai) ∧ IsVulnerableMegacity(mumbai) ∧ IsVulnerableMegacity(ho_chi_minh_"
+  },
+  {
+    "text": "The glaciers of Pine Island Bay are two of the largest and fastest-melting in Antarctica . ( A Rolling Stone feature earlier this year dubbed Thwaites “ The Doomsday Glacier. ” ) Together , they act as a plug holding back enough ice to pour 11 feet of sea-level rise into the world ’ s oceans — an amount that would submerge every coastal city on the planet .",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ∃g1 ∃g2 (Glacier(g1) ∧ Glacier(g2) ∧ g1 ≠ g2 ∧ IsLarge("
+  },
+  {
+    "text": "Ice gets so heavy that these taller cliffs can ’ t support their own weight . Once they start to crumble , the destruction would be unstoppable .",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ∀x (TallerCliff(x) → CannotSupportOwnWeight(x))\nPremise 2: ∀x (CannotSupportOwnWeight("
+  },
+  {
+    "text": "Minute-by-minute , huge skyscraper-sized shards of ice cliffs would crumble into the sea , as tall as the Statue of Liberty and as deep underwater as the height of the Empire State Building .",
+    "label": "ad populum",
+    "fol": "Proposition: ∀t (IsMinute(t) → ∃x (IsIceShard(x) ∧ IsFromIceCliff(x) ∧ IsHuge(x) ∧ Is"
+  },
+  {
+    "text": "All this could play out in a mere 20 to 50 years — much too quickly for humanity to adapt .",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: OccursWithinYears(thisEvent, 20, 50)\nPremise 2: MinAdaptationTime(humanity) > 5"
+  },
+  {
+    "text": "South Florida would be largely uninhabitable ; floods on the scale of Hurricane Sandy would strike twice a month in New York and New Jersey , as the tug of the moon alone would be enough to send tidewaters into homes and buildings .",
+    "label": "faulty generalization",
+    "fol": "Premise 1: Causes(TugOfTheMoon, SendTidewatersIntoBuildings) → Strikes(sandyScaleFlood, newYork) ∧ Strikes(s"
+  },
+  {
+    "text": "That ’ s a decision worth countless trillions of dollars and millions of lives .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: IsDecision(d) ∧ WorthTrillionsOfDollars(d) ∧ AffectsMillionsOfLives(d)"
+  },
+  {
+    "text": "Stretching across a frozen plain more than 150 miles long , these glaciers , named Pine Island and Thwaites , have marched steadily for millennia toward the Amundsen Sea , part of the vast Southern Ocean .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∃p (Glacier(pineIsland) ∧ Glacier(thwaites) ∧ FrozenPlain(p) ∧ LengthGreaterThan(p, 150miles"
+  },
+  {
+    "text": "Minute-by-minute , huge skyscraper-sized shards of ice cliffs would crumble into the sea , as tall as the Statue of Liberty and as deep underwater as the height of the Empire State Building . The result : a global catastrophe the likes of which we ’ ve never seen .",
+    "label": "appeal to emotion",
+    "fol": "Premise 1: ∃e (IsIceCrumblingEvent(e) ∧ IsContinuous(e) ∧ ∀x (IsInvolvedIn(x, e"
+  },
+  {
+    "text": "Unfortunately , it now seems like three feet is possible only under the rosiest of scenarios .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∀s (Achieves(s, threeFeet) ∧ Possible(s) → IsRosiestScenario(s))\nConclusion: ∀s (Achieves(s,"
+  },
+  {
+    "text": "Pollard and DeConto are the first to admit that their model is still crude , but its results have pushed the entire scientific community into emergency mode .",
+    "label": "equivocation",
+    "fol": "Proposition: ∃m ∃r (HasModel(pollard, m) ∧ HasModel(deconto, m) ∧ Admits(pollard, IsCrude("
+  },
+  {
+    "text": "“ It could happen faster or slower , I don ’ t think we really know yet , ” says Jeremy Bassis , a leading ice sheet scientist at the University of Michigan . “ But it ’ s within the realm of possibility , and that ’ s kind of a scary thing . ”",
+    "label": "faulty generalization",
+    "fol": "Premise 1: Possible(iceSheetCollapse)\nPremise 2: Scary(Possible(iceSheetCollapse))\nConclusion: Possible(iceSheetCollapse)"
+  },
+  {
+    "text": "What we do now will determine how quickly Pine Island and Thwaites collapse .",
+    "label": "false dilemma",
+    "fol": "Proposition: ∃f (CollapseRate(pineIsland) = f(OurActionsNow) ∧ CollapseRate(thwaites) = f(OurActionsNow))\nHidden"
+  },
+  {
+    "text": "For 30 years\nI taught at MIT , during which time the climate has changed remarkably little .",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∃t (TaughtAtDuring(speaker, mit, t) ∧ DurationIs(t, thirtyYears) ∧ ChangedLittleDuring(theClimate, t))"
+  },
+  {
+    "text": "For 30 years\nI taught at MIT , during which time the climate has changed remarkably little .",
+    "label": "intentional",
+    "fol": "Proposition: ∃p, t (Person(p) ∧ TaughtAt(p, mit, t) ∧ Duration(t) = 30"
+  },
+  {
+    "text": "For politicians it ’ s money and power .",
+    "label": "ad hominem",
+    "fol": "Proposition: ∀x (Politician(x) → (Seeks(x, money) ∧ Seeks(x, power)))\nConclusion: ∀x (Politician(x) → ("
+  },
+  {
+    "text": "And for the media it ’ s ideology , money , and headlines .",
+    "label": "ad hominem",
+    "fol": "Proposition: IsPrimaryMotivationFor(ideology, theMedia) ∧ IsPrimaryMotivationFor(money, theMedia) ∧ IsPrimaryMotivationFor(headlines, theMedia)\nHidden assumption"
+  },
+  {
+    "text": "For politicians it ’ s money and power . For environmentalists it ’ s money for their\norganizations and confirmation of their near religious devotion to the idea that man is a\ndestructive force acting upon nature .",
+    "label": "ad hominem",
+    "fol": "Proposition 1: ∀x (Politician(x) → (MotivatedBy(x, Money) ∧ MotivatedBy(x, Power)))\nProposition"
+  },
+  {
+    "text": "I ’ m an atmospheric physicist . I ’ ve published more than 200 scientific papers . For 30 years\nI taught at MIT , during which time the climate has changed remarkably little .",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: AtmosphericPhysicist(i)\nPremise 2: ∃n (NumberOfPapersPublishedBy(i, n) ∧ n >"
+  },
+  {
+    "text": "In fact , it seems that the less the climate\nchanges , the louder the voices of the climate alarmists get .",
+    "label": "false causality",
+    "fol": "Proposition: ∀t1 ∀t2 ((DegreeOfClimateChange(t2) < DegreeOfClimateChange(t1)) → (LoudnessOfAlarmistVoices(t2) >"
+  },
+  {
+    "text": "But the cry\nof “ global warming ” has grown ever more shrill .",
+    "label": "ad hominem",
+    "fol": "Proposition: HasGrownMoreShrill(cryOfGlobalWarming)\nConclusion: HasGrownMoreShrill(cryOfGlobalWarming)"
+  },
+  {
+    "text": "The following are\nsuch points of agreement :\n1 ) The climate is always changing .",
+    "label": "faulty generalization",
+    "fol": "Proposition: ∀t (Time(t) → IsChanging(theClimate, t))"
+  },
+  {
+    "text": "2 ) CO2 is a greenhouse gas without which life on earth is not possible , but adding it to the\natmosphere should lead to some warming .",
+    "label": "fallacy of relevance",
+    "fol": "Proposition: GreenhouseGas(co2) ∧ (¬∃x (IsCO2(x)) → ¬IsPossible(lifeOnEarth)) ∧ (AddsToAtmosphere(co2)"
+  },
+  {
+    "text": "4 ) Over this period ( the past two centuries ) , the global mean temperature has increased\nslightly and erratically by about 1.8 degrees Fahrenheit or one degree Celsius ; but only since\nthe 1960 ’ s have man ’ s greenhouse emissions been sufficient to play a role .",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: ∃t_start, t_end (IsPeriod(pastTwoCenturies, t_start, t_end) ∧ (GlobalMeanTemp(t_end"
+  },
+  {
+    "text": "4 ) Over this period ( the past two centuries ) , the global mean temperature has increased\nslightly and erratically by about 1.8 degrees Fahrenheit or one degree Celsius ; but only since\nthe 1960 ’ s have man ’ s greenhouse emissions been sufficient to play a role .",
+    "label": "fallacy of logic",
+    "fol": "Premise 1: ∃t_start ∃t_end (IsPeriod(t_start, t_end, PastTwoCenturies) ∧ Equals(GlobalMean"
+  },
+  {
+    "text": "The IPCC acknowledged in its own 2007 report that\n“ The long-term prediction of future climate states is not possible . ”",
+    "label": "intentional",
+    "fol": "Proposition: AcknowledgedInReport(ipcc, ipcc2007Report, ¬∃p (IsLongTermPrediction(p) ∧ IsOfFutureClimateStates(p)))"
+  },
+  {
+    "text": "Most importantly , the scenario that the burning of fossil fuel leads to catastrophe isn ’ t part of\nwhat either group asserts .",
+    "label": "fallacy of logic",
+    "fol": "Proposition: ∃s ∃g1 ∃g2 (s ↔ LeadsTo(BurningFossilFuel, Catastrophe) ∧ Group(g1) ∧ Group("
+  },
+  {
+    "text": "Most importantly , the scenario that the burning of fossil fuel leads to catastrophe isn ’ t part of\nwhat either group asserts .",
+    "label": "intentional",
+    "fol": "Proposition: ∀g (IsOneOfTheGroups(g) → ¬Asserts(g, LeadsTo(BurningFossilFuel, Catastrophe)))"
+  },
+  {
+    "text": "So why are so many people worried , indeed , panic stricken about\nthis issue .",
+    "label": "appeal to emotion",
+    "fol": "Proposition: ∃x (Person(x) ∧ WorriedAbout(x, thisIssue) ∧ PanicStrickenAbout(x, thisIssue))\nConclusion:"
+  },
+  {
+    "text": "Global warming alarmism provides them , more than any other issue , with the things they\nmost want : For politicians it ’ s money and power . For environmentalists it ’ s money for their\norganizations and confirmation of their near religious devotion to the idea that man is a\ndestructive force acting upon nature . And for the media it ’ s ideology , money , and headlines .",
+    "label": "fallacy of extension",
+    "fol": "Premise 1: ∀x (Politician(x) → Provides(gwa, Money, x) ∧ Provides(gwa, Power, x))\nPrem"
+  },
+  {
+    "text": "Meanwhile , over the last decade , scientists outside of climate physics have jumped on the\nbandwagon , publishing papers blaming global warming for everything from acne to the Syrian\ncivil war .",
+    "label": "intentional",
+    "fol": "Proposition: ∃x ∃p (Scientist(x) ∧ ¬ClimatePhysicist(x) ∧ PublishesPaper(x, p) ∧"
+  },
+  {
+    "text": "And crony capitalists have eagerly grabbed for the subsidies that governments have\nso lavishly provided .",
+    "label": "ad hominem",
+    "fol": "Premise 1: ∀x (CronyCapitalist(x) → ∃y∃z (Subsidy(y) ∧ Government(z)"
+  },
+  {
+    "text": "AD\nLong was not involved in the current work , but his research had previously demonstrated that ocean oxygen loss was expected to occur and that it should soon be possible to demonstrate that in the real world through measurements , despite the complexities involved in studying the global ocean and deducing trends about it .",
+    "label": "fallacy of credibility",
+    "fol": "Premise 1: ¬InvolvedIn(adLong, currentWork)\nPremise 2: Demonstrated(researchOf(adLong), WasExpectedToOccur(oceanOxygen"
+  }
+]
