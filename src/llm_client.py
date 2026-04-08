@@ -1,12 +1,20 @@
-import json
 import os
+import time
+import random
 from dotenv import load_dotenv
 from pathlib import Path
 import ollama
-import vertexai
-from vertexai.generative_models import GenerativeModel
+from google import genai
+from google.genai import types
 
 load_dotenv(Path(__file__).parent.parent / ".env")
+
+# Substrings that identify retryable API errors
+_RETRYABLE = frozenset([
+    '503', '429', '500', 'quota', 'unavailable', 'deadline',
+    'timeout', 'rate limit', 'resource exhausted', 'service unavailable',
+    'internal server error', 'connection', 'reset by peer',
+])
 
 
 class LLMClient:
@@ -19,21 +27,34 @@ class LLMClient:
         elif self.backend == 'openai':
             self.model = model or 'gpt-4o'
         elif self.backend == 'gemini':
-            vertexai.init(project = os.getenv("PROJECT_ID"), location = "us-east1")
-            self.model = GenerativeModel(model)
+            self.model_name = model or 'gemini-2.5-flash'
+            self._genai_client = genai.Client(
+                vertexai=True,
+                project=os.getenv("PROJECT_ID"),
+                location="us-east1",
+            )
         else:
-            raise ValueError(f"Unknown backend: {self.backend}. Use 'ollama', 'openai', or 'gemini'.")
-
-
+            raise ValueError(f"Unknown backend: {self.backend!r}. Use 'ollama', 'openai', or 'gemini'.")
 
     def _env_key(self):
-        return {
-            'ollama': '',
-            'openai': 'OPENAI_API_KEY',
-            'gemini': os.getenv("GEMINI_API_KEY"),
-        }.get(self.backend, '')
+        return {'ollama': '', 'openai': 'OPENAI_API_KEY', 'gemini': 'GEMINI_API_KEY'}.get(self.backend, '')
 
-
+    def _with_retry(self, fn, max_retries=5):
+        """Call fn(), retrying with exponential backoff on transient errors."""
+        last_exc = None
+        for attempt in range(max_retries):
+            try:
+                return fn()
+            except Exception as e:
+                err_str = (type(e).__name__ + ' ' + str(e)).lower()
+                is_retryable = any(code in err_str for code in _RETRYABLE)
+                last_exc = e
+                if not is_retryable or attempt == max_retries - 1:
+                    raise
+                wait = min(60.0, (2 ** attempt) + random.uniform(0, 1))
+                print(f"  [retry {attempt + 1}/{max_retries - 1}] {type(e).__name__}: waiting {wait:.1f}s")
+                time.sleep(wait)
+        raise last_exc  # unreachable, but satisfies type checkers
 
     def chat(self, message, system_prompt=None):
         if self.backend == 'ollama':
@@ -41,19 +62,19 @@ class LLMClient:
         elif self.backend == 'openai':
             return self._chat_openai(message, system_prompt)
         elif self.backend == 'gemini':
-            return self._generate_gemini(message, system_prompt)
-
-
+            return self._chat_gemini(message, system_prompt)
 
     def _chat_ollama(self, message, system_prompt=None):
         msgs = []
         if system_prompt:
             msgs.append({'role': 'system', 'content': system_prompt})
         msgs.append({'role': 'user', 'content': message})
-        response = ollama.chat(model=self.model, messages=msgs)
-        return response['message']['content']
 
+        def call():
+            response = ollama.chat(model=self.model, messages=msgs)
+            return response['message']['content']
 
+        return self._with_retry(call)
 
     def _chat_openai(self, message, system_prompt=None):
         import httpx
@@ -62,59 +83,40 @@ class LLMClient:
             msgs.append({'role': 'system', 'content': system_prompt})
         msgs.append({'role': 'user', 'content': message})
 
-        resp = httpx.post(
-            'https://api.openai.com/v1/chat/completions',
-            headers={
-                'Authorization': f'Bearer {self.api_key}',
-                'Content-Type': 'application/json',
-            },
-            json={
-                'model': self.model,
-                'messages': msgs,
-                'temperature': 0.2,
-            },
-            timeout=60,
-        )
-        resp.raise_for_status()
-        return resp.json()['choices'][0]['message']['content']
+        def call():
+            resp = httpx.post(
+                'https://api.openai.com/v1/chat/completions',
+                headers={
+                    'Authorization': f'Bearer {self.api_key}',
+                    'Content-Type': 'application/json',
+                },
+                json={'model': self.model, 'messages': msgs, 'temperature': 0.1},
+                timeout=60,
+            )
+            resp.raise_for_status()
+            return resp.json()['choices'][0]['message']['content']
 
-
+        return self._with_retry(call)
 
     def _chat_gemini(self, message, system_prompt=None):
-        import httpx
-        url = (
-            f'https://generativelanguage.googleapis.com/v1beta/models/'
-            f'{self.model}:generateContent?key={self.api_key}'
+        """Call Gemini via Vertex AI using the google-genai SDK."""
+        config = types.GenerateContentConfig( 
+            temperature=0.1,
+            max_output_tokens=1024,
+            system_instruction=system_prompt,
         )
-        contents = []
-        if system_prompt:
-            contents.append({'role': 'user', 'parts': [{'text': system_prompt}]})
-            contents.append({'role': 'model', 'parts': [{'text': 'Understood.'}]})
-        contents.append({'role': 'user', 'parts': [{'text': message}]})
 
-        resp = httpx.post(
-            url,
-            headers={'Content-Type': 'application/json'},
-            json={
-                'contents': contents,
-                'generationConfig': {'temperature': 0.2},
-            },
-            timeout=60,
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        return data['candidates'][0]['content']['parts'][0]['text']
+        def call():
+            response = self._genai_client.models.generate_content(
+                model=self.model_name,
+                contents=message,
+                config=config,
+            )
+            return response.text
 
-    def _generate_gemini(self, message, system_prompt=None):
-        response = self.model.generate_content(
-            message,
-        )
-        return response.text
-
-
+        return self._with_retry(call)
 
 
 if __name__ == '__main__':
-    # Quick test — change backend/key as needed
-    client = LLMClient(backend='gemini', model='gemini-2.5-pro')
+    client = LLMClient(backend='gemini', model='gemini-2.5-flash')
     print(client.chat("What is first-order logic? One sentence."))
