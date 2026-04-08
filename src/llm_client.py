@@ -100,9 +100,9 @@ class LLMClient:
 
     def _chat_gemini(self, message, system_prompt=None):
         """Call Gemini via Vertex AI using the google-genai SDK."""
-        config = types.GenerateContentConfig( 
+        config = types.GenerateContentConfig(
             temperature=0.1,
-            max_output_tokens=1024,
+            max_output_tokens=2048,
             system_instruction=system_prompt,
         )
 
@@ -112,6 +112,13 @@ class LLMClient:
                 contents=message,
                 config=config,
             )
+            candidate = response.candidates[0]
+            finish = candidate.finish_reason.name if candidate.finish_reason else 'UNKNOWN'
+            if finish == 'MAX_TOKENS':
+                raise RuntimeError(
+                    f"Response truncated (MAX_TOKENS): partial output was {len(response.text)} chars. "
+                    f"Increase max_output_tokens or shorten the input."
+                )
             return response.text
 
         return self._with_retry(call)

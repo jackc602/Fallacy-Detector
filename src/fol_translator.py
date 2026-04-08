@@ -89,6 +89,11 @@ def validate_fol_response(text: str) -> tuple[bool, str]:
     if not (has_symbol or has_label or has_predicate):
         return False, "no FOL content detected (no symbols, labels, or predicates)"
 
+    has_premise = 'Premise' in stripped or 'Hidden assumption' in stripped
+    has_conclusion = 'Conclusion:' in stripped or 'Proposition:' in stripped
+    if has_premise and not has_conclusion:
+        return False, "truncated: has premises but no Conclusion line"
+
     return True, "ok"
 
 
