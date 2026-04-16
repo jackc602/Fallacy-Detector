@@ -23,6 +23,26 @@ BATCH_SIZE    = 64
 LEARNING_RATE = 0.001
 MIN_DF        = 2
 
+SMT_LABELS = [
+    "false dilemma",
+    "circular reasoning",
+    "fallacy of logic",
+    "false causality",
+    "faulty generalization",
+    "equivocation",
+]
+
+NON_SMT_LABELS = [
+    "ad hominem",
+    "ad populum",
+    "appeal to emotion",
+    "fallacy of credibility",
+    "fallacy of extension",
+    "fallacy of relevance",
+    "intentional",
+]
+
+
 def load_split(split):
     with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json") as f:
         return json.load(f)
@@ -142,6 +162,18 @@ def main():
     dev_texts    = [item["text"] for item in dev_data]
     train_labels = [item["label"] for item in train_data]
     dev_labels   = [item["label"] for item in dev_data]
+
+    # logical fallacies only
+    pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in SMT_LABELS]
+    train_texts, train_labels = zip(*pairs)
+    pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in SMT_LABELS]
+    dev_texts, dev_labels = zip(*pairs)
+
+    ## informal fallacies only (swap with block above)
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in NON_SMT_LABELS]
+    # train_texts, train_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in NON_SMT_LABELS]
+    # dev_texts, dev_labels = zip(*pairs)
 
     train_tokens = [tokenize(t) for t in train_texts]
     dev_tokens   = [tokenize(t) for t in dev_texts]
