@@ -23,6 +23,26 @@ FREEZE_EMBEDDINGS = True
 PAD_TOKEN = "<PAD>"
 UNK_TOKEN = "<UNK>"
 
+# logical fallacies (smt solvable)
+SMT_LABELS = [
+    "false dilemma",
+    "circular reasoning",
+    "fallacy of logic",
+    "false causality",
+    "faulty generalization",
+    "equivocation",
+]
+
+# informal fallacies (not smt solvable)
+NON_SMT_LABELS = [
+    "ad hominem",
+    "ad populum",
+    "appeal to emotion",
+    "fallacy of credibility",
+    "fallacy of extension",
+    "fallacy of relevance",
+    "intentional",
+]
 
 def load_split_labels(split):
     with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", "r") as f:
@@ -47,7 +67,7 @@ def load_word_embeddings():
         assert assigned == idx, f"vocab/index mismatch for {word}"
 
     vec_list = [vectors[i] for i in range(len(vectors))]
-    return WordEmbeddings(indexer, vec_list)
+    return WordEmbeddings(indexer, vec_list), vocab
 
 
 def build_label_indexer(labels):
@@ -182,7 +202,7 @@ def main():
     torch.manual_seed(42)
     np.random.seed(42)
 
-    word_embeddings = load_word_embeddings()
+    word_embeddings, vocab = load_word_embeddings()
     pad_idx = word_embeddings.word_indexer.index_of(PAD_TOKEN)
     unk_idx = word_embeddings.word_indexer.index_of(UNK_TOKEN)
 
@@ -193,6 +213,18 @@ def main():
     # load labels and load them into indexers
     train_labels = load_split_labels("train")
     dev_labels = load_split_labels("dev")
+
+    # logical fallacies only
+    pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in SMT_LABELS]
+    train_tokens, train_labels = zip(*pairs)
+    pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in SMT_LABELS]
+    dev_tokens, dev_labels = zip(*pairs)
+
+    ## informal fallacies only (swap with block above)
+    # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in NON_SMT_LABELS]
+    # train_tokens, train_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in NON_SMT_LABELS]
+    # dev_tokens, dev_labels = zip(*pairs)
 
     label_indexer = build_label_indexer(train_labels)
     num_classes = len(label_indexer)
