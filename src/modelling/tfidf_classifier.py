@@ -4,10 +4,10 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
 import torch
 import torch.nn as nn
+import numpy as np
+import pandas as pd
 from pathlib import Path
 from sklearn.metrics import classification_report, confusion_matrix
 from torch.utils.data import DataLoader, Dataset
@@ -18,7 +18,7 @@ from utils import Indexer
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
 
-NUM_EPOCHS    = 50
+NUM_EPOCHS    = 200
 BATCH_SIZE    = 64
 LEARNING_RATE = 0.001
 MIN_DF        = 2
@@ -44,7 +44,7 @@ NON_SMT_LABELS = [
 
 
 def load_split(split):
-    with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json") as f:
+    with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -163,17 +163,17 @@ def main():
     train_labels = [item["label"] for item in train_data]
     dev_labels   = [item["label"] for item in dev_data]
 
-    # logical fallacies only
-    pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in SMT_LABELS]
-    train_texts, train_labels = zip(*pairs)
-    pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in SMT_LABELS]
-    dev_texts, dev_labels = zip(*pairs)
-
-    ## informal fallacies only (swap with block above)
-    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in NON_SMT_LABELS]
+    ## logical fallacies only
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in SMT_LABELS]
     # train_texts, train_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in NON_SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in SMT_LABELS]
     # dev_texts, dev_labels = zip(*pairs)
+
+    # informal fallacies only (swap with block above)
+    pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in NON_SMT_LABELS]
+    train_texts, train_labels = zip(*pairs)
+    pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in NON_SMT_LABELS]
+    dev_texts, dev_labels = zip(*pairs)
 
     train_tokens = [tokenize(t) for t in train_texts]
     dev_tokens   = [tokenize(t) for t in dev_texts]
