@@ -45,3 +45,27 @@
 - fallacy of extension nearly useless (0.163), same story as TF-IDF
 
 
+## DAN + TF-IDF - all 13 classes
+- 35.26% accuracy, actually worse than either single-stream baseline (TF-IDF 39.65%, DAN 40.35%) - naive concatenation is net negative here
+- severe overfitting: train loss 0.24, dev loss 4.19 by epoch 100, dev acc plateaus around epoch 30 and oscillates 0.33-0.35 after
+- TF-IDF vocab 4333, plus the 128d projection + 300d avg embedding feeding into the MLP is likely too many parameters for ~2000 training examples split across 13 classes
+- equivocation F1 0.214 (nonzero for the first time across any all-13 model) and fallacy of logic F1 0.102 both improve vs baselines, but faulty generalization (0.400) and intentional (0.318) lose some ground - the catch-all effect gets redistributed, not eliminated
+- ad hominem (0.514) and ad populum (0.516) hold up, same rhetorical-vocab story as the baselines
+- main takeaway: adding TF-IDF features did not help the DAN extract better signal, and the extra capacity probably hurt generalization
+
+## DAN + TF-IDF - logical fallacies only (6 smt solvable classes)
+- 52.78% accuracy, below both TF-IDF (57.87%) and DAN (62.50%) on the same subset
+- TF-IDF vocab 2189, model hits 0.52 dev by epoch 9 then plateaus while train loss keeps dropping (0.04 by epoch 100, dev loss 3.64) - same overfit signature as all-13 run
+- circular reasoning still the strongest signal (F1 0.684), faulty generalization close behind (0.616)
+- fallacy of logic F1 0.409 - notably better than DAN's 0.364, the one place fusion seems to help
+- equivocation 0 F1 again, consistent with every other model on this subset - no amount of feature engineering rescues the 9-sample class
+- false causality flipped to high-precision / low-recall (0.643 / 0.419), model got more conservative on that class than DAN did
+
+## DAN + TF-IDF - informal fallacies only (7 non-SMT classes)
+- 40.68% accuracy, ~8 points below both TF-IDF (48.87%) and DAN (48.31%) - biggest gap of the three hybrid runs
+- TF-IDF vocab 3142, same overfitting curve: train loss 0.13 by epoch 100, dev loss ~4.0
+- fallacy of relevance F1 0.151 (nonzero, DAN was 0) - again the hybrid spreads predictions instead of letting a catch-all swallow a class
+- intentional F1 0.434, way below its TF-IDF / DAN dominance - dropped from catch-all behavior, but the redistributed mass went into weaker classes and dragged accuracy down
+- ad populum (0.612) and ad hominem (0.525) survive but trail DAN's ad populum (0.698) - the TF-IDF projection seems to blur what DAN does well on rhetorical classes
+- hybrid's pattern across all three runs: flattens the class distribution slightly (fewer 0 F1s, weaker catch-alls) at the cost of overall accuracy - the two streams appear to interfere rather than complement, at least with this architecture and data size
+
