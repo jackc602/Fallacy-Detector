@@ -1,8 +1,8 @@
+import torch
+import torch.nn as nn
 import json
 import numpy as np
 import pandas as pd
-import torch
-import torch.nn as nn
 from pathlib import Path
 from sklearn.metrics import classification_report, confusion_matrix
 from torch.utils.data import DataLoader, Dataset
@@ -45,7 +45,7 @@ NON_SMT_LABELS = [
 ]
 
 def load_split_labels(split):
-    with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", "r") as f:
+    with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", "r", encoding="utf-8") as f:
         data = json.load(f)
     return [item["label"] for item in data]
 
@@ -214,13 +214,13 @@ def main():
     train_labels = load_split_labels("train")
     dev_labels = load_split_labels("dev")
 
-    # logical fallacies only
-    pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in SMT_LABELS]
-    train_tokens, train_labels = zip(*pairs)
-    pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in SMT_LABELS]
-    dev_tokens, dev_labels = zip(*pairs)
+    # # logical fallacies only
+    # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in SMT_LABELS]
+    # train_tokens, train_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in SMT_LABELS]
+    # dev_tokens, dev_labels = zip(*pairs)
 
-    ## informal fallacies only (swap with block above)
+    # # informal fallacies only (only one uncommented at a time)
     # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in NON_SMT_LABELS]
     # train_tokens, train_labels = zip(*pairs)
     # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in NON_SMT_LABELS]

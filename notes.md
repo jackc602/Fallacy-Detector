@@ -20,3 +20,28 @@
 - model peaked around epoch 69, extra training just overfits (train loss 0.31, dev loss 1.16 at epoch 200, same best checkpoint, 100 epochs and 200 epochs showed no difference, 100 better than 50)
 - same faulty generalization dominance and equivocation failure as DAN
 - high precision / low recall pattern across most classes - model is conservative, rarely commits but usually right when it does
+
+
+## DAN - all 13 classes
+- 40.35% accuracy, basically identical to TF-IDF on all 13 (39.65%)
+- equivocation and fallacy of relevance both 0 F1, model can't learn these
+- circular reasoning the clearest signal (0.690)
+- training very noisy throughout, dev loss barely trending down
+- 13 classes likely too many for small data set
+
+## DAN - logical fallacies only (6 smt solvable classes)
+- 62.5% accuracy
+- model defaults to faulty generalization when unclear (largest class, 84 dev samples)
+- equivocation is a total miss (0 F1) likely due to lack of training examples (9 dev samples)
+- circular reasoning is the strongest class (F1 0.789), probably has distinctive phrasing
+- false dilemma has high precision (0.867) but low recall meaning model rarely predicts it but is usually right when it does
+- fallacy of logic is weak (F1 0.364), likely absorbed into faulty generalization
+
+## DAN - informal fallacies only (7 non-SMT classes)
+- 48.31% accuracy, essentially tied with TF-IDF on the same task (48.87%), embeddings not helping here either
+- training curve much noisier than TF-IDF, dev acc bouncing around the whole run suggesting the model is struggling to find stable signal
+- fallacy of relevance is a total miss (0 F1), all 44 samples swallowed by intentional and other classes
+- ad populum strongest (F1 0.698), better than TF-IDF's 0.629 - one place DAN edges out
+- fallacy of extension nearly useless (0.163), same story as TF-IDF
+
+
