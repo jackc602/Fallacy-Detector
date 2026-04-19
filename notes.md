@@ -69,3 +69,24 @@
 - ad populum (0.612) and ad hominem (0.525) survive but trail DAN's ad populum (0.698) - the TF-IDF projection seems to blur what DAN does well on rhetorical classes
 - hybrid's pattern across all three runs: flattens the class distribution slightly (fewer 0 F1s, weaker catch-alls) at the cost of overall accuracy - the two streams appear to interfere rather than complement, at least with this architecture and data size
 
+
+## Argument Structure Features (14 features, no word identity)
+- 28.6% accuracy with handcrafted features only (premise/conclusion density, sentiment, text stats, etc.)
+- equivocation F1 0.233 which is the first none zero sxore we got
+- top features: pronoun usage, question marks, causal words, premise/conclusion ratio
+
+## TF-IDF + Argument Features
+- 39.12% accuracy and got a lot better class distribution
+- equivocation F1 0.261 and ad populum F1 0.604
+- structural features complement lexical ones, especially for pattern-defined fallacies
+
+
+# BERT models show that we are missing semantic understanding
+## DistilBERT
+- 50.18% accuracy
+- even BERT can't learn equivocation with 58 train / 9 dev samples
+- got a 0 f1
+
+## RoBERTa 
+- 51.23% untuned, 52.28% tuned with class weighting 
+- equivocation F1 0.500 (precision 1.000), macro F1 0.530
