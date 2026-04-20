@@ -114,23 +114,28 @@ def main():
     # load data
     train_data = load_split("train")
     dev_data = load_split("dev")
+    test_data = load_split("test")
 
     train_texts = [item["text"] for item in train_data]
     dev_texts = [item["text"] for item in dev_data]
+    test_texts = [item["text"] for item in test_data]
     train_labels = [item["label"] for item in train_data]
     dev_labels = [item["label"] for item in dev_data]
+    test_labels = [item["label"] for item in test_data]
 
     # extract and normalize features
     num_features = len(FEATURE_NAMES)
     print(f"Extracting {num_features} features...")
     train_features = np.array([extract_argument_features(t) for t in train_texts])
     dev_features = np.array([extract_argument_features(t) for t in dev_texts])
+    test_features = np.array([extract_argument_features(t) for t in test_texts])
 
     mu = train_features.mean(axis=0)
     sigma = train_features.std(axis=0)
     sigma[sigma == 0] = 1.0
     train_features = (train_features - mu) / sigma
     dev_features = (dev_features - mu) / sigma
+    test_features = (test_features - mu) / sigma
 
     print(f"Feature matrix shape: {train_features.shape}")
 
@@ -141,6 +146,7 @@ def main():
 
     train_y = torch.tensor([label_indexer.index_of(lbl) for lbl in train_labels], dtype=torch.long)
     dev_y = torch.tensor([label_indexer.index_of(lbl) for lbl in dev_labels], dtype=torch.long)
+    test_y = torch.tensor([label_indexer.index_of(lbl) for lbl in test_labels], dtype=torch.long)
 
     # data loaders
     train_loader = DataLoader(
@@ -149,6 +155,10 @@ def main():
     )
     dev_loader = DataLoader(
         torch.utils.data.TensorDataset(torch.tensor(dev_features), dev_y),
+        batch_size=BATCH_SIZE, shuffle=False,
+    )
+    test_loader = DataLoader(
+        torch.utils.data.TensorDataset(torch.tensor(test_features), test_y),
         batch_size=BATCH_SIZE, shuffle=False,
     )
 
@@ -173,8 +183,18 @@ def main():
     trainer.train()
 
     # evaluation
-    targets, preds = trainer.collect_predictions()
+    print("\n--- Dev set ---")
+    targets, preds = trainer.pred()
     print_eval_report(targets, preds, label_names)
+
+    print("\n--- Test set ---")
+    model.eval()
+    test_targets, test_preds = [], []
+    with torch.no_grad():
+        for x, y in test_loader:
+            test_preds.extend(model(x).argmax(-1).tolist())
+            test_targets.extend(y.tolist())
+    print_eval_report(test_targets, test_preds, label_names)
     print_feature_importance(model, FEATURE_NAMES)
 
 

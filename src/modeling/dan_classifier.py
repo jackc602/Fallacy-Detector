@@ -6,7 +6,7 @@ import pandas as pd
 from pathlib import Path
 from sklearn.metrics import classification_report, confusion_matrix
 from torch.utils.data import DataLoader, Dataset
-from utils import Indexer, WordEmbeddings
+from utils import Indexer, WordEmbeddings, print_eval_report
 
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
@@ -188,15 +188,6 @@ def collect_predictions(model, loader):
     return targets, preds
 
 
-def print_eval_report(targets, preds, label_names):
-    labels = list(range(len(label_names)))
-    cm = confusion_matrix(targets, preds, labels = labels)
-    print("\nConfusion matrix (rows = true, cols = pred):")
-    print(pd.DataFrame(cm, index=label_names, columns=label_names).to_string())
-    print("\nClassification report:")
-    print(classification_report(targets, preds, labels = labels,
-                                target_names = label_names, digits = 3, zero_division = 0))
-
 
 def main():
     torch.manual_seed(42)
@@ -209,36 +200,45 @@ def main():
     # load in data
     train_tokens = load_split_tokens("train")
     dev_tokens = load_split_tokens("dev")
+    test_tokens = load_split_tokens("test")
 
     # load labels and load them into indexers
     train_labels = load_split_labels("train")
     dev_labels = load_split_labels("dev")
+    test_labels = load_split_labels("test")
 
     # # logical fallacies only
     # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in SMT_LABELS]
     # train_tokens, train_labels = zip(*pairs)
     # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in SMT_LABELS]
     # dev_tokens, dev_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(test_tokens, test_labels) if l in SMT_LABELS]
+    # test_tokens, test_labels = zip(*pairs)
 
     # # informal fallacies only (only one uncommented at a time)
     # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in NON_SMT_LABELS]
     # train_tokens, train_labels = zip(*pairs)
     # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in NON_SMT_LABELS]
     # dev_tokens, dev_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(test_tokens, test_labels) if l in NON_SMT_LABELS]
+    # test_tokens, test_labels = zip(*pairs)
 
     label_indexer = build_label_indexer(train_labels)
     num_classes = len(label_indexer)
 
     train_y = encode_labels(train_labels, label_indexer)
     dev_y = encode_labels(dev_labels, label_indexer)
+    test_y = encode_labels(test_labels, label_indexer)
 
-    # package data instances and wrap in data loader object with our custom collate function 
+    # package data instances and wrap in data loader object with our custom collate function
     train_ds = DANDataset(train_tokens, train_y)
     dev_ds = DANDataset(dev_tokens, dev_y)
+    test_ds = DANDataset(test_tokens, test_y)
 
     collate = make_collate(pad_idx, unk_idx)
     train_loader = DataLoader(train_ds, batch_size = BATCH_SIZE, shuffle = True, collate_fn = collate)
     dev_loader = DataLoader(dev_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn = collate)
+    test_loader = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn = collate)
 
     model = DAN(word_embeddings = word_embeddings, num_classes = num_classes, pad_idx = pad_idx)
 
@@ -264,7 +264,13 @@ def main():
 
     # aggregate predictions and label names and run in depth eval
     label_names = [label_indexer.get_object(i) for i in range(num_classes)]
+
+    print("\n--- Dev set ---")
     targets, preds = collect_predictions(model, dev_loader)
+    print_eval_report(targets, preds, label_names)
+
+    print("\n--- Test set ---")
+    targets, preds = collect_predictions(model, test_loader)
     print_eval_report(targets, preds, label_names)
 
     out_path = DATA_DIR.parent / "src" / "models" / "dan_best.pt"

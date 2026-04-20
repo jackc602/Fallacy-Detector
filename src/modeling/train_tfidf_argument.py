@@ -28,35 +28,43 @@ def main():
     # load data
     train_data = load_split("train")
     dev_data   = load_split("dev")
+    test_data  = load_split("test")
 
     train_texts  = [item["text"] for item in train_data]
     dev_texts    = [item["text"] for item in dev_data]
+    test_texts   = [item["text"] for item in test_data]
     train_labels = [item["label"] for item in train_data]
     dev_labels   = [item["label"] for item in dev_data]
+    test_labels  = [item["label"] for item in test_data]
 
     # tfidf features
     train_tokens = [tokenize(t) for t in train_texts]
     dev_tokens   = [tokenize(t) for t in dev_texts]
+    test_tokens  = [tokenize(t) for t in test_texts]
 
     vocab = build_vocab(train_tokens)
     print(f"TF-IDF vocab size: {len(vocab)}")
 
     train_tfidf, idf = compute_tfidf(train_tokens, vocab)
     dev_tfidf,   _   = compute_tfidf(dev_tokens, vocab, idf=idf)
+    test_tfidf,  _   = compute_tfidf(test_tokens, vocab, idf=idf)
 
     # argument structure features
     print(f"Extracting {len(FEATURE_NAMES)} argument structure features...")
     train_arg = np.array([extract_argument_features(t) for t in train_texts])
     dev_arg   = np.array([extract_argument_features(t) for t in dev_texts])
+    test_arg  = np.array([extract_argument_features(t) for t in test_texts])
 
     mu    = train_arg.mean(axis=0)
     sigma = train_arg.std(axis=0)
     sigma[sigma == 0] = 1.0
     train_arg = (train_arg - mu) / sigma
     dev_arg   = (dev_arg - mu) / sigma
+    test_arg  = (test_arg - mu) / sigma
 
     train_vecs = np.hstack([train_tfidf, train_arg])
     dev_vecs   = np.hstack([dev_tfidf, dev_arg])
+    test_vecs  = np.hstack([test_tfidf, test_arg])
     input_dim  = train_vecs.shape[1]
 
     print(f"Combined feature vector: {input_dim} "
@@ -69,6 +77,7 @@ def main():
 
     train_y = torch.tensor([label_indexer.index_of(lbl) for lbl in train_labels], dtype=torch.long)
     dev_y   = torch.tensor([label_indexer.index_of(lbl) for lbl in dev_labels], dtype=torch.long)
+    test_y  = torch.tensor([label_indexer.index_of(lbl) for lbl in test_labels], dtype=torch.long)
 
     # data loaders
     train_loader = DataLoader(
@@ -77,6 +86,10 @@ def main():
     )
     dev_loader = DataLoader(
         torch.utils.data.TensorDataset(torch.tensor(dev_vecs), dev_y),
+        batch_size=BATCH_SIZE, shuffle=False,
+    )
+    test_loader = DataLoader(
+        torch.utils.data.TensorDataset(torch.tensor(test_vecs), test_y),
         batch_size=BATCH_SIZE, shuffle=False,
     )
 
@@ -102,8 +115,18 @@ def main():
     trainer = Trainer(model, train_loader, dev_loader, loss_fn, optimizer, num_epochs=NUM_EPOCHS)
     trainer.train()
 
-    targets, preds = trainer.collect_predictions()
+    print("\n--- Dev set ---")
+    targets, preds = trainer.pred()
     print_eval_report(targets, preds, label_names)
+
+    print("\n--- Test set ---")
+    model.eval()
+    test_targets, test_preds = [], []
+    with torch.no_grad():
+        for x, y in test_loader:
+            test_preds.extend(model(x).argmax(-1).tolist())
+            test_targets.extend(y.tolist())
+    print_eval_report(test_targets, test_preds, label_names)
 
 
 if __name__ == "__main__":

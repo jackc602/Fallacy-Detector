@@ -12,7 +12,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from torch.utils.data import DataLoader, Dataset
 
 sys.path.insert(0, str(Path(__file__).parent))
-from utils import Indexer, WordEmbeddings
+from utils import Indexer, WordEmbeddings, print_eval_report
 
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
@@ -233,15 +233,6 @@ def collect_predictions(model, loader):
     return targets, preds
 
 
-def print_eval_report(targets, preds, label_names):
-    labels = list(range(len(label_names)))
-    cm = confusion_matrix(targets, preds, labels=labels)
-    print("\nConfusion matrix (rows = true, cols = pred):")
-    print(pd.DataFrame(cm, index=label_names, columns=label_names).to_string())
-    print("\nClassification report:")
-    print(classification_report(targets, preds, labels=labels,
-                                target_names=label_names, digits=3, zero_division=0))
-
 
 def main():
     torch.manual_seed(42)
@@ -253,37 +244,47 @@ def main():
 
     train_raw = load_split_raw("train")
     dev_raw   = load_split_raw("dev")
+    test_raw  = load_split_raw("test")
 
     train_token_ids = load_split_tokens("train")
     dev_token_ids   = load_split_tokens("dev")
+    test_token_ids  = load_split_tokens("test")
 
     train_texts = [item["text"]  for item in train_raw]
     dev_texts = [item["text"]  for item in dev_raw]
+    test_texts = [item["text"]  for item in test_raw]
     train_labels = [item["label"] for item in train_raw]
     dev_labels = [item["label"] for item in dev_raw]
+    test_labels = [item["label"] for item in test_raw]
 
     ## logical fallacies only
     # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(train_token_ids, train_texts, train_labels) if lbl in SMT_LABELS]
     # train_token_ids, train_texts, train_labels = [list(x) for x in zip(*triples)]
     # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(dev_token_ids, dev_texts, dev_labels) if lbl in SMT_LABELS]
     # dev_token_ids, dev_texts, dev_labels = [list(x) for x in zip(*triples)]
+    # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(test_token_ids, test_texts, test_labels) if lbl in SMT_LABELS]
+    # test_token_ids, test_texts, test_labels = [list(x) for x in zip(*triples)]
 
     ## informal fallacies only (swap with block above)
     # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(train_token_ids, train_texts, train_labels) if lbl in NON_SMT_LABELS]
     # train_token_ids, train_texts, train_labels = [list(x) for x in zip(*triples)]
     # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(dev_token_ids, dev_texts, dev_labels) if lbl in NON_SMT_LABELS]
     # dev_token_ids, dev_texts, dev_labels = [list(x) for x in zip(*triples)]
+    # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(test_token_ids, test_texts, test_labels) if lbl in NON_SMT_LABELS]
+    # test_token_ids, test_texts, test_labels = [list(x) for x in zip(*triples)]
 
     # tf-idf stream uses its own regex tokenizer over raw text; the pretrained
     # embedding vocab is separate and drives the dan stream via the token-id files
     train_text_tokens = [tokenize(t) for t in train_texts]
     dev_text_tokens = [tokenize(t) for t in dev_texts]
+    test_text_tokens = [tokenize(t) for t in test_texts]
 
     tfidf_vocab = build_tfidf_vocab(train_text_tokens)
     print(f"TF-IDF vocab size: {len(tfidf_vocab)}")
 
     train_tfidf, idf = compute_tfidf(train_text_tokens, tfidf_vocab)
-    dev_tfidf, _ = compute_tfidf(dev_text_tokens,   tfidf_vocab, idf=idf)
+    dev_tfidf, _ = compute_tfidf(dev_text_tokens, tfidf_vocab, idf=idf)
+    test_tfidf, _ = compute_tfidf(test_text_tokens, tfidf_vocab, idf=idf)
 
     label_indexer = build_label_indexer(train_labels)
     num_classes = len(label_indexer)
@@ -291,13 +292,16 @@ def main():
 
     train_y = encode_labels(train_labels, label_indexer)
     dev_y = encode_labels(dev_labels, label_indexer)
+    test_y = encode_labels(test_labels, label_indexer)
 
     train_ds = HybridDataset(train_token_ids, train_tfidf, train_y)
     dev_ds = HybridDataset(dev_token_ids, dev_tfidf, dev_y)
+    test_ds = HybridDataset(test_token_ids, test_tfidf, test_y)
 
     collate = make_collate(pad_idx, unk_idx)
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate)
     dev_loader = DataLoader(dev_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate)
+    test_loader = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate)
 
     model = HybridClassifier(
         word_embeddings=word_embeddings,
@@ -322,7 +326,12 @@ def main():
     if best_state is not None:
         model.load_state_dict(best_state)
 
+    print("\n--- Dev set ---")
     targets, preds = collect_predictions(model, dev_loader)
+    print_eval_report(targets, preds, label_names)
+
+    print("\n--- Test set ---")
+    targets, preds = collect_predictions(model, test_loader)
     print_eval_report(targets, preds, label_names)
 
     out_path = DATA_DIR.parent / "src" / "models" / "dan_tfidf_best.pt"

@@ -13,7 +13,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from torch.utils.data import DataLoader, Dataset
 
 sys.path.insert(0, str(Path(__file__).parent))
-from utils import Indexer
+from utils import Indexer, print_eval_report
 
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
@@ -141,15 +141,6 @@ def collect_predictions(model, loader):
     return targets, preds
 
 
-def print_eval_report(targets, preds, label_names):
-    labels = list(range(len(label_names)))
-    cm = confusion_matrix(targets, preds, labels=labels)
-    print("\nConfusion matrix (rows = true, cols = pred):")
-    print(pd.DataFrame(cm, index=label_names, columns=label_names).to_string())
-    print("\nClassification report:")
-    print(classification_report(targets, preds, labels=labels,
-                                target_names=label_names, digits=3, zero_division=0))
-
 
 def main():
     torch.manual_seed(42)
@@ -157,32 +148,41 @@ def main():
 
     train_data = load_split("train")
     dev_data   = load_split("dev")
+    test_data  = load_split("test")
 
     train_texts  = [item["text"] for item in train_data]
     dev_texts    = [item["text"] for item in dev_data]
+    test_texts   = [item["text"] for item in test_data]
     train_labels = [item["label"] for item in train_data]
     dev_labels   = [item["label"] for item in dev_data]
+    test_labels  = [item["label"] for item in test_data]
 
-    ## logical fallacies only
+    # # logical fallacies only
     # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in SMT_LABELS]
     # train_texts, train_labels = zip(*pairs)
     # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in SMT_LABELS]
     # dev_texts, dev_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in SMT_LABELS]
+    # test_texts, test_labels = zip(*pairs)
 
-    # informal fallacies only (swap with block above)
-    pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in NON_SMT_LABELS]
-    train_texts, train_labels = zip(*pairs)
-    pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in NON_SMT_LABELS]
-    dev_texts, dev_labels = zip(*pairs)
+    # # informal fallacies only (swap with block above)
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in NON_SMT_LABELS]
+    # train_texts, train_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in NON_SMT_LABELS]
+    # dev_texts, dev_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in NON_SMT_LABELS]
+    # test_texts, test_labels = zip(*pairs)
 
     train_tokens = [tokenize(t) for t in train_texts]
     dev_tokens   = [tokenize(t) for t in dev_texts]
+    test_tokens  = [tokenize(t) for t in test_texts]
 
     vocab = build_vocab(train_tokens)
     print(f"Vocab size: {len(vocab)}")
 
     train_vecs, idf = compute_tfidf(train_tokens, vocab)
     dev_vecs,   _   = compute_tfidf(dev_tokens,   vocab, idf=idf)
+    test_vecs,  _   = compute_tfidf(test_tokens,  vocab, idf=idf)
 
     label_indexer = build_label_indexer(train_labels)
     num_classes   = len(label_indexer)
@@ -190,10 +190,13 @@ def main():
 
     train_y = [label_indexer.index_of(l) for l in train_labels]
     dev_y   = [label_indexer.index_of(l) for l in dev_labels]
+    test_y  = [label_indexer.index_of(l) for l in test_labels]
 
     train_loader = DataLoader(TFIDFDataset(train_vecs, train_y),
                               batch_size=BATCH_SIZE, shuffle=True)
     dev_loader   = DataLoader(TFIDFDataset(dev_vecs, dev_y),
+                              batch_size=BATCH_SIZE, shuffle=False)
+    test_loader  = DataLoader(TFIDFDataset(test_vecs, test_y),
                               batch_size=BATCH_SIZE, shuffle=False)
 
     # logistic regression - single linear layer
@@ -214,7 +217,12 @@ def main():
     print(f"\nBest dev accuracy: {best_dev_acc:.4f}")
     model.load_state_dict(best_state)
 
+    print("\n--- Dev set ---")
     targets, preds = collect_predictions(model, dev_loader)
+    print_eval_report(targets, preds, label_names)
+
+    print("\n--- Test set ---")
+    targets, preds = collect_predictions(model, test_loader)
     print_eval_report(targets, preds, label_names)
 
 

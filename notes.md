@@ -90,3 +90,32 @@
 ## RoBERTa 
 - 51.23% untuned, 52.28% tuned with class weighting 
 - equivocation F1 0.500 (precision 1.000), macro F1 0.530
+
+
+# Results
+
+## For all classes
+
+| Model              | Dev Acc | Dev Macro F1 | Dev Weighted F1 | Test Acc | Test Macro F1 | Test Weighted F1 |
+|--------------------|---------|--------------|-----------------|----------|---------------|------------------|
+| TF-IDF             | 40.0%   | 0.380        | 0.385           | 37.6%    | 0.328         | 0.356            |
+| DAN                | 39.8%   | 0.332        | 0.368           | 33.7%    | 0.297         | 0.309            |
+| DAN+TF-IDF Hybrid  | 35.8%   | 0.346        | 0.355           | 36.0%    | 0.335         | 0.358            |
+| Argument Features  | 19.1%   | 0.186        | 0.182           | 15.3%    | 0.139         | 0.137            |
+| TF-IDF + Argument  | 40.2%   | 0.396        | 0.403           | 39.9%    | 0.373         | 0.396            |
+| DistilBERT         | 46.5%   | 0.405        | 0.441           | 40.7%    | 0.341         | 0.371            |
+| RoBERTa (weighted) | 53.2%   | 0.545        | 0.534           | 47.6%    | 0.450         | 0.469            |
+
+## For 6 logical fallacies
+
+| Model   | Dev Acc | Dev Macro F1 | Dev Weighted F1 | Test Acc | Test Macro F1 | Test Weighted F1 |
+|---------|---------|--------------|-----------------|----------|---------------|------------------|
+| TF-IDF  | 57.9%   | 0.443        | 0.528           | 54.2%    | 0.392         | 0.493            |
+| DAN     | 63.0%   | 0.513        | 0.597           | 59.7%    | 0.441         | 0.553            |
+
+## 7 informal fallacies
+
+| Model   | Dev Acc | Dev Macro F1 | Dev Weighted F1 | Test Acc | Test Macro F1 | Test Weighted F1 |
+|---------|---------|--------------|-----------------|----------|---------------|------------------|
+| TF-IDF  | 48.9%   | 0.420        | 0.454           | 45.5%    | 0.424         | 0.432            |
+| DAN     | 48.3%   | 0.383        | 0.431           | 46.5%    | 0.410         | 0.417            |

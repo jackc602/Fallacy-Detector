@@ -1,23 +1,23 @@
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 import torch
+import torch.nn as nn
 import numpy as np
-import pandas as pd
-from sklearn.metrics import classification_report, confusion_matrix
 from torch.utils.data import DataLoader, Dataset
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 sys.path.insert(0, str(Path(__file__).parent))
-from utils import Indexer
+from utils import Indexer, print_eval_report
 
 path = Path(__file__).parent.parent.parent / "data"
 
-MODEL_NAME    = "distilbert-base-uncased"
-NUM_EPOCHS    = 5
+MODEL_NAME    = "roberta-base"
+NUM_EPOCHS    = 20
 BATCH_SIZE    = 16
-LEARNING_RATE = 0.000002
+LEARNING_RATE = 2e-5
 MAX_LENGTH    = 128
 
 
@@ -47,14 +47,6 @@ def build_label_indexer(labels):
     return indexer
 
 
-def print_eval_report(targets, preds, label_names):
-    labels = list(range(len(label_names)))
-    cm = confusion_matrix(targets, preds, labels=labels)
-    print("\nConfusion matrix (rows = true, cols = pred):")
-    print(pd.DataFrame(cm, index=label_names, columns=label_names).to_string())
-    print("\nClassification report:")
-    print(classification_report(targets, preds, labels=labels,target_names=label_names, digits=3, zero_division=0))
-
 
 def main():
     torch.manual_seed(42)
@@ -66,11 +58,14 @@ def main():
     # load data
     train_data = load_split("train")
     dev_data   = load_split("dev")
+    test_data  = load_split("test")
 
     train_texts  = [item["text"] for item in train_data]
     dev_texts    = [item["text"] for item in dev_data]
+    test_texts   = [item["text"] for item in test_data]
     train_labels = [item["label"] for item in train_data]
     dev_labels   = [item["label"] for item in dev_data]
+    test_labels  = [item["label"] for item in test_data]
 
     # labels
     label_indexer = build_label_indexer(train_labels)
@@ -79,8 +74,9 @@ def main():
 
     train_y = torch.tensor([label_indexer.index_of(lbl) for lbl in train_labels], dtype=torch.long)
     dev_y   = torch.tensor([label_indexer.index_of(lbl) for lbl in dev_labels], dtype=torch.long)
+    test_y  = torch.tensor([label_indexer.index_of(lbl) for lbl in test_labels], dtype=torch.long)
 
-    print(f"Train: {len(train_texts)}, Dev: {len(dev_texts)}, Classes: {num_classes}")
+    print(f"Train: {len(train_texts)}, Dev: {len(dev_texts)}, Test: {len(test_texts)}, Classes: {num_classes}")
 
     # tokenize with pretrained tokenizer
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
@@ -90,9 +86,20 @@ def main():
 
     train_enc = tokenizer(train_texts, truncation=True, padding=True, max_length=MAX_LENGTH, return_tensors="pt")
     dev_enc   = tokenizer(dev_texts, truncation=True, padding=True, max_length=MAX_LENGTH, return_tensors="pt")
+    test_enc  = tokenizer(test_texts, truncation=True, padding=True, max_length=MAX_LENGTH, return_tensors="pt")
 
     train_loader = DataLoader(FallacyDataset(train_enc, train_y), batch_size=BATCH_SIZE, shuffle=True)
     dev_loader   = DataLoader(FallacyDataset(dev_enc, dev_y), batch_size=BATCH_SIZE, shuffle=False)
+    test_loader  = DataLoader(FallacyDataset(test_enc, test_y), batch_size=BATCH_SIZE, shuffle=False)
+
+    # class-weighted loss
+    counts = Counter(train_y.tolist())
+    n_samples = len(train_y)
+    w = torch.tensor(
+        [n_samples / (num_classes * counts[i]) for i in range(num_classes)],
+        dtype=torch.float32,
+    ).to(device)
+    loss_fn = nn.CrossEntropyLoss(weight=w)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=0.01)
 
@@ -107,12 +114,12 @@ def main():
         for batch in train_loader:
             optimizer.zero_grad()
             out = model(input_ids=batch["input_ids"].to(device),
-                        attention_mask=batch["attention_mask"].to(device),
-                        labels=batch["labels"].to(device))
-            out.loss.backward()
+                        attention_mask=batch["attention_mask"].to(device))
+            loss = loss_fn(out.logits, batch["labels"].to(device))
+            loss.backward()
             optimizer.step()
 
-            total_loss += out.loss.item() * batch["labels"].size(0)
+            total_loss += loss.item() * batch["labels"].size(0)
             total      += batch["labels"].size(0)
 
         # dev evaluation
@@ -137,8 +144,12 @@ def main():
     if best_state is not None:
         model.load_state_dict(best_state)
 
+    label_names = [label_indexer.get_object(i) for i in range(num_classes)]
+
     # collect predictions and evaluate
     model.eval()
+
+    print("\n--- Dev set ---")
     targets, preds = [], []
     with torch.no_grad():
         for batch in dev_loader:
@@ -146,8 +157,16 @@ def main():
                         attention_mask=batch["attention_mask"].to(device))
             preds.extend(out.logits.argmax(dim=-1).cpu().tolist())
             targets.extend(batch["labels"].tolist())
+    print_eval_report(targets, preds, label_names)
 
-    label_names = [label_indexer.get_object(i) for i in range(num_classes)]
+    print("\n--- Test set ---")
+    targets, preds = [], []
+    with torch.no_grad():
+        for batch in test_loader:
+            out = model(input_ids=batch["input_ids"].to(device),
+                        attention_mask=batch["attention_mask"].to(device))
+            preds.extend(out.logits.argmax(dim=-1).cpu().tolist())
+            targets.extend(batch["labels"].tolist())
     print_eval_report(targets, preds, label_names)
 
 

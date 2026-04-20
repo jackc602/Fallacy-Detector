@@ -5,7 +5,7 @@ from pathlib import Path
 
 import torch
 import torch.nn
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, f1_score
 
 class Indexer(object):
     """
@@ -128,6 +128,9 @@ def print_eval_report(targets, preds, label_names):
     print(pd.DataFrame(cm, index=label_names, columns=label_names).to_string())
     print("\nClassification report:")
     print(classification_report(targets, preds, labels=labels, target_names=label_names, digits=3, zero_division=0))
+    macro = f1_score(targets, preds, labels=labels, average="macro", zero_division=0)
+    weighted = f1_score(targets, preds, labels=labels, average="weighted", zero_division=0)
+    print(f"Macro F1: {macro:.4f}  Weighted F1: {weighted:.4f}")
 
 
 class Trainer:
