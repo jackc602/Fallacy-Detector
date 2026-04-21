@@ -10,7 +10,10 @@ from torch.utils.data import DataLoader
 
 sys.path.insert(0, str(Path(__file__).parent))
 from utils import (
-    load_split, build_label_indexer, print_eval_report, Trainer,
+    load_split,
+    build_label_indexer,
+    print_eval_report,
+    Trainer,
 )
 
 
@@ -24,56 +27,116 @@ WEIGHT_DECAY = 0.0001
 
 ## Lists of words to use as features, these were examples generated with gemini
 
-PREMISE_MARKERS = frozenset({
-    "because", "since", "given", "as", "for", "due", "owing",
-    "whereas", "considering", "assuming", "granted",
-})
-CONCLUSION_MARKERS = frozenset({
-    "therefore", "thus", "hence", "so", "consequently",
-    "accordingly", "implies", "means", "proves", "shows",
-})
-NEGATIONS = frozenset({
-    "not", "no", "never", "neither", "nor", "nobody", "nothing", "nowhere",
-})
-POSITIVE_WORDS = frozenset({
-    "love", "happy", "joy", "wonderful", "beautiful", "hope",
-    "great", "amazing", "fantastic", "excellent", "good", "best",
-    "proud", "grateful", "blessed",
-})
-NEGATIVE_WORDS = frozenset({
-    "hate", "fear", "afraid", "terrible", "horrible", "evil",
-    "sad", "angry", "awful", "disgusting", "worst", "bad",
-    "dangerous", "threat", "pain", "suffer", "tragic",
-})
+PREMISE_MARKERS = [
+    "because",
+    "since",
+    "given",
+    "as",
+    "for",
+    "due",
+    "owing",
+    "whereas",
+    "considering",
+    "assuming",
+    "granted",
+]
+CONCLUSION_MARKERS = [
+    "therefore",
+    "thus",
+    "hence",
+    "so",
+    "consequently",
+    "accordingly",
+    "implies",
+    "means",
+    "proves",
+    "shows",
+]
+NEGATIONS = [
+    "not",
+    "no",
+    "never",
+    "neither",
+    "nor",
+    "nobody",
+    "nothing",
+    "nowhere",
+]
+POSITIVE_WORDS = [
+    "love",
+    "happy",
+    "joy",
+    "wonderful",
+    "beautiful",
+    "hope",
+    "great",
+    "amazing",
+    "fantastic",
+    "excellent",
+    "good",
+    "best",
+    "proud",
+    "grateful",
+    "blessed",
+]
+NEGATIVE_WORDS = [
+    "hate",
+    "fear",
+    "afraid",
+    "terrible",
+    "horrible",
+    "evil",
+    "sad",
+    "angry",
+    "awful",
+    "disgusting",
+    "worst",
+    "bad",
+    "dangerous",
+    "threat",
+    "pain",
+    "suffer",
+    "tragic",
+]
 
 
 ## Feature names that we are adding
 
 FEATURE_NAMES = [
-    "premise_density", "conclusion_density", "negation_density",
-    "positive_density", "negative_density", "sentiment_polarity",
-    "question_per_sentence", "exclamation_per_sentence",
+    "premise_density",
+    "conclusion_density",
+    "negation_density",
+    "positive_density",
+    "negative_density",
+    "sentiment_polarity",
+    "question_per_sentence",
+    "exclamation_per_sentence",
     "capitalization_ratio",
     "type_token_ratio",
-    "text_length", "avg_word_length", "avg_sentence_length", "sentence_count",
+    "text_length",
+    "avg_word_length",
+    "avg_sentence_length",
+    "sentence_count",
 ]
 
 
 ## feature extraction
+
 
 def tokenize(text):
     return re.findall(r"[a-z0-9]+(?:'[a-z]+)?", text.lower())
 
 
 def word_density(words, word_set, n):
-    return sum(1 for w in words if w in word_set) / n
+    count = len([w for w in words if w in word_set])
+    return count / n
 
 
 def extract_argument_features(text):
     words = tokenize(text)
     n = max(len(words), 1)
 
-    sentences = [s.strip() for s in re.split(r'[.!?]+', text) if s.strip()]
+    sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
     num_sentences = max(len(sentences), 1)
     pos = word_density(words, POSITIVE_WORDS, n)
     neg = word_density(words, NEGATIVE_WORDS, n)
@@ -87,10 +150,10 @@ def extract_argument_features(text):
         pos - neg,
         text.count("?") / num_sentences,
         text.count("!") / num_sentences,
-        sum(1 for c in text if c.isupper()) / max(len(text), 1),
+        len([c for c in text if c.isupper()]) / max(len(text), 1),
         len(set(words)) / n,
         n / 100.0,
-        np.mean([len(w) for w in words]) if words else 0.0,
+        sum(len(w) for w in words) / len(words) if words else 0.0,
         n / num_sentences / 20.0,
         num_sentences / 10.0,
     ]
@@ -108,8 +171,8 @@ def print_feature_importance(model, feature_names):
 
 
 def main():
-    torch.manual_seed(42)
-    np.random.seed(42)
+    torch.manual_seed(50)
+    np.random.seed(50)
 
     # load data
     train_data = load_split("train")
@@ -144,27 +207,38 @@ def main():
     num_classes = len(label_indexer)
     label_names = [label_indexer.get_object(i) for i in range(num_classes)]
 
-    train_y = torch.tensor([label_indexer.index_of(lbl) for lbl in train_labels], dtype=torch.long)
-    dev_y = torch.tensor([label_indexer.index_of(lbl) for lbl in dev_labels], dtype=torch.long)
-    test_y = torch.tensor([label_indexer.index_of(lbl) for lbl in test_labels], dtype=torch.long)
+    train_y = torch.tensor(
+        [label_indexer.index_of(lbl) for lbl in train_labels], dtype=torch.long
+    )
+    dev_y = torch.tensor(
+        [label_indexer.index_of(lbl) for lbl in dev_labels], dtype=torch.long
+    )
+    test_y = torch.tensor(
+        [label_indexer.index_of(lbl) for lbl in test_labels], dtype=torch.long
+    )
 
     # data loaders
     train_loader = DataLoader(
         torch.utils.data.TensorDataset(torch.tensor(train_features), train_y),
-        batch_size=BATCH_SIZE, shuffle=True,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
     )
     dev_loader = DataLoader(
         torch.utils.data.TensorDataset(torch.tensor(dev_features), dev_y),
-        batch_size=BATCH_SIZE, shuffle=False,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
     )
     test_loader = DataLoader(
         torch.utils.data.TensorDataset(torch.tensor(test_features), test_y),
-        batch_size=BATCH_SIZE, shuffle=False,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
     )
 
     # using feedforward network
     model = nn.Sequential(
-        nn.Linear(num_features, 64), nn.ReLU(), nn.Dropout(0.3),
+        nn.Linear(num_features, 64),
+        nn.ReLU(),
+        nn.Dropout(0.3),
         nn.Linear(64, num_classes),
     )
 
@@ -176,10 +250,14 @@ def main():
         dtype=torch.float32,
     )
     loss_fn = nn.CrossEntropyLoss(weight=w)
-    optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
+    optimizer = torch.optim.Adam(
+        model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
+    )
 
     # train
-    trainer = Trainer(model, train_loader, dev_loader, loss_fn, optimizer, num_epochs=NUM_EPOCHS)
+    trainer = Trainer(
+        model, train_loader, dev_loader, loss_fn, optimizer, num_epochs=NUM_EPOCHS
+    )
     trainer.train()
 
     # evaluation

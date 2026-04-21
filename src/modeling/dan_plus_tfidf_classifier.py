@@ -17,16 +17,16 @@ from utils import Indexer, WordEmbeddings, print_eval_report
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
 
-NUM_EPOCHS        = 100
-BATCH_SIZE        = 64
-LEARNING_RATE     = 1e-3
-WEIGHT_DECAY      = 1e-5
-HIDDEN_DIM        = 256
+NUM_EPOCHS = 100
+BATCH_SIZE = 64
+LEARNING_RATE = 0.001
+WEIGHT_DECAY = 0.00001
+HIDDEN_DIM = 256
 NUM_HIDDEN_LAYERS = 2
-TFIDF_PROJ_DIM    = 128
-DROPOUT           = 0.4
+TFIDF_PROJ_DIM = 128
+DROPOUT = 0.4
 FREEZE_EMBEDDINGS = True
-MIN_DF            = 2
+MIN_DF = 2
 
 PAD_TOKEN = "<PAD>"
 UNK_TOKEN = "<UNK>"
@@ -52,7 +52,11 @@ NON_SMT_LABELS = [
 
 
 def load_split_raw(split):
-    with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", "r", encoding="utf-8") as f:
+    with open(
+        DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json",
+        "r",
+        encoding="utf-8",
+    ) as f:
         return json.load(f)
 
 
@@ -71,7 +75,7 @@ def load_word_embeddings():
     for word, idx in ordered:
         assigned = indexer.add_and_get_index(word)
 
-    vec_list = [vectors[i] for i in range(len(vectors))]
+    vec_list = list(vectors)
     return WordEmbeddings(indexer, vec_list), vocab
 
 
@@ -84,9 +88,12 @@ def build_tfidf_vocab(token_lists, min_df=MIN_DF):
     for tokens in token_lists:
         for tok in set(tokens):
             df[tok] += 1
-    vocab = {tok: i for i, tok in enumerate(
-        tok for tok, count in sorted(df.items()) if count >= min_df
-    )}
+    vocab = {}
+    idx = 0
+    for tok, count in sorted(df.items()):
+        if count >= min_df:
+            vocab[tok] = idx
+            idx += 1
     return vocab
 
 
@@ -96,13 +103,14 @@ def compute_tfidf(token_lists, vocab, idf=None):
     tf_matrix = np.zeros((N, V), dtype=np.float32)
 
     for i, tokens in enumerate(token_lists):
-        counts = Counter(t for t in tokens if t in vocab)
-        total  = max(len(tokens), 1)
+        vocab_tokens = [t for t in tokens if t in vocab]
+        counts = Counter(vocab_tokens)
+        total = max(len(tokens), 1)
         for tok, cnt in counts.items():
             tf_matrix[i, vocab[tok]] = cnt / total
 
     if idf is None:
-        df  = (tf_matrix > 0).sum(axis=0).astype(np.float32)
+        df = (tf_matrix > 0).sum(axis=0).astype(np.float32)
         idf = np.log((N + 1) / (df + 1)) + 1.0
 
     tfidf = tf_matrix * idf
@@ -129,8 +137,8 @@ class HybridDataset(Dataset):
     def __init__(self, token_lists, tfidf_matrix, label_ids):
         assert len(token_lists) == len(tfidf_matrix) == len(label_ids)
         self.token_lists = list(token_lists)
-        self.tfidf       = torch.tensor(tfidf_matrix, dtype=torch.float32)
-        self.labels      = torch.tensor(label_ids, dtype=torch.long)
+        self.tfidf = torch.tensor(tfidf_matrix, dtype=torch.float32)
+        self.labels = torch.tensor(label_ids, dtype=torch.long)
 
     def __len__(self):
         return len(self.labels)
@@ -147,24 +155,33 @@ def make_collate(pad_idx, unk_idx):
         x = torch.full((len(batch), max_len), pad_idx, dtype=torch.long)
         lengths = torch.zeros(len(batch), dtype=torch.long)
         for i, t in enumerate(token_lists):
-            x[i, :len(t)] = torch.tensor(t, dtype=torch.long)
+            x[i, : len(t)] = torch.tensor(t, dtype=torch.long)
             lengths[i] = len(t)
         tfidf = torch.stack(tfidf_rows, dim=0)
-        y     = torch.stack(labels, dim=0)
+        y = torch.stack(labels, dim=0)
         return x, lengths, tfidf, y
+
     return collate
 
 
 class HybridClassifier(nn.Module):
-
-    def __init__(self, word_embeddings, tfidf_vocab_size, num_classes, pad_idx,
-            hidden_dim=HIDDEN_DIM, num_hidden_layers=NUM_HIDDEN_LAYERS,
-            tfidf_proj_dim=TFIDF_PROJ_DIM, dropout=DROPOUT,
-            freeze_embeddings=FREEZE_EMBEDDINGS):
+    def __init__(
+        self,
+        word_embeddings,
+        tfidf_vocab_size,
+        num_classes,
+        pad_idx,
+        hidden_dim=HIDDEN_DIM,
+        num_hidden_layers=NUM_HIDDEN_LAYERS,
+        tfidf_proj_dim=TFIDF_PROJ_DIM,
+        dropout=DROPOUT,
+        freeze_embeddings=FREEZE_EMBEDDINGS,
+    ):
         super().__init__()
-        self.pad_idx   = pad_idx
+        self.pad_idx = pad_idx
         self.embedding = word_embeddings.get_initialized_embedding_layer(
-            frozen=freeze_embeddings, padding_idx=pad_idx)
+            frozen=freeze_embeddings, padding_idx=pad_idx
+        )
         embed_dim = word_embeddings.get_embedding_length()
 
         # learned bottleneck so the (much larger) tf-idf stream doesn't swamp
@@ -186,13 +203,13 @@ class HybridClassifier(nn.Module):
         self.classifier = nn.Sequential(*layers)
 
     def forward(self, token_ids, lengths, tfidf):
-        embs   = self.embedding(token_ids)
-        mask   = (token_ids != self.pad_idx).unsqueeze(-1).float()
+        embs = self.embedding(token_ids)
+        mask = (token_ids != self.pad_idx).unsqueeze(-1).float()
         summed = (embs * mask).sum(dim=1)
-        denom  = lengths.clamp(min=1).unsqueeze(-1).float()
-        avg    = summed / denom
+        denom = lengths.clamp(min=1).unsqueeze(-1).float()
+        avg = summed / denom
 
-        tproj    = self.tfidf_proj(tfidf)
+        tproj = self.tfidf_proj(tfidf)
         combined = torch.cat([avg, tproj], dim=-1)
         return self.classifier(combined)
 
@@ -203,11 +220,11 @@ def run_epoch(model, loader, optimizer, loss_fn):
     for x, lengths, tfidf, y in loader:
         optimizer.zero_grad()
         logits = model(x, lengths, tfidf)
-        loss   = loss_fn(logits, y)
+        loss = loss_fn(logits, y)
         loss.backward()
         optimizer.step()
         total_loss += loss.item() * y.size(0)
-        total      += y.size(0)
+        total += y.size(0)
     return total_loss / total
 
 
@@ -233,26 +250,25 @@ def collect_predictions(model, loader):
     return targets, preds
 
 
-
 def main():
-    torch.manual_seed(42)
-    np.random.seed(42)
+    torch.manual_seed(50)
+    np.random.seed(50)
 
     word_embeddings, _ = load_word_embeddings()
     pad_idx = word_embeddings.word_indexer.index_of(PAD_TOKEN)
     unk_idx = word_embeddings.word_indexer.index_of(UNK_TOKEN)
 
     train_raw = load_split_raw("train")
-    dev_raw   = load_split_raw("dev")
-    test_raw  = load_split_raw("test")
+    dev_raw = load_split_raw("dev")
+    test_raw = load_split_raw("test")
 
     train_token_ids = load_split_tokens("train")
-    dev_token_ids   = load_split_tokens("dev")
-    test_token_ids  = load_split_tokens("test")
+    dev_token_ids = load_split_tokens("dev")
+    test_token_ids = load_split_tokens("test")
 
-    train_texts = [item["text"]  for item in train_raw]
-    dev_texts = [item["text"]  for item in dev_raw]
-    test_texts = [item["text"]  for item in test_raw]
+    train_texts = [item["text"] for item in train_raw]
+    dev_texts = [item["text"] for item in dev_raw]
+    test_texts = [item["text"] for item in test_raw]
     train_labels = [item["label"] for item in train_raw]
     dev_labels = [item["label"] for item in dev_raw]
     test_labels = [item["label"] for item in test_raw]
@@ -299,9 +315,15 @@ def main():
     test_ds = HybridDataset(test_token_ids, test_tfidf, test_y)
 
     collate = make_collate(pad_idx, unk_idx)
-    train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate)
-    dev_loader = DataLoader(dev_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate)
-    test_loader = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate)
+    train_loader = DataLoader(
+        train_ds, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate
+    )
+    dev_loader = DataLoader(
+        dev_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate
+    )
+    test_loader = DataLoader(
+        test_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate
+    )
 
     model = HybridClassifier(
         word_embeddings=word_embeddings,
@@ -309,18 +331,24 @@ def main():
         num_classes=num_classes,
         pad_idx=pad_idx,
     )
-    optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
-    loss_fn   = nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(
+        model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
+    )
+    loss_fn = nn.CrossEntropyLoss()
 
     best_dev_acc, best_state = 0.0, None
     for epoch in range(1, NUM_EPOCHS + 1):
-        train_loss        = run_epoch(model, train_loader, optimizer, loss_fn)
+        train_loss = run_epoch(model, train_loader, optimizer, loss_fn)
         dev_loss, dev_acc = evaluate(model, dev_loader, loss_fn)
-        print(f"Epoch {epoch:3d}  train_loss={train_loss:.4f}  "
-              f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}")
+        print(
+            f"Epoch {epoch:3d}  train_loss={train_loss:.4f}  "
+            f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}"
+        )
         if dev_acc > best_dev_acc:
             best_dev_acc = dev_acc
-            best_state   = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
+            best_state = {
+                k: v.detach().cpu().clone() for k, v in model.state_dict().items()
+            }
 
     print(f"Best dev accuracy: {best_dev_acc:.4f}")
     if best_state is not None:
@@ -335,7 +363,10 @@ def main():
     print_eval_report(targets, preds, label_names)
 
     out_path = DATA_DIR.parent / "src" / "models" / "dan_tfidf_best.pt"
-    torch.save({"model_state": best_state, "label_indexer": label_indexer.objs_to_ints}, out_path)
+    torch.save(
+        {"model_state": best_state, "label_indexer": label_indexer.objs_to_ints},
+        out_path,
+    )
 
 
 if __name__ == "__main__":

@@ -18,10 +18,10 @@ from utils import Indexer, print_eval_report
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
 
-NUM_EPOCHS    = 200
-BATCH_SIZE    = 64
+NUM_EPOCHS = 200
+BATCH_SIZE = 64
 LEARNING_RATE = 0.001
-MIN_DF        = 2
+MIN_DF = 2
 
 SMT_LABELS = [
     "false dilemma",
@@ -44,7 +44,9 @@ NON_SMT_LABELS = [
 
 
 def load_split(split):
-    with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", encoding="utf-8") as f:
+    with open(
+        DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", encoding="utf-8"
+    ) as f:
         return json.load(f)
 
 
@@ -57,9 +59,12 @@ def build_vocab(token_lists, min_df=MIN_DF):
     for tokens in token_lists:
         for tok in set(tokens):
             df[tok] += 1
-    vocab = {tok: i for i, tok in enumerate(
-        tok for tok, count in sorted(df.items()) if count >= min_df
-    )}
+    vocab = {}
+    idx = 0
+    for tok, count in sorted(df.items()):
+        if count >= min_df:
+            vocab[tok] = idx
+            idx += 1
     return vocab
 
 
@@ -69,13 +74,14 @@ def compute_tfidf(token_lists, vocab, idf=None):
     tf_matrix = np.zeros((N, V), dtype=np.float32)
 
     for i, tokens in enumerate(token_lists):
-        counts = Counter(t for t in tokens if t in vocab)
-        total  = max(len(tokens), 1)
+        vocab_tokens = [t for t in tokens if t in vocab]
+        counts = Counter(vocab_tokens)
+        total = max(len(tokens), 1)
         for tok, cnt in counts.items():
             tf_matrix[i, vocab[tok]] = cnt / total
 
     if idf is None:
-        df  = (tf_matrix > 0).sum(axis=0).astype(np.float32)
+        df = (tf_matrix > 0).sum(axis=0).astype(np.float32)
         idf = np.log((N + 1) / (df + 1)) + 1.0
 
     tfidf = tf_matrix * idf
@@ -141,21 +147,20 @@ def collect_predictions(model, loader):
     return targets, preds
 
 
-
 def main():
-    torch.manual_seed(42)
-    np.random.seed(42)
+    torch.manual_seed(50)
+    np.random.seed(50)
 
     train_data = load_split("train")
-    dev_data   = load_split("dev")
-    test_data  = load_split("test")
+    dev_data = load_split("dev")
+    test_data = load_split("test")
 
-    train_texts  = [item["text"] for item in train_data]
-    dev_texts    = [item["text"] for item in dev_data]
-    test_texts   = [item["text"] for item in test_data]
+    train_texts = [item["text"] for item in train_data]
+    dev_texts = [item["text"] for item in dev_data]
+    test_texts = [item["text"] for item in test_data]
     train_labels = [item["label"] for item in train_data]
-    dev_labels   = [item["label"] for item in dev_data]
-    test_labels  = [item["label"] for item in test_data]
+    dev_labels = [item["label"] for item in dev_data]
+    test_labels = [item["label"] for item in test_data]
 
     # # logical fallacies only
     # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in SMT_LABELS]
@@ -174,45 +179,50 @@ def main():
     # test_texts, test_labels = zip(*pairs)
 
     train_tokens = [tokenize(t) for t in train_texts]
-    dev_tokens   = [tokenize(t) for t in dev_texts]
-    test_tokens  = [tokenize(t) for t in test_texts]
+    dev_tokens = [tokenize(t) for t in dev_texts]
+    test_tokens = [tokenize(t) for t in test_texts]
 
     vocab = build_vocab(train_tokens)
     print(f"Vocab size: {len(vocab)}")
 
     train_vecs, idf = compute_tfidf(train_tokens, vocab)
-    dev_vecs,   _   = compute_tfidf(dev_tokens,   vocab, idf=idf)
-    test_vecs,  _   = compute_tfidf(test_tokens,  vocab, idf=idf)
+    dev_vecs, _ = compute_tfidf(dev_tokens, vocab, idf=idf)
+    test_vecs, _ = compute_tfidf(test_tokens, vocab, idf=idf)
 
     label_indexer = build_label_indexer(train_labels)
-    num_classes   = len(label_indexer)
-    label_names   = [label_indexer.get_object(i) for i in range(num_classes)]
+    num_classes = len(label_indexer)
+    label_names = [label_indexer.get_object(i) for i in range(num_classes)]
 
     train_y = [label_indexer.index_of(l) for l in train_labels]
-    dev_y   = [label_indexer.index_of(l) for l in dev_labels]
-    test_y  = [label_indexer.index_of(l) for l in test_labels]
+    dev_y = [label_indexer.index_of(l) for l in dev_labels]
+    test_y = [label_indexer.index_of(l) for l in test_labels]
 
-    train_loader = DataLoader(TFIDFDataset(train_vecs, train_y),
-                              batch_size=BATCH_SIZE, shuffle=True)
-    dev_loader   = DataLoader(TFIDFDataset(dev_vecs, dev_y),
-                              batch_size=BATCH_SIZE, shuffle=False)
-    test_loader  = DataLoader(TFIDFDataset(test_vecs, test_y),
-                              batch_size=BATCH_SIZE, shuffle=False)
+    train_loader = DataLoader(
+        TFIDFDataset(train_vecs, train_y), batch_size=BATCH_SIZE, shuffle=True
+    )
+    dev_loader = DataLoader(
+        TFIDFDataset(dev_vecs, dev_y), batch_size=BATCH_SIZE, shuffle=False
+    )
+    test_loader = DataLoader(
+        TFIDFDataset(test_vecs, test_y), batch_size=BATCH_SIZE, shuffle=False
+    )
 
     # logistic regression - single linear layer
-    model     = nn.Linear(len(vocab), num_classes)
+    model = nn.Linear(len(vocab), num_classes)
     optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
-    loss_fn   = nn.CrossEntropyLoss()
+    loss_fn = nn.CrossEntropyLoss()
 
     best_dev_acc, best_state = 0.0, None
     for epoch in range(1, NUM_EPOCHS + 1):
-        train_loss        = run_epoch(model, train_loader, optimizer, loss_fn)
+        train_loss = run_epoch(model, train_loader, optimizer, loss_fn)
         dev_loss, dev_acc = evaluate(model, dev_loader, loss_fn)
-        print(f"Epoch {epoch:3d}  train_loss={train_loss:.4f}  "
-              f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}")
+        print(
+            f"Epoch {epoch:3d}  train_loss={train_loss:.4f}  "
+            f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}"
+        )
         if dev_acc > best_dev_acc:
             best_dev_acc = dev_acc
-            best_state   = {k: v.clone() for k, v in model.state_dict().items()}
+            best_state = {k: v.clone() for k, v in model.state_dict().items()}
 
     print(f"\nBest dev accuracy: {best_dev_acc:.4f}")
     model.load_state_dict(best_state)

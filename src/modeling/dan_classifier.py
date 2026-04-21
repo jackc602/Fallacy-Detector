@@ -13,8 +13,8 @@ DATA_DIR = Path(__file__).parent.parent.parent / "data"
 
 NUM_EPOCHS = 100
 BATCH_SIZE = 64
-LEARNING_RATE = 1e-3
-WEIGHT_DECAY = 1e-5
+LEARNING_RATE = 0.001
+WEIGHT_DECAY = 0.00001
 HIDDEN_DIM = 256
 NUM_HIDDEN_LAYERS = 2
 DROPOUT = 0.4
@@ -44,8 +44,13 @@ NON_SMT_LABELS = [
     "intentional",
 ]
 
+
 def load_split_labels(split):
-    with open(DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", "r", encoding="utf-8") as f:
+    with open(
+        DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json",
+        "r",
+        encoding="utf-8",
+    ) as f:
         data = json.load(f)
     return [item["label"] for item in data]
 
@@ -66,7 +71,7 @@ def load_word_embeddings():
         assigned = indexer.add_and_get_index(word)
         assert assigned == idx, f"vocab/index mismatch for {word}"
 
-    vec_list = [vectors[i] for i in range(len(vectors))]
+    vec_list = list(vectors)
     return WordEmbeddings(indexer, vec_list), vocab
 
 
@@ -97,6 +102,7 @@ def make_collate(pad_idx, unk_idx):
     Custom collate funciton for out dataloader to conver embeddings to tensors
     and apply pad token.
     """
+
     def collate(batch):
         token_lists, labels = zip(*batch)
         token_lists = [t if len(t) > 0 else [unk_idx] for t in token_lists]
@@ -104,23 +110,31 @@ def make_collate(pad_idx, unk_idx):
         x = torch.full((len(batch), max_len), pad_idx, dtype=torch.long)
         lengths = torch.zeros(len(batch), dtype=torch.long)
         for i, t in enumerate(token_lists):
-            x[i, :len(t)] = torch.tensor(t, dtype=torch.long)
+            x[i, : len(t)] = torch.tensor(t, dtype=torch.long)
             lengths[i] = len(t)
         y = torch.tensor(labels, dtype=torch.long)
         return x, lengths, y
+
     return collate
 
 
 class DAN(nn.Module):
-
-    def __init__(self, word_embeddings, num_classes, pad_idx,
-            hidden_dim=HIDDEN_DIM, num_hidden_layers=NUM_HIDDEN_LAYERS,
-            dropout=DROPOUT, freeze_embeddings=FREEZE_EMBEDDINGS):
+    def __init__(
+        self,
+        word_embeddings,
+        num_classes,
+        pad_idx,
+        hidden_dim=HIDDEN_DIM,
+        num_hidden_layers=NUM_HIDDEN_LAYERS,
+        dropout=DROPOUT,
+        freeze_embeddings=FREEZE_EMBEDDINGS,
+    ):
         super().__init__()
-        # initialize embeddings 
+        # initialize embeddings
         self.pad_idx = pad_idx
-        self.embedding = word_embeddings.get_initialized_embedding_layer(frozen=freeze_embeddings, 
-                                                                         padding_idx=pad_idx)
+        self.embedding = word_embeddings.get_initialized_embedding_layer(
+            frozen=freeze_embeddings, padding_idx=pad_idx
+        )
         embed_dim = word_embeddings.get_embedding_length()
 
         # define feedforward architecture
@@ -188,10 +202,9 @@ def collect_predictions(model, loader):
     return targets, preds
 
 
-
 def main():
-    torch.manual_seed(42)
-    np.random.seed(42)
+    torch.manual_seed(50)
+    np.random.seed(50)
 
     word_embeddings, vocab = load_word_embeddings()
     pad_idx = word_embeddings.word_indexer.index_of(PAD_TOKEN)
@@ -236,13 +249,23 @@ def main():
     test_ds = DANDataset(test_tokens, test_y)
 
     collate = make_collate(pad_idx, unk_idx)
-    train_loader = DataLoader(train_ds, batch_size = BATCH_SIZE, shuffle = True, collate_fn = collate)
-    dev_loader = DataLoader(dev_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn = collate)
-    test_loader = DataLoader(test_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn = collate)
+    train_loader = DataLoader(
+        train_ds, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate
+    )
+    dev_loader = DataLoader(
+        dev_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate
+    )
+    test_loader = DataLoader(
+        test_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate
+    )
 
-    model = DAN(word_embeddings = word_embeddings, num_classes = num_classes, pad_idx = pad_idx)
+    model = DAN(
+        word_embeddings=word_embeddings, num_classes=num_classes, pad_idx=pad_idx
+    )
 
-    optimizer = torch.optim.Adam(model.parameters(), lr = LEARNING_RATE, weight_decay = WEIGHT_DECAY)
+    optimizer = torch.optim.Adam(
+        model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
+    )
     loss_fn = nn.CrossEntropyLoss()
 
     best_dev_acc = 0.0
@@ -251,11 +274,15 @@ def main():
     for epoch in range(1, NUM_EPOCHS + 1):
         train_loss = run_epoch(model, train_loader, optimizer, loss_fn)
         dev_loss, dev_acc = evaluate(model, dev_loader, loss_fn)
-        print(f"Epoch {epoch}, train_loss={train_loss:.4f}, "
-            f"dev_loss={dev_loss:.4f}, dev_acc={dev_acc:.4f}")
+        print(
+            f"Epoch {epoch}, train_loss={train_loss:.4f}, "
+            f"dev_loss={dev_loss:.4f}, dev_acc={dev_acc:.4f}"
+        )
         if dev_acc > best_dev_acc:
             best_dev_acc = dev_acc
-            best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
+            best_state = {
+                k: v.detach().cpu().clone() for k, v in model.state_dict().items()
+            }
 
     print(f"Best dev accuracy: {best_dev_acc}")
 
@@ -274,7 +301,10 @@ def main():
     print_eval_report(targets, preds, label_names)
 
     out_path = DATA_DIR.parent / "src" / "models" / "dan_best.pt"
-    torch.save({"model_state": best_state, "label_indexer": label_indexer.objs_to_ints}, out_path)
+    torch.save(
+        {"model_state": best_state, "label_indexer": label_indexer.objs_to_ints},
+        out_path,
+    )
 
 
 if __name__ == "__main__":
