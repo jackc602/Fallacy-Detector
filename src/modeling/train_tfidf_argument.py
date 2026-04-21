@@ -17,8 +17,10 @@ DATA_DIR = Path(__file__).parent.parent.parent / "data"
 
 NUM_EPOCHS = 200
 BATCH_SIZE = 64
-LEARNING_RATE = 0.0005
-WEIGHT_DECAY = 0.0001
+LEARNING_RATE = 0.0002
+WEIGHT_DECAY = 0.0005
+HIDDEN_SIZE = 96
+DROPOUT = 0.6
 
 
 def main():
@@ -122,10 +124,10 @@ def main():
 
     # hidden layer
     model = nn.Sequential(
-        nn.Linear(input_dim, 64),
+        nn.Linear(input_dim, HIDDEN_SIZE),
         nn.ReLU(),
-        nn.Dropout(0.5),
-        nn.Linear(64, num_classes),
+        nn.Dropout(DROPOUT),
+        nn.Linear(HIDDEN_SIZE, num_classes),
     )
 
     # Getting loss weights

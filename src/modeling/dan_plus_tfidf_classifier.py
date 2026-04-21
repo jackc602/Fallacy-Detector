@@ -17,14 +17,14 @@ from utils import Indexer, WordEmbeddings, print_eval_report
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
 
-NUM_EPOCHS = 100
+NUM_EPOCHS = 50
 BATCH_SIZE = 64
 LEARNING_RATE = 0.001
-WEIGHT_DECAY = 0.00001
-HIDDEN_DIM = 256
-NUM_HIDDEN_LAYERS = 2
-TFIDF_PROJ_DIM = 128
-DROPOUT = 0.4
+WEIGHT_DECAY = 0.0001
+HIDDEN_DIM = 128
+NUM_HIDDEN_LAYERS = 1
+TFIDF_PROJ_DIM = 64
+DROPOUT = 0.6
 FREEZE_EMBEDDINGS = True
 MIN_DF = 2
 

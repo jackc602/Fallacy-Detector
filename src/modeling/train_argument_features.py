@@ -23,6 +23,7 @@ NUM_EPOCHS = 200
 BATCH_SIZE = 64
 LEARNING_RATE = 0.001
 WEIGHT_DECAY = 0.0001
+HIDDEN_SIZE = 64
 
 
 SMT_LABELS = [
@@ -272,10 +273,10 @@ def main():
 
     # using feedforward network
     model = nn.Sequential(
-        nn.Linear(num_features, 64),
+        nn.Linear(num_features, HIDDEN_SIZE),
         nn.ReLU(),
         nn.Dropout(0.3),
-        nn.Linear(64, num_classes),
+        nn.Linear(HIDDEN_SIZE, num_classes),
     )
 
     # class-weighted loss
