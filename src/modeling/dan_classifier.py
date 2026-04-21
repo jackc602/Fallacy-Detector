@@ -1,10 +1,11 @@
 import torch
 import torch.nn as nn
 import json
+from collections import Counter
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from torch.utils.data import DataLoader, Dataset
 from utils import Indexer, WordEmbeddings, print_eval_report
 
@@ -181,6 +182,7 @@ def evaluate(model, loader, loss_fn):
     total_loss = 0.0
     correct = 0
     total = 0
+    all_targets, all_preds = [], []
     for x, lengths, y in loader:
         logits = model(x, lengths)
         loss = loss_fn(logits, y)
@@ -189,7 +191,10 @@ def evaluate(model, loader, loss_fn):
         preds = logits.argmax(dim=-1)
         correct += (preds == y).sum().item()
         total += y.size(0)
-    return total_loss / total, correct / total
+        all_targets.extend(y.tolist())
+        all_preds.extend(preds.tolist())
+    macro_f1 = f1_score(all_targets, all_preds, average="macro", zero_division=0)
+    return total_loss / total, correct / total, macro_f1
 
 
 @torch.no_grad()
@@ -266,25 +271,32 @@ def main():
     optimizer = torch.optim.Adam(
         model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
     )
-    loss_fn = nn.CrossEntropyLoss()
 
-    best_dev_acc = 0.0
+    counts = Counter(train_y)
+    class_weights = torch.tensor(
+        [len(train_y) / (num_classes * counts[i]) for i in range(num_classes)],
+        dtype=torch.float32,
+    )
+    loss_fn = nn.CrossEntropyLoss(weight=class_weights)
+
+    best_dev_f1 = -1.0
     best_state = None
 
     for epoch in range(1, NUM_EPOCHS + 1):
         train_loss = run_epoch(model, train_loader, optimizer, loss_fn)
-        dev_loss, dev_acc = evaluate(model, dev_loader, loss_fn)
+        dev_loss, dev_acc, dev_f1 = evaluate(model, dev_loader, loss_fn)
         print(
             f"Epoch {epoch}, train_loss={train_loss:.4f}, "
-            f"dev_loss={dev_loss:.4f}, dev_acc={dev_acc:.4f}"
+            f"dev_loss={dev_loss:.4f}, dev_acc={dev_acc:.4f}, "
+            f"dev_macro_f1={dev_f1:.4f}"
         )
-        if dev_acc > best_dev_acc:
-            best_dev_acc = dev_acc
+        if dev_f1 > best_dev_f1:
+            best_dev_f1 = dev_f1
             best_state = {
                 k: v.detach().cpu().clone() for k, v in model.state_dict().items()
             }
 
-    print(f"Best dev accuracy: {best_dev_acc}")
+    print(f"Best dev macro F1: {best_dev_f1}")
 
     if best_state is not None:
         model.load_state_dict(best_state)

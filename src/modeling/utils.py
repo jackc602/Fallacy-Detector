@@ -180,12 +180,13 @@ class Trainer:
         return tloss / batches
 
     def evaluate(self):
-        """Evaluating on dev, returns average loss and accuracy"""
+        """Evaluating on dev, returns average loss, accuracy, and macro F1"""
         self.model.eval()
         tloss = 0
         correct = 0
         total = 0
         batches = 0
+        all_targets, all_preds = [], []
         with torch.no_grad():
             for x, y in self.dev_loader:
                 scores = self.model(x)
@@ -195,7 +196,10 @@ class Trainer:
                 total += y.size(0)
                 tloss += loss.item()
                 batches += 1
-        return tloss / batches, correct / total
+                all_targets.extend(y.tolist())
+                all_preds.extend(preds.tolist())
+        macro_f1 = f1_score(all_targets, all_preds, average="macro", zero_division=0)
+        return tloss / batches, correct / total, macro_f1
 
     def pred(self):
         """Gets predictions"""
@@ -209,26 +213,27 @@ class Trainer:
         return targets, preds
 
     def train(self):
-        """Trains model and returns best dev accuracy"""
-        best_acc = 0.0
+        """Trains model; checkpoints on best dev macro F1, returns that value"""
+        best_f1 = -1.0
         best_state = None
 
         for epoch in range(1, self.num_epochs + 1):
             train_loss = self.run_epoch()
-            dev_loss, dev_acc = self.evaluate()
+            dev_loss, dev_acc, dev_f1 = self.evaluate()
             print(
                 f"Epoch {epoch:3d}  train_loss={train_loss:.4f}  "
-                f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}"
+                f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}  "
+                f"dev_macro_f1={dev_f1:.4f}"
             )
 
-            if dev_acc > best_acc:
-                best_acc = dev_acc
+            if dev_f1 > best_f1:
+                best_f1 = dev_f1
                 best_state = {
                     k: v.detach().cpu().clone()
                     for k, v in self.model.state_dict().items()
                 }
 
-        print(f"\nBest dev accuracy: {best_acc:.4f}")
+        print(f"\nBest dev macro F1: {best_f1:.4f}")
         if best_state is not None:
             self.model.load_state_dict(best_state)
-        return best_acc
+        return best_f1

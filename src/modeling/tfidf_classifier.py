@@ -9,7 +9,7 @@ import torch.nn as nn
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report, confusion_matrix, f1_score
 from torch.utils.data import DataLoader, Dataset
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -129,12 +129,17 @@ def run_epoch(model, loader, optimizer, loss_fn):
 def evaluate(model, loader, loss_fn):
     model.eval()
     total_loss, correct, total = 0.0, 0, 0
+    all_targets, all_preds = [], []
     for x, y in loader:
         logits = model(x)
         total_loss += loss_fn(logits, y).item() * y.size(0)
-        correct += (logits.argmax(-1) == y).sum().item()
+        preds = logits.argmax(-1)
+        correct += (preds == y).sum().item()
         total += y.size(0)
-    return total_loss / total, correct / total
+        all_targets.extend(y.tolist())
+        all_preds.extend(preds.tolist())
+    macro_f1 = f1_score(all_targets, all_preds, average="macro", zero_division=0)
+    return total_loss / total, correct / total, macro_f1
 
 
 @torch.no_grad()
@@ -210,21 +215,28 @@ def main():
     # logistic regression - single linear layer
     model = nn.Linear(len(vocab), num_classes)
     optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
-    loss_fn = nn.CrossEntropyLoss()
 
-    best_dev_acc, best_state = 0.0, None
+    counts = Counter(train_y)
+    class_weights = torch.tensor(
+        [len(train_y) / (num_classes * counts[i]) for i in range(num_classes)],
+        dtype=torch.float32,
+    )
+    loss_fn = nn.CrossEntropyLoss(weight=class_weights)
+
+    best_dev_f1, best_state = -1.0, None
     for epoch in range(1, NUM_EPOCHS + 1):
         train_loss = run_epoch(model, train_loader, optimizer, loss_fn)
-        dev_loss, dev_acc = evaluate(model, dev_loader, loss_fn)
+        dev_loss, dev_acc, dev_f1 = evaluate(model, dev_loader, loss_fn)
         print(
             f"Epoch {epoch:3d}  train_loss={train_loss:.4f}  "
-            f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}"
+            f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}  "
+            f"dev_macro_f1={dev_f1:.4f}"
         )
-        if dev_acc > best_dev_acc:
-            best_dev_acc = dev_acc
+        if dev_f1 > best_dev_f1:
+            best_dev_f1 = dev_f1
             best_state = {k: v.clone() for k, v in model.state_dict().items()}
 
-    print(f"\nBest dev accuracy: {best_dev_acc:.4f}")
+    print(f"\nBest dev macro F1: {best_dev_f1:.4f}")
     model.load_state_dict(best_state)
 
     print("\n--- Dev set ---")
