@@ -25,6 +25,26 @@ LEARNING_RATE = 0.001
 WEIGHT_DECAY = 0.0001
 
 
+SMT_LABELS = [
+    "false dilemma",
+    "circular reasoning",
+    "fallacy of logic",
+    "false causality",
+    "faulty generalization",
+    "equivocation",
+]
+
+NON_SMT_LABELS = [
+    "ad hominem",
+    "ad populum",
+    "appeal to emotion",
+    "fallacy of credibility",
+    "fallacy of extension",
+    "fallacy of relevance",
+    "intentional",
+]
+
+
 ## Lists of words to use as features, these were examples generated with gemini
 
 PREMISE_MARKERS = [
@@ -185,6 +205,22 @@ def main():
     train_labels = [item["label"] for item in train_data]
     dev_labels = [item["label"] for item in dev_data]
     test_labels = [item["label"] for item in test_data]
+
+    # # logical fallacies only
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in SMT_LABELS]
+    # train_texts, train_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in SMT_LABELS]
+    # dev_texts, dev_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in SMT_LABELS]
+    # test_texts, test_labels = zip(*pairs)
+
+    # # informal fallacies only (swap with block above)
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in NON_SMT_LABELS]
+    # train_texts, train_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in NON_SMT_LABELS]
+    # dev_texts, dev_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in NON_SMT_LABELS]
+    # test_texts, test_labels = zip(*pairs)
 
     # extract and normalize features
     num_features = len(FEATURE_NAMES)

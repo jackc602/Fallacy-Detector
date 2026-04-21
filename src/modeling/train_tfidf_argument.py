@@ -9,7 +9,7 @@ from torch.utils.data import DataLoader
 
 sys.path.insert(0, str(Path(__file__).parent))
 from utils import load_split, build_label_indexer, print_eval_report, Trainer
-from tfidf_classifier import tokenize, build_vocab, compute_tfidf
+from tfidf_classifier import tokenize, build_vocab, compute_tfidf, SMT_LABELS, NON_SMT_LABELS
 from train_argument_features import extract_argument_features, FEATURE_NAMES
 
 
@@ -36,6 +36,22 @@ def main():
     train_labels = [item["label"] for item in train_data]
     dev_labels = [item["label"] for item in dev_data]
     test_labels = [item["label"] for item in test_data]
+
+    # # logical fallacies only
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in SMT_LABELS]
+    # train_texts, train_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in SMT_LABELS]
+    # dev_texts, dev_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in SMT_LABELS]
+    # test_texts, test_labels = zip(*pairs)
+
+    # # informal fallacies only (swap with block above)
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in NON_SMT_LABELS]
+    # train_texts, train_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in NON_SMT_LABELS]
+    # dev_texts, dev_labels = zip(*pairs)
+    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in NON_SMT_LABELS]
+    # test_texts, test_labels = zip(*pairs)
 
     # tfidf features
     train_tokens = [tokenize(t) for t in train_texts]
