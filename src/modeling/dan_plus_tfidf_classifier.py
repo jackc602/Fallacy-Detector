@@ -4,6 +4,7 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
@@ -184,7 +185,7 @@ class HybridClassifier(nn.Module):
         )
         embed_dim = word_embeddings.get_embedding_length()
 
-        # learned bottleneck so the (much larger) tf-idf stream doesn't swamp
+        # learned bottleneck so the tf-idf stream doesn't swamp
         # the averaged embedding by dimensionality alone
         self.tfidf_proj = nn.Sequential(
             nn.Linear(tfidf_vocab_size, tfidf_proj_dim),
@@ -203,12 +204,14 @@ class HybridClassifier(nn.Module):
         self.classifier = nn.Sequential(*layers)
 
     def forward(self, token_ids, lengths, tfidf):
+        # compute avg embedding ignoring pad indices when computing denom
         embs = self.embedding(token_ids)
         mask = (token_ids != self.pad_idx).unsqueeze(-1).float()
         summed = (embs * mask).sum(dim=1)
         denom = lengths.clamp(min=1).unsqueeze(-1).float()
         avg = summed / denom
 
+        # project tf-idf to smaller dim then concat with avg embeds
         tproj = self.tfidf_proj(tfidf)
         combined = torch.cat([avg, tproj], dim=-1)
         return self.classifier(combined)
@@ -255,58 +258,48 @@ def collect_predictions(model, loader):
     return targets, preds
 
 
-def main():
-    torch.manual_seed(50)
-    np.random.seed(50)
+def train_loop(model, train_loader, dev_loader, loss_fn, optimizer):
+    dev_losses = []
+    best_f1, best_state = -1.0, None
+    for epoch in range(1, NUM_EPOCHS + 1):
+        train_loss = run_epoch(model, train_loader, optimizer, loss_fn)
+        dev_loss, dev_acc, dev_f1 = evaluate(model, dev_loader, loss_fn)
+        dev_losses.append(dev_loss)
+        print(
+            f"Epoch {epoch:3d}  train_loss={train_loss:.4f}  "
+            f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}  "
+            f"dev_macro_f1={dev_f1:.4f}"
+        )
+        if dev_f1 > best_f1:
+            best_f1 = dev_f1
+            best_state = {
+                k: v.detach().cpu().clone() for k, v in model.state_dict().items()
+            }
+    print(f"Best dev macro F1: {best_f1:.4f}")
+    return dev_losses, best_state
 
-    word_embeddings, _ = load_word_embeddings()
-    pad_idx = word_embeddings.word_indexer.index_of(PAD_TOKEN)
-    unk_idx = word_embeddings.word_indexer.index_of(UNK_TOKEN)
 
-    train_raw = load_split_raw("train")
-    dev_raw = load_split_raw("dev")
-    test_raw = load_split_raw("test")
+def build_run(train_raw, dev_raw, test_raw, train_tok, dev_tok, test_tok,
+              word_embeddings, pad_idx, unk_idx):
+    """
+    Helper function to build features, dataloaders, and model for a given subset of the data.
+    Only included in this file because the loss is plotted over the different splits in this file
+    """
+    collate = make_collate(pad_idx, unk_idx)
 
-    train_token_ids = load_split_tokens("train")
-    dev_token_ids = load_split_tokens("dev")
-    test_token_ids = load_split_tokens("test")
+    train_tt = [tokenize(r["text"]) for r in train_raw]
+    dev_tt = [tokenize(r["text"]) for r in dev_raw]
+    test_tt = [tokenize(r["text"]) for r in test_raw]
 
-    train_texts = [item["text"] for item in train_raw]
-    dev_texts = [item["text"] for item in dev_raw]
-    test_texts = [item["text"] for item in test_raw]
-    train_labels = [item["label"] for item in train_raw]
-    dev_labels = [item["label"] for item in dev_raw]
-    test_labels = [item["label"] for item in test_raw]
+    vocab = build_tfidf_vocab(train_tt)
+    print(f"TF-IDF vocab size: {len(vocab)}")
+    train_tfidf, idf = compute_tfidf(train_tt, vocab)
+    dev_tfidf, _ = compute_tfidf(dev_tt, vocab, idf=idf)
+    test_tfidf, _ = compute_tfidf(test_tt, vocab, idf=idf)
 
-    ## logical fallacies only
-    # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(train_token_ids, train_texts, train_labels) if lbl in SMT_LABELS]
-    # train_token_ids, train_texts, train_labels = [list(x) for x in zip(*triples)]
-    # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(dev_token_ids, dev_texts, dev_labels) if lbl in SMT_LABELS]
-    # dev_token_ids, dev_texts, dev_labels = [list(x) for x in zip(*triples)]
-    # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(test_token_ids, test_texts, test_labels) if lbl in SMT_LABELS]
-    # test_token_ids, test_texts, test_labels = [list(x) for x in zip(*triples)]
-
-    ## informal fallacies only (swap with block above)
-    # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(train_token_ids, train_texts, train_labels) if lbl in NON_SMT_LABELS]
-    # train_token_ids, train_texts, train_labels = [list(x) for x in zip(*triples)]
-    # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(dev_token_ids, dev_texts, dev_labels) if lbl in NON_SMT_LABELS]
-    # dev_token_ids, dev_texts, dev_labels = [list(x) for x in zip(*triples)]
-    # triples = [(tok, txt, lbl) for tok, txt, lbl in zip(test_token_ids, test_texts, test_labels) if lbl in NON_SMT_LABELS]
-    # test_token_ids, test_texts, test_labels = [list(x) for x in zip(*triples)]
-
-    # tf-idf stream uses its own regex tokenizer over raw text; the pretrained
-    # embedding vocab is separate and drives the dan stream via the token-id files
-    train_text_tokens = [tokenize(t) for t in train_texts]
-    dev_text_tokens = [tokenize(t) for t in dev_texts]
-    test_text_tokens = [tokenize(t) for t in test_texts]
-
-    tfidf_vocab = build_tfidf_vocab(train_text_tokens)
-    print(f"TF-IDF vocab size: {len(tfidf_vocab)}")
-
-    train_tfidf, idf = compute_tfidf(train_text_tokens, tfidf_vocab)
-    dev_tfidf, _ = compute_tfidf(dev_text_tokens, tfidf_vocab, idf=idf)
-    test_tfidf, _ = compute_tfidf(test_text_tokens, tfidf_vocab, idf=idf)
-
+    train_labels = [r["label"] for r in train_raw]
+    dev_labels = [r["label"] for r in dev_raw]
+    test_labels = [r["label"] for r in test_raw]
     label_indexer = build_label_indexer(train_labels)
     num_classes = len(label_indexer)
     label_names = [label_indexer.get_object(i) for i in range(num_classes)]
@@ -315,31 +308,28 @@ def main():
     dev_y = encode_labels(dev_labels, label_indexer)
     test_y = encode_labels(test_labels, label_indexer)
 
-    train_ds = HybridDataset(train_token_ids, train_tfidf, train_y)
-    dev_ds = HybridDataset(dev_token_ids, dev_tfidf, dev_y)
-    test_ds = HybridDataset(test_token_ids, test_tfidf, test_y)
-
-    collate = make_collate(pad_idx, unk_idx)
     train_loader = DataLoader(
-        train_ds, batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate
+        HybridDataset(train_tok, train_tfidf, train_y),
+        batch_size=BATCH_SIZE, shuffle=True, collate_fn=collate,
     )
     dev_loader = DataLoader(
-        dev_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate
+        HybridDataset(dev_tok, dev_tfidf, dev_y),
+        batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate,
     )
     test_loader = DataLoader(
-        test_ds, batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate
+        HybridDataset(test_tok, test_tfidf, test_y),
+        batch_size=BATCH_SIZE, shuffle=False, collate_fn=collate,
     )
 
     model = HybridClassifier(
         word_embeddings=word_embeddings,
-        tfidf_vocab_size=len(tfidf_vocab),
+        tfidf_vocab_size=len(vocab),
         num_classes=num_classes,
         pad_idx=pad_idx,
     )
     optimizer = torch.optim.Adam(
         model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY
     )
-
     counts = Counter(train_y)
     class_weights = torch.tensor(
         [len(train_y) / (num_classes * counts[i]) for i in range(num_classes)],
@@ -347,38 +337,83 @@ def main():
     )
     loss_fn = nn.CrossEntropyLoss(weight=class_weights)
 
-    best_dev_f1, best_state = -1.0, None
-    for epoch in range(1, NUM_EPOCHS + 1):
-        train_loss = run_epoch(model, train_loader, optimizer, loss_fn)
-        dev_loss, dev_acc, dev_f1 = evaluate(model, dev_loader, loss_fn)
-        print(
-            f"Epoch {epoch:3d}  train_loss={train_loss:.4f}  "
-            f"dev_loss={dev_loss:.4f}  dev_acc={dev_acc:.4f}  "
-            f"dev_macro_f1={dev_f1:.4f}"
-        )
-        if dev_f1 > best_dev_f1:
-            best_dev_f1 = dev_f1
-            best_state = {
-                k: v.detach().cpu().clone() for k, v in model.state_dict().items()
-            }
+    return (model, train_loader, dev_loader, test_loader, loss_fn, optimizer,
+            label_indexer, label_names)
 
-    print(f"Best dev macro F1: {best_dev_f1:.4f}")
-    if best_state is not None:
-        model.load_state_dict(best_state)
 
-    print("\n--- Dev set ---")
+def main():
+    word_embeddings, _ = load_word_embeddings()
+    pad_idx = word_embeddings.word_indexer.index_of(PAD_TOKEN)
+    unk_idx = word_embeddings.word_indexer.index_of(UNK_TOKEN)
+
+    train_raw_all = load_split_raw("train")
+    dev_raw_all = load_split_raw("dev")
+    test_raw_all = load_split_raw("test")
+    train_tok_all = load_split_tokens("train")
+    dev_tok_all = load_split_tokens("dev")
+    test_tok_all = load_split_tokens("test")
+
+    print("\nFull (13 classes)")
+    torch.manual_seed(50)
+    np.random.seed(50)
+    model, train_loader, dev_loader, test_loader, loss_fn, optimizer, label_indexer, label_names = build_run(
+        train_raw_all, dev_raw_all, test_raw_all,
+        train_tok_all, dev_tok_all, test_tok_all,
+        word_embeddings, pad_idx, unk_idx,
+    )
+    full_dev_losses, best_state = train_loop(model, train_loader, dev_loader, loss_fn, optimizer)
+    model.load_state_dict(best_state)
+    print("\nDev set")
     targets, preds = collect_predictions(model, dev_loader)
     print_eval_report(targets, preds, label_names)
-
-    print("\n--- Test set ---")
+    print("\nTest set")
     targets, preds = collect_predictions(model, test_loader)
     print_eval_report(targets, preds, label_names)
-
-    out_path = DATA_DIR.parent / "src" / "models" / "dan_tfidf_best.pt"
     torch.save(
         {"model_state": best_state, "label_indexer": label_indexer.objs_to_ints},
-        out_path,
+        DATA_DIR.parent / "src" / "models" / "dan_tfidf_best.pt",
     )
+
+    print("\nFormal (6 classes)")
+    train_raw = [r for r in train_raw_all if r["label"] in SMT_LABELS]
+    dev_raw = [r for r in dev_raw_all if r["label"] in SMT_LABELS]
+    test_raw = [r for r in test_raw_all if r["label"] in SMT_LABELS]
+    train_tok = [t for t, r in zip(train_tok_all, train_raw_all) if r["label"] in SMT_LABELS]
+    dev_tok = [t for t, r in zip(dev_tok_all, dev_raw_all) if r["label"] in SMT_LABELS]
+    test_tok = [t for t, r in zip(test_tok_all, test_raw_all) if r["label"] in SMT_LABELS]
+    model, train_loader, dev_loader, _, loss_fn, optimizer, _, _ = build_run(
+        train_raw, dev_raw, test_raw, train_tok, dev_tok, test_tok,
+        word_embeddings, pad_idx, unk_idx,
+    )
+    formal_dev_losses, _ = train_loop(model, train_loader, dev_loader, loss_fn, optimizer)
+
+    print("\nInformal (7 classes)")
+    train_raw = [r for r in train_raw_all if r["label"] in NON_SMT_LABELS]
+    dev_raw = [r for r in dev_raw_all if r["label"] in NON_SMT_LABELS]
+    test_raw = [r for r in test_raw_all if r["label"] in NON_SMT_LABELS]
+    train_tok = [t for t, r in zip(train_tok_all, train_raw_all) if r["label"] in NON_SMT_LABELS]
+    dev_tok = [t for t, r in zip(dev_tok_all, dev_raw_all) if r["label"] in NON_SMT_LABELS]
+    test_tok = [t for t, r in zip(test_tok_all, test_raw_all) if r["label"] in NON_SMT_LABELS]
+    model, train_loader, dev_loader, _, loss_fn, optimizer, _, _ = build_run(
+        train_raw, dev_raw, test_raw, train_tok, dev_tok, test_tok,
+        word_embeddings, pad_idx, unk_idx,
+    )
+    informal_dev_losses, _ = train_loop(model, train_loader, dev_loader, loss_fn, optimizer)
+
+    # plot losses over all epochs for different splits
+    epochs = range(1, NUM_EPOCHS + 1)
+    plt.figure(figsize=(9, 5))
+    plt.plot(epochs, full_dev_losses, label="Full (13 classes)")
+    plt.plot(epochs, formal_dev_losses, label="Formal (6 classes)")
+    plt.plot(epochs, informal_dev_losses, label="Informal (7 classes)")
+    plt.xlabel("Epoch")
+    plt.ylabel("Dev Loss (class-weighted CE)")
+    plt.title("DAN + TF-IDF: Dev Loss by Epoch")
+    plt.legend()
+    plt.grid(alpha=0.3)
+    plt.tight_layout()
+    plot_path = DATA_DIR.parent / "dan_tfidf_dev_loss.png"
+    plt.savefig(plot_path, dpi=150)
 
 
 if __name__ == "__main__":
