@@ -7,9 +7,7 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 import numpy as np
-import pandas as pd
-from pathlib import Path
-from sklearn.metrics import classification_report, confusion_matrix, f1_score
+from sklearn.metrics import f1_score
 from torch.utils.data import DataLoader, Dataset
 
 sys.path.insert(0, str(Path(__file__).parent))

@@ -5,6 +5,8 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix
 from torch.utils.data import DataLoader
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -15,7 +17,7 @@ from train_argument_features import extract_argument_features, FEATURE_NAMES
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
 
-NUM_EPOCHS = 200
+NUM_EPOCHS = 70
 BATCH_SIZE = 64
 LEARNING_RATE = 0.0002
 WEIGHT_DECAY = 0.0005
@@ -161,6 +163,31 @@ def main():
             test_targets.extend(y.tolist())
     print_eval_report(test_targets, test_preds, label_names)
 
+    # Confusion matrix of F1
+    labels = list(range(num_classes))
+    cm = confusion_matrix(test_targets, test_preds, labels=labels)
+    row_sums = cm.sum(axis=1, keepdims=True)
+    cm_norm = np.divide(cm, row_sums, where=row_sums != 0)
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+    im = ax.imshow(cm_norm, cmap="Blues", vmin=0.0, vmax=1.0)
+    ax.set_xticks(range(num_classes))
+    ax.set_yticks(range(num_classes))
+    ax.set_xticklabels(label_names, rotation=45, ha="right")
+    ax.set_yticklabels(label_names)
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("True")
+    ax.set_title("TF-IDF + Argument Features Confusion Matrix")
+    for i in range(num_classes):
+        for j in range(num_classes):
+            v = cm_norm[i, j]
+            if v > 0.01:
+                ax.text(
+                    j, i, f"{v:.2f}",
+                    ha="center", va="center",
+                    color="white" if v > 0.5 else "black", fontsize=8,
+                )
+    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
 
 if __name__ == "__main__":
     main()
