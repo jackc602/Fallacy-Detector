@@ -1,4 +1,3 @@
-import json
 import sys
 from collections import Counter
 from pathlib import Path
@@ -6,26 +5,18 @@ from pathlib import Path
 import torch
 import torch.nn as nn
 import numpy as np
+from sklearn.metrics import f1_score
 from torch.utils.data import DataLoader, Dataset
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 sys.path.insert(0, str(Path(__file__).parent))
-from utils import Indexer, print_eval_report
-
-path = Path(__file__).parent.parent.parent / "data"
+from utils import build_label_indexer, load_split, print_eval_report
 
 MODEL_NAME = "roberta-base"
 NUM_EPOCHS = 20
 BATCH_SIZE = 16
 LEARNING_RATE = 0.00002
 MAX_LENGTH = 128
-
-
-def load_split(split):
-    with open(
-        path / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", encoding="utf-8"
-    ) as f:
-        return json.load(f)
 
 
 class FallacyDataset(Dataset):
@@ -42,17 +33,11 @@ class FallacyDataset(Dataset):
         return item
 
 
-def build_label_indexer(labels):
-    indexer = Indexer()
-    for lbl in sorted(set(labels)):
-        indexer.add_and_get_index(lbl)
-    return indexer
-
-
 def main():
     torch.manual_seed(50)
     np.random.seed(50)
 
+    # use GPU if available
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     print(f"Using device: {device}")
 
@@ -139,7 +124,7 @@ def main():
     )
 
     # training loop
-    best_dev_acc = 0.0
+    best_dev_f1 = -1.0
     best_state = None
 
     for epoch in range(1, NUM_EPOCHS + 1):
@@ -162,6 +147,7 @@ def main():
         # dev evaluation
         model.eval()
         correct = 0
+        all_targets, all_preds = [], []
         with torch.no_grad():
             for batch in dev_loader:
                 out = model(
@@ -170,26 +156,28 @@ def main():
                 )
                 preds = out.logits.argmax(dim=-1)
                 correct += (preds == batch["labels"].to(device)).sum().item()
+                all_targets.extend(batch["labels"].tolist())
+                all_preds.extend(preds.cpu().tolist())
 
         dev_acc = correct / len(dev_y)
+        dev_f1 = f1_score(all_targets, all_preds, average="macro", zero_division=0)
         print(
-            f"Epoch {epoch}  train_loss={total_loss / total:.4f}  dev_acc={dev_acc:.4f}"
+            f"Epoch {epoch}  train_loss={total_loss / total:.4f}  "
+            f"dev_acc={dev_acc:.4f}  dev_macro_f1={dev_f1:.4f}"
         )
 
-        if dev_acc > best_dev_acc:
-            best_dev_acc = dev_acc
+        if dev_f1 > best_dev_f1:
+            best_dev_f1 = dev_f1
             best_state = {
                 k: v.detach().cpu().clone() for k, v in model.state_dict().items()
             }
 
-    print(f"\nBest dev accuracy: {best_dev_acc:.4f}")
+    print(f"\nBest dev macro F1: {best_dev_f1:.4f}")
 
     if best_state is not None:
         model.load_state_dict(best_state)
 
-    label_names = [label_indexer.get_object(i) for i in range(num_classes)]
-
-    # collect predictions and evaluate
+    # collect preds and eval
     model.eval()
 
     print("\n--- Dev set ---")

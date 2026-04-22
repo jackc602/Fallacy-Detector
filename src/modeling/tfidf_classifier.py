@@ -11,7 +11,7 @@ from sklearn.metrics import f1_score
 from torch.utils.data import DataLoader, Dataset
 
 sys.path.insert(0, str(Path(__file__).parent))
-from utils import Indexer, print_eval_report
+from utils import build_label_indexer, print_eval_report
 
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
@@ -89,13 +89,6 @@ def compute_tfidf(token_lists, vocab, idf=None):
     tfidf /= norms
 
     return tfidf, idf
-
-
-def build_label_indexer(labels):
-    indexer = Indexer()
-    for lbl in sorted(set(labels)):
-        indexer.add_and_get_index(lbl)
-    return indexer
 
 
 class TFIDFDataset(Dataset):
@@ -232,7 +225,7 @@ def main():
         )
         if dev_f1 > best_dev_f1:
             best_dev_f1 = dev_f1
-            best_state = {k: v.clone() for k, v in model.state_dict().items()}
+            best_state = {k: v.detach().cpu().clone() for k, v in model.state_dict().items()}
 
     print(f"\nBest dev macro F1: {best_dev_f1:.4f}")
     model.load_state_dict(best_state)
