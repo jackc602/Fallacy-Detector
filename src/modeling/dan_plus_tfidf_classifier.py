@@ -54,7 +54,7 @@ INFORMAL_LABELS = [
 
 def load_split_raw(split):
     with open(
-        DATA_DIR / f"{split}_fol_clean_gemini_gemini-2.5-pro.json",
+        DATA_DIR / f"{split}_fol_clean.json",
         "r",
         encoding="utf-8",
     ) as f:

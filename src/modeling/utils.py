@@ -118,7 +118,7 @@ path = Path(__file__).parent.parent.parent / "data"
 
 def load_split(split):
     with open(
-        path / f"{split}_fol_clean_gemini_gemini-2.5-pro.json", encoding="utf-8"
+        path / f"{split}_fol_clean.json", encoding="utf-8"
     ) as f:
         return json.load(f)
 

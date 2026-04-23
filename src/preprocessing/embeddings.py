@@ -101,9 +101,9 @@ def tokens_to_ids(token_lists, vocab):
 
 def main():
     datasets = [
-        ("train_fol_clean_gemini_gemini-2.5-pro.json", "train"),
-        ("test_fol_clean_gemini_gemini-2.5-pro.json", "test"),
-        ("dev_fol_clean_gemini_gemini-2.5-pro.json", "dev"),
+        ("train_fol_clean.json", "train"),
+        ("test_fol_clean.json", "test"),
+        ("dev_fol_clean.json", "dev"),
     ]
 
     nl_tokens_by_split = {}
