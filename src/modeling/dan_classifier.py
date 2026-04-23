@@ -100,7 +100,7 @@ class DANDataset(Dataset):
 
 def make_collate(pad_idx, unk_idx):
     """
-    Custom collate funciton for out dataloader to conver embeddings to tensors
+    Custom collate function for our dataloader to convert embeddings to tensors
     and apply pad token.
     """
 
@@ -154,7 +154,7 @@ class DAN(nn.Module):
         # get the indices of non pad tokens
         mask = (token_ids != self.pad_idx).unsqueeze(-1).float()
         summed = (embs * mask).sum(dim=1)
-        # ensure we divide by number of actual (non pad) tokens
+        # ensure we divide by number of actual non padding tokens
         denom = lengths.clamp(min=1).unsqueeze(-1).float()
         avg = summed / denom
         return self.classifier(avg)
@@ -241,6 +241,7 @@ def main():
     # pairs = [(t, l) for t, l in zip(test_tokens, test_labels) if l in INFORMAL_LABELS]
     # test_tokens, test_labels = zip(*pairs)
 
+    # create indexer object mapping labels to ints
     label_indexer = build_label_indexer(train_labels)
     num_classes = len(label_indexer)
 
