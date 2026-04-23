@@ -53,10 +53,12 @@ def tokenize(text):
 
 
 def build_vocab(token_lists, min_df=MIN_DF):
+    # count how many docs each token appears in
     df = defaultdict(int)
     for tokens in token_lists:
         for tok in set(tokens):
             df[tok] += 1
+    # skip words with count < MIN_DF
     vocab = {}
     idx = 0
     for tok, count in sorted(df.items()):
@@ -71,6 +73,7 @@ def compute_tfidf(token_lists, vocab, idf=None):
     V = len(vocab)
     tf_matrix = np.zeros((N, V), dtype=np.float32)
 
+    # term freq: count / doc length
     for i, tokens in enumerate(token_lists):
         vocab_tokens = [t for t in tokens if t in vocab]
         counts = Counter(vocab_tokens)
@@ -78,12 +81,14 @@ def compute_tfidf(token_lists, vocab, idf=None):
         for tok, cnt in counts.items():
             tf_matrix[i, vocab[tok]] = cnt / total
 
+    # only compute idf on train, reuse it for dev/test
     if idf is None:
         df = (tf_matrix > 0).sum(axis=0).astype(np.float32)
-        idf = np.log((N + 1) / (df + 1)) + 1.0
+        idf = np.log((N + 1) / (df + 1)) + 1.0  # smoothed
 
     tfidf = tf_matrix * idf
 
+    # l2 normalize each row so doc length doesn't matter
     norms = np.linalg.norm(tfidf, axis=1, keepdims=True)
     norms[norms == 0] = 1.0
     tfidf /= norms
@@ -174,13 +179,16 @@ def main():
     # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in INFORMAL_LABELS]
     # test_texts, test_labels = zip(*pairs)
 
+    # tokenize
     train_tokens = [tokenize(t) for t in train_texts]
     dev_tokens = [tokenize(t) for t in dev_texts]
     test_tokens = [tokenize(t) for t in test_texts]
 
+    # build vocab from train only
     vocab = build_vocab(train_tokens)
     print(f"Vocab size: {len(vocab)}")
 
+    # use train idf for dev/test too
     train_vecs, idf = compute_tfidf(train_tokens, vocab)
     dev_vecs, _ = compute_tfidf(dev_tokens, vocab, idf=idf)
     test_vecs, _ = compute_tfidf(test_tokens, vocab, idf=idf)
@@ -207,6 +215,7 @@ def main():
     model = nn.Linear(len(vocab), num_classes)
     optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
+    # weight classes by inverse freq since data is imbalanced
     counts = Counter(train_y)
     class_weights = torch.tensor(
         [len(train_y) / (num_classes * counts[i]) for i in range(num_classes)],
