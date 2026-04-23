@@ -11,48 +11,8 @@ DEFAULT_MODEL = "all-MiniLM-L6-v2"
 PAD_TOKEN = "<PAD>"
 UNK_TOKEN = "<UNK>"
 
-FOL_SYMBOL_REPLACEMENTS = {
-    "∀": " for all ",
-    "∃": " there exists ",
-    "→": " implies ",
-    "↔": " if and only if ",
-    "∧": " and ",
-    "∨": " or ",
-    "¬": " not ",
-    "∈": " is in ",
-    "≈": " approximately equals ",
-    "≠": " not equals ",
-    "≤": " less than or equal to ",
-    "≥": " greater than or equal to ",
-}
-
-_CAMEL_RE = re.compile(r"(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])")
-_WS_RE = re.compile(r"\s+")
 _TOKEN_RE = re.compile(r"[a-z0-9]+(?:'[a-z]+)?")
 
-
-def _split_camel_case(token):
-    """
-    Parse through camel case in FOL to get meaningful ebeddings
-    """
-    return _CAMEL_RE.sub(" ", token)
-
-
-def fol_to_natural_language(fol):
-    """
-    Replace logical symbols that will become meaningful embeddings
-    """
-    if not fol:
-        return ""
-
-    text = fol
-    for symbol, phrase in FOL_SYMBOL_REPLACEMENTS.items():
-        text = text.replace(symbol, phrase)
-
-    text = " ".join(_split_camel_case(tok) for tok in text.split())
-
-    text = _WS_RE.sub(" ", text).strip()
-    return text
 
 
 def tokenize(text: str):
@@ -61,14 +21,12 @@ def tokenize(text: str):
     return _TOKEN_RE.findall(text.lower())
 
 
-def load_split_token_lists(in_path, use_fol=False):
+def load_split_token_lists(in_path):
     """
     Load in a file and tokenize it
     """
     with open(in_path, "r") as f:
         data = json.load(f)
-    if use_fol:
-        return [tokenize(fol_to_natural_language(item.get("fol", ""))) for item in data]
     return [tokenize(item["text"]) for item in data]
 
 
@@ -84,7 +42,7 @@ def build_vocab(token_lists_by_split):
 
 def encode_vocab(vocab, model_name=DEFAULT_MODEL):
     """
-    Call our embedding model to get ves
+    Call our embedding model to get vecs
     """
     model = SentenceTransformer(model_name)
     words = [w for w, _ in sorted(vocab.items(), key=lambda kv: kv[1])]
@@ -110,10 +68,10 @@ def main():
     fol_tokens_by_split = {}
     for filename, split in datasets:
         in_path = data_path / filename
-        nl_tokens_by_split[split] = load_split_token_lists(in_path, use_fol=False)
-        fol_tokens_by_split[split] = load_split_token_lists(in_path, use_fol=True)
+        nl_tokens_by_split[split] = load_split_token_lists(in_path)
+        fol_tokens_by_split[split] = load_split_token_lists(in_path)
 
-    # pull vocab out of all words in all splits, then embed ans save
+    # pull vocab out of all words in all splits, then embed and save
     vocab = build_vocab(list(nl_tokens_by_split.values()) + list(fol_tokens_by_split.values()))
     vectors = encode_vocab(vocab)
     np.save(data_path / "word_embeddings.npy", vectors)
