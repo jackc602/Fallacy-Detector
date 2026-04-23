@@ -45,11 +45,13 @@ uv run python src/modeling/train_bert_baseline.py
 
 ## Dependencies
 
-- `torch`, `numpy`, `pandas`, `pyarrow`
-- `scikit-learn`, `matplotlib`
-- `transformers`, `sentence-transformers` (BERT / RoBERTa baselines)
-- `datasets` (HF dataset loading)
-- `z3-solver` (formal-fallacy SMT experiments)
-- `google-genai`, `google-cloud-aiplatform`, `ollama` (FOL translation via
-  LLMs)
+- `torch`
+- `numpy`
+- `pandas`
+- `pyarrow`
+- `scikit-learn`
+- `matplotlib`
+- `transformers`
+- `sentence-transformers`
+- `datasets`
 - `python-dotenv`
