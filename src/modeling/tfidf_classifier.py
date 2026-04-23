@@ -21,7 +21,7 @@ BATCH_SIZE = 64
 LEARNING_RATE = 0.001
 MIN_DF = 2
 
-SMT_LABELS = [
+FORMAL_LABELS = [
     "false dilemma",
     "circular reasoning",
     "fallacy of logic",
@@ -30,7 +30,7 @@ SMT_LABELS = [
     "equivocation",
 ]
 
-NON_SMT_LABELS = [
+INFORMAL_LABELS = [
     "ad hominem",
     "ad populum",
     "appeal to emotion",
@@ -159,19 +159,19 @@ def main():
     test_labels = [item["label"] for item in test_data]
 
     # # logical fallacies only
-    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in FORMAL_LABELS]
     # train_texts, train_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in FORMAL_LABELS]
     # dev_texts, dev_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in FORMAL_LABELS]
     # test_texts, test_labels = zip(*pairs)
 
     # # informal fallacies only (swap with block above)
-    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in NON_SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(train_texts, train_labels) if l in INFORMAL_LABELS]
     # train_texts, train_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in NON_SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(dev_texts, dev_labels) if l in INFORMAL_LABELS]
     # dev_texts, dev_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in NON_SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(test_texts, test_labels) if l in INFORMAL_LABELS]
     # test_texts, test_labels = zip(*pairs)
 
     train_tokens = [tokenize(t) for t in train_texts]

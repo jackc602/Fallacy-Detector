@@ -32,7 +32,7 @@ MIN_DF = 2
 PAD_TOKEN = "<PAD>"
 UNK_TOKEN = "<UNK>"
 
-SMT_LABELS = [
+FORMAL_LABELS = [
     "false dilemma",
     "circular reasoning",
     "fallacy of logic",
@@ -41,7 +41,7 @@ SMT_LABELS = [
     "equivocation",
 ]
 
-NON_SMT_LABELS = [
+INFORMAL_LABELS = [
     "ad hominem",
     "ad populum",
     "appeal to emotion",

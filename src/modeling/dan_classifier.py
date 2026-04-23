@@ -24,8 +24,8 @@ FREEZE_EMBEDDINGS = True
 PAD_TOKEN = "<PAD>"
 UNK_TOKEN = "<UNK>"
 
-# logical fallacies (smt solvable)
-SMT_LABELS = [
+# formal fallacies
+FORMAL_LABELS = [
     "false dilemma",
     "circular reasoning",
     "fallacy of logic",
@@ -34,8 +34,8 @@ SMT_LABELS = [
     "equivocation",
 ]
 
-# informal fallacies (not smt solvable)
-NON_SMT_LABELS = [
+# informal fallacies
+INFORMAL_LABELS = [
     "ad hominem",
     "ad populum",
     "appeal to emotion",
@@ -226,19 +226,19 @@ def main():
     test_labels = load_split_labels("test")
 
     # # logical fallacies only
-    # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in FORMAL_LABELS]
     # train_tokens, train_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in FORMAL_LABELS]
     # dev_tokens, dev_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(test_tokens, test_labels) if l in SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(test_tokens, test_labels) if l in FORMAL_LABELS]
     # test_tokens, test_labels = zip(*pairs)
 
     # # informal fallacies only (only one uncommented at a time)
-    # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in NON_SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(train_tokens, train_labels) if l in INFORMAL_LABELS]
     # train_tokens, train_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in NON_SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(dev_tokens, dev_labels) if l in INFORMAL_LABELS]
     # dev_tokens, dev_labels = zip(*pairs)
-    # pairs = [(t, l) for t, l in zip(test_tokens, test_labels) if l in NON_SMT_LABELS]
+    # pairs = [(t, l) for t, l in zip(test_tokens, test_labels) if l in INFORMAL_LABELS]
     # test_tokens, test_labels = zip(*pairs)
 
     label_indexer = build_label_indexer(train_labels)
