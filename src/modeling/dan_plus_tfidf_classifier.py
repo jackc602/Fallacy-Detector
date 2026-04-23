@@ -375,12 +375,12 @@ def main():
     )
 
     print("\nFormal (6 classes)")
-    train_raw = [r for r in train_raw_all if r["label"] in SMT_LABELS]
-    dev_raw = [r for r in dev_raw_all if r["label"] in SMT_LABELS]
-    test_raw = [r for r in test_raw_all if r["label"] in SMT_LABELS]
-    train_tok = [t for t, r in zip(train_tok_all, train_raw_all) if r["label"] in SMT_LABELS]
-    dev_tok = [t for t, r in zip(dev_tok_all, dev_raw_all) if r["label"] in SMT_LABELS]
-    test_tok = [t for t, r in zip(test_tok_all, test_raw_all) if r["label"] in SMT_LABELS]
+    train_raw = [r for r in train_raw_all if r["label"] in FORMAL_LABELS]
+    dev_raw = [r for r in dev_raw_all if r["label"] in FORMAL_LABELS]
+    test_raw = [r for r in test_raw_all if r["label"] in FORMAL_LABELS]
+    train_tok = [t for t, r in zip(train_tok_all, train_raw_all) if r["label"] in FORMAL_LABELS]
+    dev_tok = [t for t, r in zip(dev_tok_all, dev_raw_all) if r["label"] in FORMAL_LABELS]
+    test_tok = [t for t, r in zip(test_tok_all, test_raw_all) if r["label"] in FORMAL_LABELS]
     model, train_loader, dev_loader, _, loss_fn, optimizer, _, _ = build_run(
         train_raw, dev_raw, test_raw, train_tok, dev_tok, test_tok,
         word_embeddings, pad_idx, unk_idx,
@@ -388,12 +388,12 @@ def main():
     formal_dev_losses, _ = train_loop(model, train_loader, dev_loader, loss_fn, optimizer)
 
     print("\nInformal (7 classes)")
-    train_raw = [r for r in train_raw_all if r["label"] in NON_SMT_LABELS]
-    dev_raw = [r for r in dev_raw_all if r["label"] in NON_SMT_LABELS]
-    test_raw = [r for r in test_raw_all if r["label"] in NON_SMT_LABELS]
-    train_tok = [t for t, r in zip(train_tok_all, train_raw_all) if r["label"] in NON_SMT_LABELS]
-    dev_tok = [t for t, r in zip(dev_tok_all, dev_raw_all) if r["label"] in NON_SMT_LABELS]
-    test_tok = [t for t, r in zip(test_tok_all, test_raw_all) if r["label"] in NON_SMT_LABELS]
+    train_raw = [r for r in train_raw_all if r["label"] in INFORMAL_LABELS]
+    dev_raw = [r for r in dev_raw_all if r["label"] in INFORMAL_LABELS]
+    test_raw = [r for r in test_raw_all if r["label"] in INFORMAL_LABELS]
+    train_tok = [t for t, r in zip(train_tok_all, train_raw_all) if r["label"] in INFORMAL_LABELS]
+    dev_tok = [t for t, r in zip(dev_tok_all, dev_raw_all) if r["label"] in INFORMAL_LABELS]
+    test_tok = [t for t, r in zip(test_tok_all, test_raw_all) if r["label"] in INFORMAL_LABELS]
     model, train_loader, dev_loader, _, loss_fn, optimizer, _, _ = build_run(
         train_raw, dev_raw, test_raw, train_tok, dev_tok, test_tok,
         word_embeddings, pad_idx, unk_idx,
